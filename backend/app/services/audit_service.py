@@ -145,6 +145,7 @@ class AuditService:
         ai_recommendation: str | None,
         human_override: bool,
         comment: str | None = None,
+        metadata: dict | None = None,
     ) -> AuditEventResponse:
         return self.record_event(
             case_id=case_id,
@@ -157,6 +158,7 @@ class AuditService:
             ai_recommendation=ai_recommendation,
             human_decision=decision,
             human_override=human_override,
+            metadata=metadata or {},
         )
 
     def create_human_override_event(
@@ -168,15 +170,19 @@ class AuditService:
         human_decision: str,
         override_reason: str | None,
     ) -> AuditEventResponse:
-        return self.record_event(
-            case_id=case_id,
-            event_type=AuditEventType.HUMAN_OVERRIDE_DETECTED,
-            actor=actor,
-            actor_role=actor_role,
-            ai_recommendation=ai_recommendation,
-            human_decision=human_decision,
-            human_override=True,
-            override_reason=override_reason,
+        return self.create_event(
+            AuditEventCreate(
+                case_id=case_id,
+                event_type=AuditEventType.HUMAN_OVERRIDE_DETECTED,
+                actor=actor,
+                actor_role=actor_role,
+                action=self._default_action(AuditEventType.HUMAN_OVERRIDE_DETECTED),
+                description=f"Human reviewer overrode AI recommendation from {ai_recommendation} to {human_decision}",
+                ai_recommendation=ai_recommendation,
+                human_decision=human_decision,
+                human_override=True,
+                override_reason=override_reason,
+            )
         )
 
     def create_case_closed_event(self, case_id: str, actor: str, actor_role: ReviewerRole, comment: str | None = None) -> AuditEventResponse:

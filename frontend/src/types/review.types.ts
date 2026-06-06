@@ -1,5 +1,6 @@
 export type ReviewerRole = "FRAUD_ANALYST" | "FRAUD_MANAGER" | "COMPLIANCE_OFFICER" | "AUDITOR";
 export type HumanReviewDecision = "APPROVE" | "HOLD" | "ESCALATE" | "REJECT";
+export type OverrideComparisonStatus = "MATCHED" | "OVERRIDDEN" | "AI_RECOMMENDATION_MISSING" | "NOT_APPLICABLE";
 export type ReasonCode =
   | "CUSTOMER_CONFIRMED"
   | "SUSPICIOUS_DEVICE"
@@ -30,8 +31,24 @@ export type HumanReviewResponse = {
   reviewer_role: ReviewerRole;
   reason_code: ReasonCode;
   ai_recommendation: HumanReviewDecision | null;
+  human_decision: HumanReviewDecision;
   human_override: boolean;
+  override_reason: string | null;
+  override_comparison_status: OverrideComparisonStatus;
+  override_detected_at: string | null;
+  override_detected_by: string | null;
   message: string;
+};
+
+export type OverrideSummary = {
+  case_id?: string;
+  has_override: boolean;
+  ai_recommendation: HumanReviewDecision | null;
+  human_decision: HumanReviewDecision | null;
+  override_reason: string | null;
+  override_detected_at: string | null;
+  override_detected_by: string | null;
+  override_comparison_status: OverrideComparisonStatus;
 };
 
 export type ReviewOptions = {

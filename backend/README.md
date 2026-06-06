@@ -46,6 +46,7 @@ Swagger UI is available at `http://localhost:8000/docs`.
 - `GET /api/v1/agents/config`: return safe agent runtime configuration without API keys or secrets.
 - `GET /api/v1/rag/policies/search?query=...`: search local or Azure AI Search-backed policy RAG.
 - `POST /api/v1/cases/{case_id}/review`: submit human review decision with role, reason, acknowledgements, and override tracking.
+- `GET /api/v1/cases/{case_id}/override-summary`: return latest AI-vs-human override comparison for a case.
 - `POST /api/v1/cases/{case_id}/close`: close an approved, held, escalated, or rejected case.
 - `GET /api/v1/cases/{case_id}/review-options?reviewer_role=FRAUD_ANALYST`: return allowed decisions and reason codes.
 - `GET /api/v1/cases/{case_id}/status`: return current status, metadata, and allowed next statuses.
@@ -81,6 +82,51 @@ Allowed decisions are `approve`, `hold`, `escalate`, and `reject`.
 ```
 
 The backend enforces role permissions, required acknowledgements, override reason requirements, and status transitions.
+
+Override review example:
+
+```json
+{
+  "decision": "ESCALATE",
+  "comment": "Synthetic suspicious beneficiary review requires escalation.",
+  "reviewed_by": "synthetic.reviewer",
+  "reviewer_role": "FRAUD_ANALYST",
+  "reason_code": "SUSPICIOUS_DEVICE",
+  "evidence_acknowledged": true,
+  "policy_acknowledged": true,
+  "override_reason": "Beneficiary is linked to multiple suspicious synthetic cases."
+}
+```
+
+Review responses include:
+
+```json
+{
+  "case_id": "case-001",
+  "decision": "ESCALATE",
+  "ai_recommendation": "HOLD",
+  "human_decision": "ESCALATE",
+  "human_override": true,
+  "override_reason": "Beneficiary is linked to multiple suspicious synthetic cases.",
+  "override_comparison_status": "OVERRIDDEN",
+  "message": "Human review submitted successfully"
+}
+```
+
+Override summary response:
+
+```json
+{
+  "case_id": "case-001",
+  "has_override": true,
+  "ai_recommendation": "HOLD",
+  "human_decision": "ESCALATE",
+  "override_reason": "Beneficiary is linked to multiple suspicious synthetic cases.",
+  "override_detected_at": "2026-06-06T11:30:00Z",
+  "override_detected_by": "synthetic.reviewer",
+  "override_comparison_status": "OVERRIDDEN"
+}
+```
 
 ## Local Audit Storage
 

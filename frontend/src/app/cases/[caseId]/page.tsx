@@ -17,6 +17,7 @@ import { SimilarCasesPanel } from "@/components/cases/SimilarCasesPanel";
 import { ReviewerValidationPanel } from "@/components/cases/ReviewerValidationPanel";
 import { HumanDecisionPanel } from "@/components/cases/HumanDecisionPanel";
 import { AuditTrailPanel } from "@/components/cases/AuditTrailPanel";
+import { HumanOverrideBanner } from "@/components/cases/HumanOverrideBanner";
 import { StatusLifecyclePanel } from "@/components/cases/StatusLifecyclePanel";
 import { getAuditTrail } from "@/services/auditService";
 import { runInvestigation } from "@/services/agentService";
@@ -110,6 +111,11 @@ export default function CaseDetailPage({ params }: PageProps) {
                 </button>
               </div>
 
+              {caseDetail.override_summary?.has_override && (
+                <div className="full-span">
+                  <HumanOverrideBanner overrideSummary={caseDetail.override_summary} />
+                </div>
+              )}
               <CaseSummaryCard caseDetail={caseDetail} />
               <StatusLifecyclePanel statusInfo={statusInfo} />
               <CustomerProfileCard customer={caseDetail.customer} />

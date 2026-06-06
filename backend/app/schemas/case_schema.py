@@ -30,6 +30,16 @@ class CaseMetadata(BaseModel):
     created_at: str
 
 
+class OverrideSummary(BaseModel):
+    has_override: bool
+    ai_recommendation: str | None = None
+    human_decision: str | None = None
+    override_reason: str | None = None
+    override_detected_at: datetime | None = None
+    override_detected_by: str | None = None
+    override_comparison_status: str
+
+
 class CaseDetail(BaseModel):
     metadata: CaseMetadata
     customer: CustomerProfile
@@ -46,4 +56,5 @@ class CaseDetail(BaseModel):
     ai_recommendation: str | None = None
     investigation_summary: dict | None = None
     human_review: dict | None = None
+    override_summary: OverrideSummary | None = None
     audit_events: list[dict] = []

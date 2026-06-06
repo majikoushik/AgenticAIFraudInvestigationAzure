@@ -1,4 +1,4 @@
-from app.core.constants import AuditEventType, CaseStatus, ReviewDecision, ReviewerRole
+from app.core.constants import AuditEventType, CaseStatus, ReviewerRole, normalize_decision
 from app.repositories.case_repository import CaseRepository
 from app.schemas.case_schema import CaseDetail, CaseMetadata, CaseSummary
 from app.schemas.decision_schema import DecisionRequest, DecisionResponse
@@ -57,8 +57,9 @@ class CaseService:
             status_updated_by=alert.get("status_updated_by"),
             status_comment=alert.get("status_comment"),
             ai_recommendation=self.get_ai_recommendation(case_id),
-            investigation_summary=self._investigation_summaries.get(case_id),
-            human_review=None,
+            investigation_summary=self._investigation_summaries.get(case_id) or alert.get("investigation_summary"),
+            human_review=alert.get("human_review"),
+            override_summary=alert.get("override_summary"),
             audit_events=[],
         )
 
@@ -109,8 +110,9 @@ class CaseService:
     def set_investigation_result(self, case_id: str, investigation: dict) -> None:
         summary = investigation.get("investigation_summary", {})
         recommendation = summary.get("recommended_action")
-        normalized_recommendation = recommendation.upper() if isinstance(recommendation, str) else None
-        if normalized_recommendation and normalized_recommendation not in {decision.value for decision in ReviewDecision}:
+        try:
+            normalized_recommendation = normalize_decision(recommendation)
+        except ValueError:
             normalized_recommendation = None
         self._ai_recommendations[case_id] = normalized_recommendation
         self._investigation_summaries[case_id] = summary
@@ -119,5 +121,24 @@ class CaseService:
         if case_id in self._ai_recommendations:
             return self._ai_recommendations.get(case_id)
         alert = self.repository.get_alert(case_id)
-        recommendation = alert.get("ai_recommendation") if alert else None
-        return recommendation.upper() if isinstance(recommendation, str) else None
+        if not alert:
+            return None
+        for recommendation in (
+            alert.get("ai_recommendation"),
+            (alert.get("investigation_summary") or {}).get("recommended_action")
+            if isinstance(alert.get("investigation_summary"), dict)
+            else None,
+            (alert.get("investigation_result") or {}).get("investigation_summary", {}).get("recommended_action")
+            if isinstance(alert.get("investigation_result"), dict)
+            else None,
+            (alert.get("latest_investigation") or {}).get("recommendation")
+            if isinstance(alert.get("latest_investigation"), dict)
+            else None,
+        ):
+            try:
+                normalized = normalize_decision(recommendation)
+            except ValueError:
+                normalized = None
+            if normalized:
+                return normalized
+        return None

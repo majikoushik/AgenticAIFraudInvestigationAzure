@@ -14,7 +14,7 @@
     "ai_recommendation": "HOLD",
     "investigation_summary": {
       "recommended_action": "HOLD",
-      "confidence_level": "medium"
+      "confidence_level": "HIGH"
     },
     "human_review": null,
     "audit_events": [],
@@ -134,7 +134,10 @@
     "status_updated_by": null,
     "status_comment": null,
     "ai_recommendation": "ESCALATE",
-    "investigation_summary": null,
+    "investigation_summary": {
+      "recommended_action": "ESCALATE",
+      "confidence_level": "HIGH"
+    },
     "human_review": null,
     "audit_events": [],
     "reason": "Synthetic escalated case for lifecycle testing.",

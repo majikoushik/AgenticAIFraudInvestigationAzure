@@ -1,5 +1,5 @@
 import { apiClient } from "@/services/apiClient";
-import type { HumanReviewRequest, HumanReviewResponse, ReviewOptions, ReviewerRole } from "@/types/review.types";
+import type { HumanReviewRequest, HumanReviewResponse, OverrideSummary, ReviewOptions, ReviewerRole } from "@/types/review.types";
 
 export function submitHumanReview(caseId: string, review: HumanReviewRequest): Promise<HumanReviewResponse> {
   return apiClient<HumanReviewResponse>(`/api/v1/cases/${caseId}/review`, {
@@ -10,4 +10,8 @@ export function submitHumanReview(caseId: string, review: HumanReviewRequest): P
 
 export function getReviewOptions(caseId: string, reviewerRole: ReviewerRole): Promise<ReviewOptions> {
   return apiClient<ReviewOptions>(`/api/v1/cases/${caseId}/review-options?reviewer_role=${reviewerRole}`);
+}
+
+export function getOverrideSummary(caseId: string): Promise<OverrideSummary> {
+  return apiClient<OverrideSummary>(`/api/v1/cases/${caseId}/override-summary`);
 }

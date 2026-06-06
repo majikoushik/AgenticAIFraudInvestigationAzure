@@ -1,6 +1,9 @@
-from pydantic import BaseModel, Field, model_validator
+from datetime import datetime
+from typing import Any
 
-from app.core.constants import ReasonCode, ReviewDecision, ReviewerRole
+from pydantic import BaseModel, Field, field_validator, model_validator
+
+from app.core.constants import OverrideComparisonStatus, ReasonCode, ReviewDecision, ReviewerRole, normalize_decision
 
 
 class HumanReviewRequest(BaseModel):
@@ -12,6 +15,17 @@ class HumanReviewRequest(BaseModel):
     evidence_acknowledged: bool
     policy_acknowledged: bool
     override_reason: str | None = None
+
+    @field_validator("decision", mode="before")
+    @classmethod
+    def normalize_review_decision(cls, value: Any) -> str:
+        try:
+            normalized = normalize_decision(value)
+        except ValueError as exc:
+            raise ValueError("Decision must be one of: APPROVE, HOLD, ESCALATE, REJECT.") from exc
+        if normalized is None:
+            raise ValueError("Decision is required.")
+        return normalized
 
     @model_validator(mode="after")
     def acknowledgements_required(self) -> "HumanReviewRequest":
@@ -31,8 +45,24 @@ class HumanReviewResponse(BaseModel):
     reviewer_role: str
     reason_code: str
     ai_recommendation: str | None
+    human_decision: str
     human_override: bool
+    override_reason: str | None = None
+    override_comparison_status: OverrideComparisonStatus
+    override_detected_at: datetime | None = None
+    override_detected_by: str | None = None
     message: str
+
+
+class OverrideSummaryResponse(BaseModel):
+    case_id: str
+    has_override: bool
+    ai_recommendation: str | None
+    human_decision: str | None
+    override_reason: str | None = None
+    override_detected_at: datetime | None = None
+    override_detected_by: str | None = None
+    override_comparison_status: OverrideComparisonStatus
 
 
 class ReviewOptionsResponse(BaseModel):

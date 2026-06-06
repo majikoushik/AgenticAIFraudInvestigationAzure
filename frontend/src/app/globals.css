@@ -465,6 +465,29 @@ td {
   color: var(--success);
 }
 
+.message.warning {
+  border: 1px solid #fedf89;
+  background: #fffcf5;
+  color: #93370d;
+}
+
+.facts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.facts-grid > div {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.facts-grid strong {
+  display: block;
+  margin-top: 4px;
+}
+
 .empty-state {
   border: 1px dashed var(--border);
   border-radius: 8px;
@@ -497,6 +520,13 @@ td {
 .timeline-item {
   border-left: 3px solid var(--accent);
   padding: 2px 0 2px 14px;
+}
+
+.timeline-item-override {
+  border-left-color: #dc6803;
+  background: #fffcf5;
+  border-radius: 0 8px 8px 0;
+  padding: 10px 0 10px 14px;
 }
 
 .timeline-item h4 {

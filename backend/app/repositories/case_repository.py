@@ -36,6 +36,19 @@ class CaseRepository:
 
         raise KeyError(f"Case '{case_id}' was not found.")
 
+    def update_case_human_review(self, case_id: str, human_review: dict[str, Any] | None) -> dict[str, Any]:
+        return self._update_alert_fields(case_id, {"human_review": human_review})
+
+    def update_case_override_summary(self, case_id: str, override_summary: dict[str, Any] | None) -> dict[str, Any]:
+        return self._update_alert_fields(case_id, {"override_summary": override_summary})
+
+    def get_latest_human_review(self, case_id: str) -> dict[str, Any] | None:
+        case = self.get_case_by_id(case_id)
+        if not case:
+            return None
+        human_review = case.get("human_review")
+        return human_review if isinstance(human_review, dict) else None
+
     def get_customer(self, customer_id: str) -> dict[str, Any] | None:
         return self._find_by_id(
             self.json_repository.read_list("customers.json"),
@@ -76,6 +89,16 @@ class CaseRepository:
             for case in self.json_repository.read_list("historical_cases.json")
             if case.get("customer_id") == customer_id
         ]
+
+    def _update_alert_fields(self, case_id: str, updates: dict[str, Any]) -> dict[str, Any]:
+        alerts = self.list_alerts()
+        for alert in alerts:
+            if alert.get("case_id") == case_id:
+                alert.update(updates)
+                self.json_repository.write_list("fraud_alerts.json", alerts)
+                return alert
+
+        raise KeyError(f"Case '{case_id}' was not found.")
 
     @staticmethod
     def _find_by_id(

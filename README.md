@@ -79,13 +79,16 @@ The backend-enforced status state machine is documented in [docs/case-status-lif
 
 The structured audit trail is documented in [docs/audit-trail.md](docs/audit-trail.md).
 
+Human override tracking is documented in [docs/human-override-tracking.md](docs/human-override-tracking.md).
+
 Local verification:
 
 1. Start the backend and frontend with `start-local.bat`.
 2. Open `http://localhost:3000/cases/case-001`.
 3. Submit a human review as `FRAUD_ANALYST` with `HOLD`.
 4. Confirm the audit trail records the decision and status change.
-5. Open `case-002`, run AI investigation, then submit review after it reaches `PENDING_HUMAN_REVIEW`.
+5. Submit `ESCALATE` on `case-001` with an override reason to verify the override banner and `HUMAN_OVERRIDE_DETECTED` audit event.
+6. Open `case-002`, run AI investigation, then submit review after it reaches `PENDING_HUMAN_REVIEW`.
 
 ## Agent Runtime Modes
 

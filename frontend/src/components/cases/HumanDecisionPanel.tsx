@@ -40,6 +40,7 @@ export function HumanDecisionPanel({ caseId, currentStatus, aiRecommendation, on
 
   const isPendingReview = currentStatus === "PENDING_HUMAN_REVIEW";
   const isOverride = Boolean(aiRecommendation && aiRecommendation !== decision);
+  const hasAiRecommendation = Boolean(aiRecommendation);
   const validationErrors = useMemo(() => {
     const errors: string[] = [];
     if (!reviewedBy.trim()) errors.push("Reviewer name is required.");
@@ -47,7 +48,7 @@ export function HumanDecisionPanel({ caseId, currentStatus, aiRecommendation, on
     if (comment.trim().length < 10) errors.push("Comment must be at least 10 characters.");
     if (!evidenceAcknowledged) errors.push("Evidence acknowledgement is required.");
     if (!policyAcknowledged) errors.push("Policy acknowledgement is required.");
-    if (isOverride && !overrideReason.trim()) errors.push("Override reason is required when decision differs from AI recommendation.");
+    if (isOverride && overrideReason.trim().length < 10) errors.push("Override reason must be at least 10 characters when decision differs from AI recommendation.");
     return errors;
   }, [comment, evidenceAcknowledged, isOverride, overrideReason, policyAcknowledged, reviewedBy, reviewerRole]);
 
@@ -73,7 +74,11 @@ export function HumanDecisionPanel({ caseId, currentStatus, aiRecommendation, on
         policy_acknowledged: policyAcknowledged,
         override_reason: isOverride ? overrideReason : undefined
       });
-      setMessage(`${response.message}. New status: ${response.new_status}`);
+      setMessage(
+        response.human_override
+          ? `${response.message}. Human override recorded: ${response.ai_recommendation} -> ${response.human_decision}.`
+          : `${response.message}. Override status: ${response.override_comparison_status}. New status: ${response.new_status}`
+      );
       await onDecisionRecorded();
     } catch (err) {
       setError((err as Error).message);
@@ -98,6 +103,11 @@ export function HumanDecisionPanel({ caseId, currentStatus, aiRecommendation, on
         <div className="message">
           AI recommendation: {aiRecommendation ?? "Not available"}
         </div>
+        {!hasAiRecommendation && (
+          <div className="message">
+            AI recommendation is not available. Override comparison will not be applied.
+          </div>
+        )}
         <div className="field">
           <label htmlFor="decision">Decision</label>
           <select id="decision" value={decision} onChange={(event) => setDecision(event.target.value as HumanReviewDecision)}>
@@ -133,10 +143,15 @@ export function HumanDecisionPanel({ caseId, currentStatus, aiRecommendation, on
           I acknowledge the applicable policy references.
         </label>
         {isOverride && (
-          <div className="field">
-            <label htmlFor="override_reason">Override reason</label>
-            <textarea id="override_reason" value={overrideReason} onChange={(event) => setOverrideReason(event.target.value)} placeholder="Explain why the human decision differs from AI recommendation" />
-          </div>
+          <>
+            <div className="message warning">
+              You are overriding the AI recommendation.
+            </div>
+            <div className="field">
+              <label htmlFor="override_reason">Override reason</label>
+              <textarea id="override_reason" value={overrideReason} onChange={(event) => setOverrideReason(event.target.value)} placeholder="Explain why the human decision differs from AI recommendation" />
+            </div>
+          </>
         )}
         {validationErrors.length > 0 && <div className="message error">{validationErrors.join(" ")}</div>}
         {message && <div className="message success">{message}</div>}

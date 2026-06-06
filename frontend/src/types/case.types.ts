@@ -1,3 +1,5 @@
+import type { OverrideSummary } from "@/types/review.types";
+
 export type RiskLevel = "low" | "medium" | "high" | "critical";
 
 export type RiskIndicator = {
@@ -85,6 +87,7 @@ export type CaseDetail = {
   ai_recommendation: string | null;
   investigation_summary: Record<string, unknown> | null;
   human_review: Record<string, unknown> | null;
+  override_summary: OverrideSummary | null;
   audit_events: Record<string, unknown>[];
 };
 

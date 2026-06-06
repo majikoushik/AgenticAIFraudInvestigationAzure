@@ -20,6 +20,34 @@ class ReviewDecision(StrEnum):
     REJECT = "REJECT"
 
 
+Decision = ReviewDecision
+
+
+class OverrideComparisonStatus(StrEnum):
+    MATCHED = "MATCHED"
+    OVERRIDDEN = "OVERRIDDEN"
+    AI_RECOMMENDATION_MISSING = "AI_RECOMMENDATION_MISSING"
+    NOT_APPLICABLE = "NOT_APPLICABLE"
+
+
+def normalize_decision(value: str | None) -> str | None:
+    if value is None:
+        return None
+
+    normalized = value.strip().upper()
+    if not normalized:
+        return None
+
+    legacy_map = {
+        "APPROVED": ReviewDecision.APPROVE.value,
+        "HELD": ReviewDecision.HOLD.value,
+        "ESCALATED": ReviewDecision.ESCALATE.value,
+        "REJECTED": ReviewDecision.REJECT.value,
+    }
+    normalized = legacy_map.get(normalized, normalized)
+    return ReviewDecision(normalized).value
+
+
 class ReviewerRole(StrEnum):
     FRAUD_ANALYST = "FRAUD_ANALYST"
     FRAUD_MANAGER = "FRAUD_MANAGER"

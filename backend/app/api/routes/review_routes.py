@@ -7,6 +7,7 @@ from app.schemas.review_schema import (
     CloseCaseResponse,
     HumanReviewRequest,
     HumanReviewResponse,
+    OverrideSummaryResponse,
     ReviewOptionsResponse,
 )
 from app.services.audit_service import audit_service
@@ -20,6 +21,11 @@ review_service = HumanReviewService(CaseRepository(), audit_service, case_status
 @router.post("/{case_id}/review", response_model=HumanReviewResponse)
 def submit_review(case_id: str, request: HumanReviewRequest) -> HumanReviewResponse:
     return review_service.submit_review(case_id, request)
+
+
+@router.get("/{case_id}/override-summary", response_model=OverrideSummaryResponse)
+def get_override_summary(case_id: str) -> OverrideSummaryResponse:
+    return OverrideSummaryResponse(**review_service.get_override_summary(case_id))
 
 
 @router.post("/{case_id}/close", response_model=CloseCaseResponse)
