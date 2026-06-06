@@ -54,7 +54,7 @@ class InvestigationService:
         except Exception:
             self.audit_service.record_event(
                 case_id=case_id,
-                event_type=AuditEventType.CASE_STATUS_CHANGED,
+                event_type=AuditEventType.AI_INVESTIGATION_FAILED,
                 actor="system",
                 actor_role=ReviewerRole.SYSTEM,
                 previous_status=CaseStatus.AI_INVESTIGATION_IN_PROGRESS.value,

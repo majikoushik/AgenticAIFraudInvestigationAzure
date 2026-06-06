@@ -64,15 +64,15 @@ class CaseStatusService:
 
         from app.services.audit_service import audit_service
 
-        event_type = self._event_type_for_transition(current_status, target)
         audit_service.record_event(
             case_id=case_id,
-            event_type=event_type,
+            event_type=self._event_type_for_transition(current_status, target),
             actor=actor,
             actor_role=self._parse_actor_role(actor_role),
             previous_status=current_status.value,
             new_status=target.value,
             comment=comment,
+            metadata={"transition_allowed": True},
         )
         return {
             "case_id": case_id,

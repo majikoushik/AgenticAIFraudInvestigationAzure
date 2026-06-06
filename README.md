@@ -77,6 +77,8 @@ Details are documented in [docs/human-review-workflow.md](docs/human-review-work
 
 The backend-enforced status state machine is documented in [docs/case-status-lifecycle.md](docs/case-status-lifecycle.md).
 
+The structured audit trail is documented in [docs/audit-trail.md](docs/audit-trail.md).
+
 Local verification:
 
 1. Start the backend and frontend with `start-local.bat`.

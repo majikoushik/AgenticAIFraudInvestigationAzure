@@ -15,15 +15,25 @@ export function AuditTrailPanel({ auditTrail }: AuditTrailPanelProps) {
         <div className="timeline">
           {auditTrail.events.map((event) => (
             <div className="timeline-item" key={event.audit_id}>
-              <h4>{event.event_type}</h4>
-              <p>
+              <h4>{event.event_type} <span className="badge status-badge">{event.event_category}</span></h4>
+              <p>{event.description}</p>
+              {(event.previous_status || event.new_status) && <p>
                 {event.previous_status && event.new_status
                   ? `${event.previous_status} -> ${event.new_status}`
-                  : event.comment ?? "Workflow event recorded."}
-              </p>
+                  : "Status context not available."}
+              </p>}
               {event.decision && <p>Decision: {event.decision} · Reason: {event.reason_code ?? "n/a"}</p>}
               {event.human_override && <p>Human override: {event.ai_recommendation} {"->"} {event.human_decision}. {event.override_reason}</p>}
+              {event.agent_name && <p>Agent: {event.agent_name}</p>}
+              {event.rag_sources.length > 0 && <p>RAG sources: {event.rag_sources.join(", ")}</p>}
+              {event.error_message && <p>Error: {event.error_code ?? "n/a"} · {event.error_message}</p>}
               <p>{event.actor} ({event.actor_role}) · {formatDateTime(event.timestamp)}</p>
+              {Object.keys(event.metadata).length > 0 && (
+                <details>
+                  <summary>Metadata</summary>
+                  <pre className="code-block">{JSON.stringify(event.metadata, null, 2)}</pre>
+                </details>
+              )}
             </div>
           ))}
         </div>

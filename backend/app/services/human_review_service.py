@@ -71,30 +71,23 @@ class HumanReviewService:
             "override_reason": request.override_reason,
         }
 
-        self.audit_service.record_event(
-            case_id=case_id,
-            event_type=AuditEventType.HUMAN_DECISION_SUBMITTED,
+        self.audit_service.create_human_decision_event(
             actor=request.reviewed_by,
             actor_role=request.reviewer_role,
-            previous_status=previous_status.value,
-            new_status=transitioned_status.value,
+            case_id=case_id,
             decision=request.decision.value,
             reason_code=request.reason_code.value,
             comment=request.comment,
             ai_recommendation=ai_recommendation,
-            human_decision=request.decision.value,
             human_override=human_override,
-            override_reason=request.override_reason,
         )
         if human_override:
-            self.audit_service.record_event(
+            self.audit_service.create_human_override_event(
                 case_id=case_id,
-                event_type=AuditEventType.HUMAN_OVERRIDE_DETECTED,
                 actor=request.reviewed_by,
                 actor_role=request.reviewer_role,
                 ai_recommendation=ai_recommendation,
                 human_decision=request.decision.value,
-                human_override=True,
                 override_reason=request.override_reason,
             )
 

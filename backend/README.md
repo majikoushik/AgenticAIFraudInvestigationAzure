@@ -50,6 +50,9 @@ Swagger UI is available at `http://localhost:8000/docs`.
 - `GET /api/v1/cases/{case_id}/review-options?reviewer_role=FRAUD_ANALYST`: return allowed decisions and reason codes.
 - `GET /api/v1/cases/{case_id}/status`: return current status, metadata, and allowed next statuses.
 - `PATCH /api/v1/cases/{case_id}/status`: perform a backend-validated status transition and write an audit event.
+- `GET /api/v1/audit/search`: search local audit events by case, type, actor, role, or date range.
+- `GET /api/v1/audit/event-types`: list supported audit event types and categories.
+- `GET /api/v1/audit/summary`: aggregate local audit events by category and type.
 
 Decision request body:
 
@@ -78,3 +81,13 @@ Allowed decisions are `approve`, `hold`, `escalate`, and `reject`.
 ```
 
 The backend enforces role permissions, required acknowledgements, override reason requirements, and status transitions.
+
+## Local Audit Storage
+
+Audit events are stored in `data/synthetic/audit_events.json` for the MVP. The audit service writes structured events through `AuditRepository`, using a temp-file replace pattern and sanitized metadata.
+
+To reset local audit data:
+
+```json
+[]
+```
