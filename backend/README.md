@@ -45,6 +45,9 @@ Swagger UI is available at `http://localhost:8000/docs`.
 - `POST /api/v1/cases/{case_id}/investigate`: run the local deterministic agent orchestration and policy RAG simulation.
 - `GET /api/v1/agents/config`: return safe agent runtime configuration without API keys or secrets.
 - `GET /api/v1/rag/policies/search?query=...`: search local or Azure AI Search-backed policy RAG.
+- `POST /api/v1/cases/{case_id}/review`: submit human review decision with role, reason, acknowledgements, and override tracking.
+- `POST /api/v1/cases/{case_id}/close`: close an approved, held, escalated, or rejected case.
+- `GET /api/v1/cases/{case_id}/review-options?reviewer_role=FRAUD_ANALYST`: return allowed decisions and reason codes.
 
 Decision request body:
 
@@ -57,3 +60,19 @@ Decision request body:
 ```
 
 Allowed decisions are `approve`, `hold`, `escalate`, and `reject`.
+
+## Human Review Example
+
+```json
+{
+  "decision": "HOLD",
+  "comment": "Synthetic suspicious device review requires additional verification.",
+  "reviewed_by": "synthetic.reviewer",
+  "reviewer_role": "FRAUD_ANALYST",
+  "reason_code": "SUSPICIOUS_DEVICE",
+  "evidence_acknowledged": true,
+  "policy_acknowledged": true
+}
+```
+
+The backend enforces role permissions, required acknowledgements, override reason requirements, and status transitions.

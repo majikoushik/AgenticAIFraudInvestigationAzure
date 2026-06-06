@@ -3,7 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.router import api_router
 from app.config import settings
-from app.services.errors import ApiError, api_error_handler
+from app.services.errors import ApiError, api_error_handler, validation_error_handler
+from fastapi.exceptions import RequestValidationError
 
 app = FastAPI(
     title="Agentic AI Fraud Investigation Backend",
@@ -20,4 +21,5 @@ app.add_middleware(
 )
 
 app.add_exception_handler(ApiError, api_error_handler)
+app.add_exception_handler(RequestValidationError, validation_error_handler)
 app.include_router(api_router)

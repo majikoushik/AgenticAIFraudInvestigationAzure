@@ -1,7 +1,9 @@
+from app.core.constants import AuditEventType, CaseStatus, ReviewDecision, ReviewerRole
 from app.repositories.case_repository import CaseRepository
 from app.schemas.case_schema import CaseDetail, CaseMetadata, CaseSummary
 from app.schemas.decision_schema import DecisionRequest, DecisionResponse
 from app.services.audit_service import AuditService
+from app.services.case_status_service import CaseStatusService, case_status_service
 from app.services.errors import ApiError
 from app.services.evidence_service import EvidenceService
 from app.services.fraud_alert_service import FraudAlertService
@@ -11,17 +13,27 @@ VALID_DECISIONS = {"approve", "hold", "escalate", "reject"}
 
 
 class CaseService:
-    def __init__(self, repository: CaseRepository, audit_service: AuditService) -> None:
+    _ai_recommendations: dict[str, str | None] = {}
+    _investigation_summaries: dict[str, dict] = {}
+
+    def __init__(
+        self,
+        repository: CaseRepository,
+        audit_service: AuditService,
+        status_service: CaseStatusService = case_status_service,
+    ) -> None:
         self.repository = repository
         self.audit_service = audit_service
+        self.status_service = status_service
         self.evidence_service = EvidenceService(repository)
-        self.fraud_alert_service = FraudAlertService(repository)
+        self.fraud_alert_service = FraudAlertService(repository, status_service)
 
     def list_cases(self) -> list[CaseSummary]:
         return self.fraud_alert_service.list_alert_cases()
 
     def get_case_detail(self, case_id: str) -> CaseDetail:
         alert = self.ensure_case_exists(case_id)
+        current_status = self.status_service.get_status(case_id, alert.get("status"))
 
         return CaseDetail(
             metadata=CaseMetadata(
@@ -39,7 +51,11 @@ class CaseService:
                 alert.get("risk_indicators", [])
             ),
             historical_cases=self.evidence_service.build_historical_cases(alert["customer_id"]),
-            current_status=alert["status"],
+            current_status=current_status.value,
+            ai_recommendation=self.get_ai_recommendation(case_id),
+            investigation_summary=self._investigation_summaries.get(case_id),
+            human_review=None,
+            audit_events=[],
         )
 
     def submit_decision(self, case_id: str, request: DecisionRequest) -> DecisionResponse:
@@ -58,7 +74,14 @@ class CaseService:
             comment=request.comment,
             reviewed_by=request.reviewed_by,
         )
-        self.audit_service.record_decision(case_id, normalized_request)
+        self.audit_service.record_event(
+            case_id=case_id,
+            event_type=AuditEventType.HUMAN_DECISION_SUBMITTED,
+            actor=normalized_request.reviewed_by,
+            actor_role=ReviewerRole.FRAUD_ANALYST,
+            decision=normalized_request.decision.upper(),
+            comment=normalized_request.comment,
+        )
 
         return DecisionResponse(
             case_id=case_id,
@@ -72,4 +95,25 @@ class CaseService:
         if alert is None:
             raise ApiError(404, "case_not_found", f"Case '{case_id}' was not found.")
 
+        self.status_service.set_initial_status(case_id, alert.get("status"))
         return alert
+
+    def get_status(self, case_id: str) -> CaseStatus:
+        alert = self.ensure_case_exists(case_id)
+        return self.status_service.get_status(case_id, alert.get("status"))
+
+    def set_investigation_result(self, case_id: str, investigation: dict) -> None:
+        summary = investigation.get("investigation_summary", {})
+        recommendation = summary.get("recommended_action")
+        normalized_recommendation = recommendation.upper() if isinstance(recommendation, str) else None
+        if normalized_recommendation and normalized_recommendation not in {decision.value for decision in ReviewDecision}:
+            normalized_recommendation = None
+        self._ai_recommendations[case_id] = normalized_recommendation
+        self._investigation_summaries[case_id] = summary
+
+    def get_ai_recommendation(self, case_id: str) -> str | None:
+        if case_id in self._ai_recommendations:
+            return self._ai_recommendations.get(case_id)
+        alert = self.repository.get_alert(case_id)
+        recommendation = alert.get("ai_recommendation") if alert else None
+        return recommendation.upper() if isinstance(recommendation, str) else None

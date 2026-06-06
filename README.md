@@ -69,6 +69,20 @@ npm run dev
 - No real banking data, secrets, or credentials should be committed.
 - High-impact actions such as freezing accounts must require human review.
 
+## Human Review Workflow
+
+The MVP requires human review before final case actions. AI investigation moves a case through `AI_INVESTIGATION_IN_PROGRESS`, `AI_INVESTIGATION_COMPLETED`, and `PENDING_HUMAN_REVIEW`. A reviewer then submits `APPROVE`, `HOLD`, `ESCALATE`, or `REJECT` according to role permissions.
+
+Details are documented in [docs/human-review-workflow.md](docs/human-review-workflow.md).
+
+Local verification:
+
+1. Start the backend and frontend with `start-local.bat`.
+2. Open `http://localhost:3000/cases/case-001`.
+3. Submit a human review as `FRAUD_ANALYST` with `HOLD`.
+4. Confirm the audit trail records the decision and status change.
+5. Open `case-002`, run AI investigation, then submit review after it reaches `PENDING_HUMAN_REVIEW`.
+
 ## Agent Runtime Modes
 
 Local deterministic mode is the default and requires no Azure credentials:

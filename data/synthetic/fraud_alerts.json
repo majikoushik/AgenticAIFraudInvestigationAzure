@@ -7,7 +7,14 @@
     "beneficiary_id": "ben-001",
     "device_id": "dev-002",
     "severity": "medium",
-    "status": "awaiting_human_review",
+    "status": "PENDING_HUMAN_REVIEW",
+    "ai_recommendation": "HOLD",
+    "investigation_summary": {
+      "recommended_action": "HOLD",
+      "confidence_level": "medium"
+    },
+    "human_review": null,
+    "audit_events": [],
     "reason": "New device and new beneficiary used for an unusually high card-not-present purchase.",
     "created_at": "2026-01-15T10:35:00Z",
     "risk_indicators": [
@@ -31,7 +38,11 @@
     "beneficiary_id": "ben-002",
     "device_id": "dev-003",
     "severity": "high",
-    "status": "awaiting_human_review",
+    "status": "NEW",
+    "ai_recommendation": null,
+    "investigation_summary": null,
+    "human_review": null,
+    "audit_events": [],
     "reason": "High-value international transfer from a new device to a new beneficiary.",
     "created_at": "2026-01-16T02:20:00Z",
     "risk_indicators": [
@@ -60,7 +71,11 @@
     "beneficiary_id": null,
     "device_id": "dev-004",
     "severity": "low",
-    "status": "triage",
+    "status": "NEW",
+    "ai_recommendation": null,
+    "investigation_summary": null,
+    "human_review": null,
+    "audit_events": [],
     "reason": "Travel merchant transaction selected for low-risk synthetic triage testing.",
     "created_at": "2026-01-17T18:50:00Z",
     "risk_indicators": [

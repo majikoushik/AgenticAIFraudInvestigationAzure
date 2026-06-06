@@ -8,16 +8,22 @@ type AuditTrailPanelProps = {
 
 export function AuditTrailPanel({ auditTrail }: AuditTrailPanelProps) {
   return (
-    <CardFrame title="Audit Trail" subtitle="Local in-memory audit entries from backend service.">
-      {!auditTrail || auditTrail.entries.length === 0 ? (
-        <div className="empty-state">No audit entries recorded yet.</div>
+    <CardFrame title="Audit Trail" subtitle="Chronological human review and status lifecycle events.">
+      {!auditTrail || auditTrail.events.length === 0 ? (
+        <div className="empty-state">No audit events recorded yet.</div>
       ) : (
-        <div className="panel-list">
-          {auditTrail.entries.map((entry, index) => (
-            <div className="panel-item" key={`${entry.created_at}-${index}`}>
-              <h4>{entry.action} · {entry.decision ?? "no decision"}</h4>
-              <p>{entry.comment ?? "No comment provided."}</p>
-              <p>Reviewed by {entry.reviewed_by ?? "unknown"} on {formatDateTime(entry.created_at)}</p>
+        <div className="timeline">
+          {auditTrail.events.map((event) => (
+            <div className="timeline-item" key={event.audit_id}>
+              <h4>{event.event_type}</h4>
+              <p>
+                {event.previous_status && event.new_status
+                  ? `${event.previous_status} -> ${event.new_status}`
+                  : event.comment ?? "Workflow event recorded."}
+              </p>
+              {event.decision && <p>Decision: {event.decision} · Reason: {event.reason_code ?? "n/a"}</p>}
+              {event.human_override && <p>Human override: {event.ai_recommendation} {"->"} {event.human_decision}. {event.override_reason}</p>}
+              <p>{event.actor} ({event.actor_role}) · {formatDateTime(event.timestamp)}</p>
             </div>
           ))}
         </div>

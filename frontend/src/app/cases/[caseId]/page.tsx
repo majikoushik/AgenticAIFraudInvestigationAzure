@@ -69,6 +69,7 @@ export default function CaseDetailPage({ params }: PageProps) {
     setError(null);
     try {
       setInvestigation(await runInvestigation(caseId));
+      await refreshCase();
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -128,7 +129,12 @@ export default function CaseDetailPage({ params }: PageProps) {
                 </>
               )}
 
-              <HumanDecisionPanel caseId={caseId} onDecisionRecorded={handleDecisionRecorded} />
+              <HumanDecisionPanel
+                caseId={caseId}
+                currentStatus={caseDetail.current_status}
+                aiRecommendation={caseDetail.ai_recommendation}
+                onDecisionRecorded={handleDecisionRecorded}
+              />
               <AuditTrailPanel auditTrail={auditTrail} />
             </div>
           ) : (

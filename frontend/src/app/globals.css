@@ -406,7 +406,19 @@ td {
   resize: vertical;
 }
 
+.checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: #344054;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
 .message {
+  border: 1px solid var(--border);
+  background: var(--surface-muted);
+  color: var(--foreground);
   border-radius: 8px;
   padding: 12px;
   line-height: 1.45;
@@ -446,6 +458,27 @@ td {
   align-items: center;
   gap: 12px;
   color: var(--muted);
+}
+
+.timeline {
+  display: grid;
+  gap: 14px;
+}
+
+.timeline-item {
+  border-left: 3px solid var(--accent);
+  padding: 2px 0 2px 14px;
+}
+
+.timeline-item h4 {
+  margin: 0 0 6px;
+  font-size: 0.95rem;
+}
+
+.timeline-item p {
+  margin: 4px 0;
+  color: var(--muted);
+  line-height: 1.45;
 }
 
 @keyframes spin {

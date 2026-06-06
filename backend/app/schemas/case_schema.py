@@ -34,3 +34,7 @@ class CaseDetail(BaseModel):
     initial_risk_indicators: list[RiskIndicator]
     historical_cases: list[HistoricalCaseSummary]
     current_status: str
+    ai_recommendation: str | None = None
+    investigation_summary: dict | None = None
+    human_review: dict | None = None
+    audit_events: list[dict] = []

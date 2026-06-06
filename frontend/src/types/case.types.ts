@@ -82,6 +82,10 @@ export type CaseDetail = {
   initial_risk_indicators: RiskIndicator[];
   historical_cases: HistoricalCaseSummary[];
   current_status: string;
+  ai_recommendation: string | null;
+  investigation_summary: Record<string, unknown> | null;
+  human_review: Record<string, unknown> | null;
+  audit_events: Record<string, unknown>[];
 };
 
 export type CaseListRow = {

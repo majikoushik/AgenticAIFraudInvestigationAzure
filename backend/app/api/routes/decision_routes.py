@@ -4,9 +4,10 @@ from app.repositories.case_repository import CaseRepository
 from app.schemas.decision_schema import DecisionRequest, DecisionResponse
 from app.services.audit_service import audit_service
 from app.services.case_service import CaseService
+from app.services.case_status_service import case_status_service
 
 router = APIRouter(prefix="/cases", tags=["decisions"])
-case_service = CaseService(CaseRepository(), audit_service)
+case_service = CaseService(CaseRepository(), audit_service, case_status_service)
 
 
 @router.post("/{case_id}/decision", response_model=DecisionResponse)
