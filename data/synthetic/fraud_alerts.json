@@ -8,6 +8,9 @@
     "device_id": "dev-002",
     "severity": "medium",
     "status": "PENDING_HUMAN_REVIEW",
+    "status_updated_at": null,
+    "status_updated_by": null,
+    "status_comment": null,
     "ai_recommendation": "HOLD",
     "investigation_summary": {
       "recommended_action": "HOLD",
@@ -39,6 +42,9 @@
     "device_id": "dev-003",
     "severity": "high",
     "status": "NEW",
+    "status_updated_at": null,
+    "status_updated_by": null,
+    "status_comment": null,
     "ai_recommendation": null,
     "investigation_summary": null,
     "human_review": null,
@@ -72,6 +78,9 @@
     "device_id": "dev-004",
     "severity": "low",
     "status": "NEW",
+    "status_updated_at": null,
+    "status_updated_by": null,
+    "status_comment": null,
     "ai_recommendation": null,
     "investigation_summary": null,
     "human_review": null,
@@ -82,6 +91,84 @@
       {
         "code": "TRAVEL_MERCHANT",
         "description": "Travel category purchase may require contextual review.",
+        "severity": "low"
+      }
+    ]
+  },
+  {
+    "alert_id": "alert-004",
+    "case_id": "case-004",
+    "customer_id": "cust-001",
+    "transaction_id": "txn-001",
+    "beneficiary_id": "ben-001",
+    "device_id": "dev-002",
+    "severity": "medium",
+    "status": "HELD",
+    "status_updated_at": null,
+    "status_updated_by": null,
+    "status_comment": null,
+    "ai_recommendation": "HOLD",
+    "investigation_summary": null,
+    "human_review": null,
+    "audit_events": [],
+    "reason": "Synthetic held case for lifecycle testing.",
+    "created_at": "2026-01-18T09:00:00Z",
+    "risk_indicators": [
+      {
+        "code": "SUSPICIOUS_DEVICE",
+        "description": "Synthetic held case with suspicious device signal.",
+        "severity": "medium"
+      }
+    ]
+  },
+  {
+    "alert_id": "alert-005",
+    "case_id": "case-005",
+    "customer_id": "cust-002",
+    "transaction_id": "txn-002",
+    "beneficiary_id": "ben-002",
+    "device_id": "dev-003",
+    "severity": "high",
+    "status": "ESCALATED",
+    "status_updated_at": null,
+    "status_updated_by": null,
+    "status_comment": null,
+    "ai_recommendation": "ESCALATE",
+    "investigation_summary": null,
+    "human_review": null,
+    "audit_events": [],
+    "reason": "Synthetic escalated case for lifecycle testing.",
+    "created_at": "2026-01-18T10:00:00Z",
+    "risk_indicators": [
+      {
+        "code": "HIGH_VALUE_TRANSFER",
+        "description": "Synthetic escalated high-value transfer.",
+        "severity": "high"
+      }
+    ]
+  },
+  {
+    "alert_id": "alert-006",
+    "case_id": "case-006",
+    "customer_id": "cust-003",
+    "transaction_id": "txn-003",
+    "beneficiary_id": null,
+    "device_id": "dev-004",
+    "severity": "low",
+    "status": "CLOSED",
+    "status_updated_at": null,
+    "status_updated_by": null,
+    "status_comment": null,
+    "ai_recommendation": "APPROVE",
+    "investigation_summary": null,
+    "human_review": null,
+    "audit_events": [],
+    "reason": "Synthetic closed case for lifecycle testing.",
+    "created_at": "2026-01-18T11:00:00Z",
+    "risk_indicators": [
+      {
+        "code": "FALSE_POSITIVE",
+        "description": "Synthetic closed false-positive case.",
         "severity": "low"
       }
     ]

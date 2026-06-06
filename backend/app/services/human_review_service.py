@@ -53,7 +53,15 @@ class HumanReviewService:
             )
 
         new_status = DECISION_TO_STATUS[request.decision]
-        previous_status, transitioned_status = self.status_service.transition(case_id, current_status, new_status)
+        status_result = self.status_service.transition_case_status(
+            case_id,
+            new_status.value,
+            actor=request.reviewed_by,
+            actor_role=request.reviewer_role.value,
+            comment=request.comment,
+        )
+        previous_status = CaseStatus(status_result["previous_status"])
+        transitioned_status = CaseStatus(status_result["new_status"])
         self._reviews[case_id] = {
             "decision": request.decision.value,
             "reviewed_by": request.reviewed_by,
@@ -77,17 +85,6 @@ class HumanReviewService:
             human_decision=request.decision.value,
             human_override=human_override,
             override_reason=request.override_reason,
-        )
-        self.audit_service.record_event(
-            case_id=case_id,
-            event_type=AuditEventType.CASE_STATUS_CHANGED,
-            actor=request.reviewed_by,
-            actor_role=request.reviewer_role,
-            previous_status=previous_status.value,
-            new_status=transitioned_status.value,
-            decision=request.decision.value,
-            reason_code=request.reason_code.value,
-            comment=request.comment,
         )
         if human_override:
             self.audit_service.record_event(
@@ -123,20 +120,17 @@ class HumanReviewService:
         if current_status not in {CaseStatus.APPROVED, CaseStatus.HELD, CaseStatus.ESCALATED, CaseStatus.REJECTED}:
             raise ApiError(400, "case_not_closable", "Case can be closed only after a final human decision.")
 
-        previous_status, new_status = self.status_service.transition(case_id, current_status, CaseStatus.CLOSED)
-        self.audit_service.record_event(
-            case_id=case_id,
-            event_type=AuditEventType.CASE_CLOSED,
+        status_result = self.status_service.transition_case_status(
+            case_id,
+            CaseStatus.CLOSED.value,
             actor=request.closed_by,
-            actor_role=request.closer_role,
-            previous_status=previous_status.value,
-            new_status=new_status.value,
+            actor_role=request.closer_role.value,
             comment=request.comment,
         )
         return CloseCaseResponse(
             case_id=case_id,
-            previous_status=previous_status.value,
-            new_status=new_status.value,
+            previous_status=status_result["previous_status"],
+            new_status=status_result["new_status"],
             message="Case closed successfully",
         )
 

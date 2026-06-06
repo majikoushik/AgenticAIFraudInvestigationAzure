@@ -36,49 +36,47 @@ class InvestigationService:
 
     def investigate_case(self, case_id: str) -> InvestigationPackage:
         current_status = self.case_service.get_status(case_id)
-        previous_status, new_status = self.status_service.transition(
+        if current_status != CaseStatus.NEW:
+            from app.services.errors import ApiError
+
+            raise ApiError(400, "invalid_status_transition", "AI investigation can only be started from NEW.")
+
+        self.status_service.transition_case_status(
             case_id,
-            current_status,
-            CaseStatus.AI_INVESTIGATION_IN_PROGRESS,
-        )
-        self.audit_service.record_event(
-            case_id=case_id,
-            event_type=AuditEventType.AI_INVESTIGATION_STARTED,
+            CaseStatus.AI_INVESTIGATION_IN_PROGRESS.value,
             actor="system",
-            actor_role=ReviewerRole.SYSTEM,
-            previous_status=previous_status.value,
-            new_status=new_status.value,
+            actor_role="SYSTEM",
+            comment="AI investigation started",
         )
         case_detail = self.case_service.get_case_detail(case_id)
-        investigation = self.orchestrator.investigate(case_detail.model_dump())
-        self.case_service.set_investigation_result(case_id, investigation)
+        try:
+            investigation = self.orchestrator.investigate(case_detail.model_dump())
+        except Exception:
+            self.audit_service.record_event(
+                case_id=case_id,
+                event_type=AuditEventType.CASE_STATUS_CHANGED,
+                actor="system",
+                actor_role=ReviewerRole.SYSTEM,
+                previous_status=CaseStatus.AI_INVESTIGATION_IN_PROGRESS.value,
+                new_status=CaseStatus.AI_INVESTIGATION_IN_PROGRESS.value,
+                comment="AI investigation failed; manual review required",
+            )
+            raise
 
-        previous_status, new_status = self.status_service.transition(
+        self.case_service.set_investigation_result(case_id, investigation)
+        self.status_service.transition_case_status(
             case_id,
-            CaseStatus.AI_INVESTIGATION_IN_PROGRESS,
-            CaseStatus.AI_INVESTIGATION_COMPLETED,
-        )
-        self.audit_service.record_event(
-            case_id=case_id,
-            event_type=AuditEventType.AI_INVESTIGATION_COMPLETED,
+            CaseStatus.AI_INVESTIGATION_COMPLETED.value,
             actor="system",
-            actor_role=ReviewerRole.SYSTEM,
-            previous_status=previous_status.value,
-            new_status=new_status.value,
-            ai_recommendation=self.case_service.get_ai_recommendation(case_id),
+            actor_role="SYSTEM",
+            comment="AI investigation completed",
         )
-        previous_status, new_status = self.status_service.transition(
+        self.status_service.transition_case_status(
             case_id,
-            CaseStatus.AI_INVESTIGATION_COMPLETED,
-            CaseStatus.PENDING_HUMAN_REVIEW,
-        )
-        self.audit_service.record_event(
-            case_id=case_id,
-            event_type=AuditEventType.CASE_STATUS_CHANGED,
+            CaseStatus.PENDING_HUMAN_REVIEW.value,
             actor="system",
-            actor_role=ReviewerRole.SYSTEM,
-            previous_status=previous_status.value,
-            new_status=new_status.value,
-            ai_recommendation=self.case_service.get_ai_recommendation(case_id),
+            actor_role="SYSTEM",
+            comment="Case is ready for human review",
         )
+        investigation["final_case_status"] = CaseStatus.PENDING_HUMAN_REVIEW.value
         return InvestigationPackage(**investigation)

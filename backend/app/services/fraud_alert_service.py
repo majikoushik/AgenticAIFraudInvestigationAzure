@@ -16,6 +16,9 @@ class FraudAlertService:
                 customer_id=alert["customer_id"],
                 severity=alert["severity"],
                 status=self.status_service.get_status(alert["case_id"], alert.get("status")).value,
+                status_updated_at=alert.get("status_updated_at"),
+                status_updated_by=alert.get("status_updated_by"),
+                status_comment=alert.get("status_comment"),
                 reason=alert["reason"],
                 created_at=alert["created_at"],
             )

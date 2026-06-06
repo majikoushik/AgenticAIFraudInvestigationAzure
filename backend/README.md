@@ -48,6 +48,8 @@ Swagger UI is available at `http://localhost:8000/docs`.
 - `POST /api/v1/cases/{case_id}/review`: submit human review decision with role, reason, acknowledgements, and override tracking.
 - `POST /api/v1/cases/{case_id}/close`: close an approved, held, escalated, or rejected case.
 - `GET /api/v1/cases/{case_id}/review-options?reviewer_role=FRAUD_ANALYST`: return allowed decisions and reason codes.
+- `GET /api/v1/cases/{case_id}/status`: return current status, metadata, and allowed next statuses.
+- `PATCH /api/v1/cases/{case_id}/status`: perform a backend-validated status transition and write an audit event.
 
 Decision request body:
 

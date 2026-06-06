@@ -11,6 +11,8 @@ class JsonRepository:
 
     def read_list(self, file_name: str) -> list[dict[str, Any]]:
         file_path = self.data_path / file_name
+        if not file_path.exists():
+            return []
         with file_path.open("r", encoding="utf-8") as file:
             data = json.load(file)
 
@@ -18,3 +20,9 @@ class JsonRepository:
             raise ValueError(f"Expected {file_name} to contain a JSON array.")
 
         return data
+
+    def write_list(self, file_name: str, records: list[dict[str, Any]]) -> None:
+        file_path = self.data_path / file_name
+        file_path.parent.mkdir(parents=True, exist_ok=True)
+        with file_path.open("w", encoding="utf-8") as file:
+            json.dump(records, file, indent=2)

@@ -1,4 +1,5 @@
 from typing import Any
+from datetime import UTC, datetime
 
 from app.repositories.json_repository import JsonRepository
 
@@ -12,6 +13,28 @@ class CaseRepository:
 
     def get_alert(self, case_id: str) -> dict[str, Any] | None:
         return self._find_by_id(self.list_alerts(), "case_id", case_id)
+
+    def get_case_by_id(self, case_id: str) -> dict[str, Any] | None:
+        return self.get_alert(case_id)
+
+    def update_case_status(
+        self,
+        case_id: str,
+        status: str,
+        updated_by: str,
+        comment: str | None = None,
+    ) -> dict[str, Any]:
+        alerts = self.list_alerts()
+        for alert in alerts:
+            if alert.get("case_id") == case_id:
+                alert["status"] = status
+                alert["status_updated_at"] = datetime.now(UTC).isoformat()
+                alert["status_updated_by"] = updated_by
+                alert["status_comment"] = comment
+                self.json_repository.write_list("fraud_alerts.json", alerts)
+                return alert
+
+        raise KeyError(f"Case '{case_id}' was not found.")
 
     def get_customer(self, customer_id: str) -> dict[str, Any] | None:
         return self._find_by_id(

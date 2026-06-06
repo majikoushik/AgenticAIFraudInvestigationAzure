@@ -75,6 +75,8 @@ The MVP requires human review before final case actions. AI investigation moves 
 
 Details are documented in [docs/human-review-workflow.md](docs/human-review-workflow.md).
 
+The backend-enforced status state machine is documented in [docs/case-status-lifecycle.md](docs/case-status-lifecycle.md).
+
 Local verification:
 
 1. Start the backend and frontend with `start-local.bat`.

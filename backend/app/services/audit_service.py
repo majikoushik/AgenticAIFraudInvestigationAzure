@@ -1,6 +1,7 @@
 from datetime import UTC, datetime
 from uuid import uuid4
 
+from app.config import get_synthetic_data_path
 from app.core.constants import AuditEventType, ReviewerRole
 from app.schemas.audit_schema import AuditEvent
 
@@ -8,6 +9,7 @@ from app.schemas.audit_schema import AuditEvent
 class AuditService:
     def __init__(self) -> None:
         self._events: list[AuditEvent] = []
+        self.audit_file = get_synthetic_data_path() / "audit_events.json"
 
     def record_event(
         self,
@@ -43,16 +45,33 @@ class AuditService:
             timestamp=datetime.now(UTC).isoformat(),
         )
         self._events.append(event)
+        self._write_events(self._read_events() + [event])
         return event
 
     def get_entries(self, case_id: str) -> list[AuditEvent]:
         return sorted(
-            [event for event in self._events if event.case_id == case_id],
+            [event for event in self._read_events() if event.case_id == case_id],
             key=lambda event: event.timestamp,
         )
 
     def clear_case(self, case_id: str) -> None:
         self._events = [event for event in self._events if event.case_id != case_id]
+        self._write_events([event for event in self._read_events() if event.case_id != case_id])
+
+    def _read_events(self) -> list[AuditEvent]:
+        if not self.audit_file.exists():
+            return []
+        import json
+
+        with self.audit_file.open("r", encoding="utf-8") as file:
+            return [AuditEvent(**event) for event in json.load(file)]
+
+    def _write_events(self, events: list[AuditEvent]) -> None:
+        import json
+
+        self.audit_file.parent.mkdir(parents=True, exist_ok=True)
+        with self.audit_file.open("w", encoding="utf-8") as file:
+            json.dump([event.model_dump() for event in events], file, indent=2)
 
 
 audit_service = AuditService()

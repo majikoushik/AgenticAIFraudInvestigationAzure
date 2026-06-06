@@ -8,6 +8,7 @@ from app.api.routes import (
     health_routes,
     rag_routes,
     review_routes,
+    status_routes,
 )
 
 api_router = APIRouter()
@@ -18,3 +19,4 @@ api_router.include_router(rag_routes.router, prefix="/api/v1")
 api_router.include_router(agent_routes.router, prefix="/api/v1")
 api_router.include_router(review_routes.router, prefix="/api/v1")
 api_router.include_router(audit_routes.router, prefix="/api/v1")
+api_router.include_router(status_routes.router, prefix="/api/v1")

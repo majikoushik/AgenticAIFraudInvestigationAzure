@@ -17,12 +17,15 @@ import { SimilarCasesPanel } from "@/components/cases/SimilarCasesPanel";
 import { ReviewerValidationPanel } from "@/components/cases/ReviewerValidationPanel";
 import { HumanDecisionPanel } from "@/components/cases/HumanDecisionPanel";
 import { AuditTrailPanel } from "@/components/cases/AuditTrailPanel";
+import { StatusLifecyclePanel } from "@/components/cases/StatusLifecyclePanel";
 import { getAuditTrail } from "@/services/auditService";
 import { runInvestigation } from "@/services/agentService";
 import { getCaseDetail } from "@/services/caseService";
+import { getCaseStatus } from "@/services/statusService";
 import type { InvestigationPackage } from "@/types/agent.types";
 import type { AuditTrail } from "@/types/audit.types";
 import type { CaseDetail } from "@/types/case.types";
+import type { CaseStatusInfo } from "@/types/status.types";
 
 type PageProps = {
   params: Promise<{ caseId: string }>;
@@ -32,6 +35,7 @@ export default function CaseDetailPage({ params }: PageProps) {
   const [caseId, setCaseId] = useState<string>("");
   const [caseDetail, setCaseDetail] = useState<CaseDetail | null>(null);
   const [auditTrail, setAuditTrail] = useState<AuditTrail | null>(null);
+  const [statusInfo, setStatusInfo] = useState<CaseStatusInfo | null>(null);
   const [investigation, setInvestigation] = useState<InvestigationPackage | null>(null);
   const [loading, setLoading] = useState(true);
   const [investigating, setInvestigating] = useState(false);
@@ -45,9 +49,10 @@ export default function CaseDetailPage({ params }: PageProps) {
     if (!caseId) {
       return;
     }
-    const [detail, audit] = await Promise.all([getCaseDetail(caseId), getAuditTrail(caseId)]);
+    const [detail, audit, status] = await Promise.all([getCaseDetail(caseId), getAuditTrail(caseId), getCaseStatus(caseId)]);
     setCaseDetail(detail);
     setAuditTrail(audit);
+    setStatusInfo(status);
   }, [caseId]);
 
   useEffect(() => {
@@ -55,10 +60,11 @@ export default function CaseDetailPage({ params }: PageProps) {
       return;
     }
 
-    Promise.all([getCaseDetail(caseId), getAuditTrail(caseId)])
-      .then(([detail, audit]) => {
+    Promise.all([getCaseDetail(caseId), getAuditTrail(caseId), getCaseStatus(caseId)])
+      .then(([detail, audit, status]) => {
         setCaseDetail(detail);
         setAuditTrail(audit);
+        setStatusInfo(status);
       })
       .catch((err: Error) => setError(err.message))
       .finally(() => setLoading(false));
@@ -105,6 +111,7 @@ export default function CaseDetailPage({ params }: PageProps) {
               </div>
 
               <CaseSummaryCard caseDetail={caseDetail} />
+              <StatusLifecyclePanel statusInfo={statusInfo} />
               <CustomerProfileCard customer={caseDetail.customer} />
               <TransactionDetailsCard transaction={caseDetail.suspicious_transaction} />
               <BeneficiaryDetailsCard beneficiary={caseDetail.beneficiary} />
