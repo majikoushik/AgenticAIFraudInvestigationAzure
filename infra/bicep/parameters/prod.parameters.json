@@ -1,0 +1,51 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environmentName": {
+      "value": "prod"
+    },
+    "location": {
+      "value": "eastus"
+    },
+    "projectName": {
+      "value": "agentic-ai-fraud-investigation-azure"
+    },
+    "backendImageName": {
+      "value": "fraud-backend:prod"
+    },
+    "frontendImageName": {
+      "value": "fraud-frontend:prod"
+    },
+    "containerRegistrySku": {
+      "value": "Standard"
+    },
+    "aiSearchSku": {
+      "value": "standard"
+    },
+    "cosmosDbDatabaseName": {
+      "value": "fraudInvestigation"
+    },
+    "cosmosDbContainerName": {
+      "value": "fraudCases"
+    },
+    "serviceBusQueueName": {
+      "value": "fraud-alerts"
+    },
+    "keyVaultPurgeProtection": {
+      "value": true
+    },
+    "deployAzureOpenAIPlaceholder": {
+      "value": false
+    },
+    "tags": {
+      "value": {
+        "project": "agentic-ai-fraud-investigation-azure",
+        "environment": "prod",
+        "owner": "fraud-ai-platform",
+        "dataClassification": "synthetic",
+        "criticality": "production"
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "historical-fraud-cases",
+  "fields": [
+    { "name": "id", "type": "Edm.String", "key": true, "filterable": true },
+    { "name": "case_id", "type": "Edm.String", "searchable": true, "filterable": true },
+    { "name": "title", "type": "Edm.String", "searchable": true },
+    { "name": "content", "type": "Edm.String", "searchable": true },
+    { "name": "source_file", "type": "Edm.String", "filterable": true, "facetable": true },
+    { "name": "case_type", "type": "Edm.String", "filterable": true, "facetable": true },
+    { "name": "risk_indicators", "type": "Collection(Edm.String)", "searchable": true, "filterable": true, "facetable": true },
+    { "name": "outcome", "type": "Edm.String", "filterable": true, "facetable": true },
+    {
+      "name": "content_vector",
+      "type": "Collection(Edm.Single)",
+      "searchable": true,
+      "dimensions": 1536,
+      "vectorSearchProfile": "default-vector-profile"
+    },
+    { "name": "created_at", "type": "Edm.DateTimeOffset", "filterable": true, "sortable": true }
+  ],
+  "vectorSearch": {
+    "algorithms": [
+      {
+        "name": "default-hnsw",
+        "kind": "hnsw"
+      }
+    ],
+    "profiles": [
+      {
+        "name": "default-vector-profile",
+        "algorithm": "default-hnsw"
+      }
+    ]
+  }
+}

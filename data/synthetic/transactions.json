@@ -1,0 +1,41 @@
+[
+  {
+    "transaction_id": "txn-001",
+    "customer_id": "cust-001",
+    "amount": 2480.75,
+    "currency": "USD",
+    "merchant": "Synthetic Electronics Outlet",
+    "merchant_country": "US",
+    "timestamp": "2026-01-15T10:30:00Z",
+    "channel": "card_not_present",
+    "payment_method": "debit_card",
+    "beneficiary_id": "ben-001",
+    "device_id": "dev-002"
+  },
+  {
+    "transaction_id": "txn-002",
+    "customer_id": "cust-002",
+    "amount": 9500.0,
+    "currency": "USD",
+    "merchant": "Synthetic Wire Transfer",
+    "merchant_country": "GB",
+    "timestamp": "2026-01-16T02:14:00Z",
+    "channel": "online_banking",
+    "payment_method": "wire_transfer",
+    "beneficiary_id": "ben-002",
+    "device_id": "dev-003"
+  },
+  {
+    "transaction_id": "txn-003",
+    "customer_id": "cust-003",
+    "amount": 179.99,
+    "currency": "CAD",
+    "merchant": "Synthetic Travel Booking",
+    "merchant_country": "CA",
+    "timestamp": "2026-01-17T18:45:00Z",
+    "channel": "mobile_app",
+    "payment_method": "credit_card",
+    "beneficiary_id": null,
+    "device_id": "dev-004"
+  }
+]

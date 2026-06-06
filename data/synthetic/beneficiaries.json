@@ -1,0 +1,20 @@
+[
+  {
+    "beneficiary_id": "ben-001",
+    "customer_id": "cust-001",
+    "display_name": "Synthetic Payee North",
+    "relationship_type": "new_merchant",
+    "bank_country": "US",
+    "first_seen": "2026-01-15",
+    "risk_note": "New beneficiary first used during alert window."
+  },
+  {
+    "beneficiary_id": "ben-002",
+    "customer_id": "cust-002",
+    "display_name": "Synthetic Payee Overseas",
+    "relationship_type": "external_account",
+    "bank_country": "GB",
+    "first_seen": "2026-01-16",
+    "risk_note": "New cross-border beneficiary with high-value transfer."
+  }
+]

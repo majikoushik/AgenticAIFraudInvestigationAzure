@@ -1,0 +1,23 @@
+[
+  {
+    "case_id": "case-hist-001",
+    "customer_id": "cust-001",
+    "outcome": "false_positive",
+    "summary": "Synthetic historical case where the customer confirmed a large electronics purchase.",
+    "risk_indicators": ["REMOTE_CHANNEL", "UNUSUAL_CUSTOMER_AMOUNT"]
+  },
+  {
+    "case_id": "case-hist-002",
+    "customer_id": "cust-002",
+    "outcome": "confirmed_customer_activity",
+    "summary": "Synthetic business transfer later confirmed by an authorized reviewer.",
+    "risk_indicators": ["HIGH_AMOUNT", "CROSS_BORDER_BENEFICIARY"]
+  },
+  {
+    "case_id": "case-hist-003",
+    "customer_id": "cust-002",
+    "outcome": "escalated_review",
+    "summary": "Synthetic prior escalation caused by new-device login and international transfer.",
+    "risk_indicators": ["UNTRUSTED_DEVICE", "HIGH_AMOUNT", "NEW_BENEFICIARY"]
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "device_id": "dev-001",
+    "customer_id": "cust-001",
+    "device_type": "mobile",
+    "trusted": true,
+    "last_seen_ip": "203.0.113.10",
+    "last_seen_country": "US",
+    "first_seen": "2024-07-08"
+  },
+  {
+    "device_id": "dev-002",
+    "customer_id": "cust-001",
+    "device_type": "browser",
+    "trusted": false,
+    "last_seen_ip": "198.51.100.42",
+    "last_seen_country": "US",
+    "first_seen": "2026-01-15"
+  },
+  {
+    "device_id": "dev-003",
+    "customer_id": "cust-002",
+    "device_type": "browser",
+    "trusted": false,
+    "last_seen_ip": "203.0.113.55",
+    "last_seen_country": "GB",
+    "first_seen": "2026-01-16"
+  },
+  {
+    "device_id": "dev-004",
+    "customer_id": "cust-003",
+    "device_type": "mobile",
+    "trusted": true,
+    "last_seen_ip": "198.51.100.77",
+    "last_seen_country": "CA",
+    "first_seen": "2023-03-22"
+  }
+]

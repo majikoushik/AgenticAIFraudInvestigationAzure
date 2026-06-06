@@ -1,0 +1,171 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  azureServiceConnection: 'TODO-AZURE-SERVICE-CONNECTION'
+  azureLocation: 'eastus'
+  devParametersFile: 'infra/bicep/parameters/dev.parameters.json'
+  containerRegistryName: 'TODO_ACR_NAME_FROM_INFRA_OUTPUT'
+  backendImageName: 'fraud-backend'
+  frontendImageName: 'fraud-frontend'
+  imageTag: '$(Build.BuildId)'
+
+stages:
+  - stage: build_frontend
+    displayName: Build frontend
+    jobs:
+      - job: build_frontend
+        steps:
+          - script: |
+              cd frontend
+              npm ci
+              npm run lint
+              npm run build
+            displayName: Install, lint, and build frontend
+
+  - stage: build_backend
+    displayName: Build backend
+    jobs:
+      - job: build_backend
+        steps:
+          - script: |
+              cd backend
+              python -m pip install --upgrade pip
+              pip install -r requirements.txt
+              python -m compileall app
+            displayName: Install and validate backend
+
+  - stage: run_tests
+    displayName: Run tests
+    dependsOn:
+      - build_frontend
+      - build_backend
+    jobs:
+      - job: run_backend_tests
+        steps:
+          - script: |
+              cd backend
+              pip install -r requirements.txt
+              pytest
+            displayName: Run backend tests
+      - job: run_agent_tests
+        steps:
+          - script: |
+              pip install -r agents/requirements.txt
+              python -m pytest agents/tests
+            displayName: Run agent tests
+
+  - stage: validate_infra
+    displayName: Validate infrastructure
+    dependsOn: run_tests
+    jobs:
+      - job: validate_bicep
+        steps:
+          - task: AzureCLI@2
+            displayName: Validate dev Bicep
+            inputs:
+              azureSubscription: '$(azureServiceConnection)'
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                az deployment sub validate \
+                  --name fraud-ai-dev-validate-$(Build.BuildId) \
+                  --location $(azureLocation) \
+                  --template-file infra/bicep/main.bicep \
+                  --parameters @$(devParametersFile)
+
+  - stage: deploy_infra_dev
+    displayName: Deploy infrastructure dev
+    dependsOn: validate_infra
+    jobs:
+      - deployment: deploy_infra_dev
+        environment: dev
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                - task: AzureCLI@2
+                  displayName: Deploy dev Bicep
+                  inputs:
+                    azureSubscription: '$(azureServiceConnection)'
+                    scriptType: bash
+                    scriptLocation: inlineScript
+                    inlineScript: |
+                      az deployment sub create \
+                        --name fraud-ai-dev-deploy-$(Build.BuildId) \
+                        --location $(azureLocation) \
+                        --template-file infra/bicep/main.bicep \
+                        --parameters @$(devParametersFile)
+
+  - stage: build_backend_container
+    displayName: Build backend container
+    dependsOn: deploy_infra_dev
+    jobs:
+      - job: build_backend_container
+        steps:
+          - script: |
+              echo "Placeholder: docker build -t $(containerRegistryName).azurecr.io/$(backendImageName):$(imageTag) backend"
+            displayName: Build backend image placeholder
+
+  - stage: build_frontend_container
+    displayName: Build frontend container
+    dependsOn: deploy_infra_dev
+    jobs:
+      - job: build_frontend_container
+        steps:
+          - script: |
+              echo "Placeholder: docker build -t $(containerRegistryName).azurecr.io/$(frontendImageName):$(imageTag) frontend"
+            displayName: Build frontend image placeholder
+
+  - stage: push_images_to_acr
+    displayName: Push images to ACR
+    dependsOn:
+      - build_backend_container
+      - build_frontend_container
+    jobs:
+      - job: push_images
+        steps:
+          - task: AzureCLI@2
+            displayName: Push container images placeholder
+            inputs:
+              azureSubscription: '$(azureServiceConnection)'
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                echo "Placeholder: az acr login --name $(containerRegistryName)"
+                echo "Placeholder: docker push $(containerRegistryName).azurecr.io/$(backendImageName):$(imageTag)"
+                echo "Placeholder: docker push $(containerRegistryName).azurecr.io/$(frontendImageName):$(imageTag)"
+
+  - stage: deploy_apps_dev
+    displayName: Deploy apps dev
+    dependsOn: push_images_to_acr
+    jobs:
+      - deployment: deploy_apps_dev
+        environment: dev
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: AzureCLI@2
+                  displayName: Update Container Apps placeholder
+                  inputs:
+                    azureSubscription: '$(azureServiceConnection)'
+                    scriptType: bash
+                    scriptLocation: inlineScript
+                    inlineScript: |
+                      echo "Placeholder: az containerapp update for backend and frontend with imageTag $(imageTag)"
+
+  - stage: deploy_dev_placeholder
+    displayName: Legacy deploy placeholder
+    dependsOn: deploy_apps_dev
+    jobs:
+      - job: deploy_dev_placeholder
+        steps:
+          - script: echo "Deployment placeholders are now split across infra, image, and app stages."
+            displayName: Placeholder deploy step

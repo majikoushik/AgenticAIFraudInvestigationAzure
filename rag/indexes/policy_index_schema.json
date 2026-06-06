@@ -1,0 +1,35 @@
+{
+  "name": "fraud-policies",
+  "fields": [
+    { "name": "id", "type": "Edm.String", "key": true, "filterable": true },
+    { "name": "title", "type": "Edm.String", "searchable": true, "filterable": true },
+    { "name": "content", "type": "Edm.String", "searchable": true },
+    { "name": "source_file", "type": "Edm.String", "filterable": true, "facetable": true },
+    { "name": "document_type", "type": "Edm.String", "filterable": true },
+    { "name": "policy_name", "type": "Edm.String", "searchable": true, "filterable": true },
+    { "name": "section_title", "type": "Edm.String", "searchable": true, "filterable": true },
+    { "name": "tags", "type": "Collection(Edm.String)", "filterable": true, "facetable": true },
+    {
+      "name": "content_vector",
+      "type": "Collection(Edm.Single)",
+      "searchable": true,
+      "dimensions": 1536,
+      "vectorSearchProfile": "default-vector-profile"
+    },
+    { "name": "created_at", "type": "Edm.DateTimeOffset", "filterable": true, "sortable": true }
+  ],
+  "vectorSearch": {
+    "algorithms": [
+      {
+        "name": "default-hnsw",
+        "kind": "hnsw"
+      }
+    ],
+    "profiles": [
+      {
+        "name": "default-vector-profile",
+        "algorithm": "default-hnsw"
+      }
+    ]
+  }
+}

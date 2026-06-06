@@ -1,0 +1,111 @@
+# Agentic AI Fraud Investigation Azure
+
+Production-style MVP skeleton for an Agentic AI Banking Fraud Investigation System on Azure.
+
+The project demonstrates the shape of a banking fraud investigation platform without real customer data, real credentials, or external AI calls. The current MVP includes a runnable FastAPI backend health endpoint, a valid Next.js TypeScript frontend skeleton, local synthetic data, agent and RAG module placeholders, Azure Bicep placeholders, and an Azure DevOps pipeline placeholder.
+
+## Architecture
+
+- `frontend/`: Next.js TypeScript investigator dashboard shell.
+- `backend/`: FastAPI API service for case and investigation workflows.
+- `agents/`: Python agent orchestration structure for deterministic MVP agents.
+- `rag/`: Local document ingestion and retrieval structure, future-ready for Azure AI Search.
+- `data/synthetic/`: Synthetic customers, transactions, beneficiaries, devices, fraud alerts, and historical cases.
+- `infra/bicep/`: Azure infrastructure placeholders.
+- `pipelines/`: Azure DevOps pipeline placeholder.
+
+## Local Setup
+
+Prerequisites:
+
+- Node.js 20+
+- Python 3.11+
+- Docker Desktop, optional but recommended
+
+### Run With Docker Compose
+
+```bash
+docker compose up --build
+```
+
+Services:
+
+- Frontend: `http://localhost:3000`
+- Backend: `http://localhost:8000`
+- Backend health: `http://localhost:8000/health`
+
+### Run Backend Locally
+
+```bash
+cd backend
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+On Windows PowerShell:
+
+```powershell
+cd backend
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+### Run Frontend Locally
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+## Security Notes
+
+- All data is synthetic.
+- `.env.example` files contain placeholders only.
+- No real banking data, secrets, or credentials should be committed.
+- High-impact actions such as freezing accounts must require human review.
+
+## Agent Runtime Modes
+
+Local deterministic mode is the default and requires no Azure credentials:
+
+```env
+USE_AZURE_OPENAI=false
+USE_AZURE_AI_FOUNDRY_AGENT_SERVICE=false
+```
+
+To enable Azure OpenAI mode, configure values through environment variables, Key Vault, or secure pipeline variables:
+
+```env
+USE_AZURE_OPENAI=true
+AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com
+AZURE_OPENAI_API_KEY=<secure value>
+AZURE_OPENAI_API_VERSION=2024-12-01-preview
+AZURE_OPENAI_CHAT_DEPLOYMENT=gpt-4o-mini
+AZURE_OPENAI_EMBEDDING_DEPLOYMENT=text-embedding-3-small
+```
+
+Never commit API keys. The backend safe config endpoint at `/api/v1/agents/config` reports mode and deployment configuration status without returning secrets.
+
+## Current MVP Scope
+
+Implemented:
+
+- Repository skeleton
+- FastAPI health endpoint
+- Next.js app shell
+- Docker Compose wiring
+- Azure DevOps pipeline placeholder
+- Synthetic JSON seed files
+
+Not implemented yet:
+
+- Fraud case dashboard APIs
+- Agent investigation workflow
+- RAG retrieval logic
+- Human review workflow
+- Audit trail persistence

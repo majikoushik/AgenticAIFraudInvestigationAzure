@@ -1,0 +1,32 @@
+[
+  {
+    "customer_id": "cust-001",
+    "display_name": "Synthetic Customer Alpha",
+    "account_number": "990000123456",
+    "segment": "retail",
+    "risk_tier": "standard",
+    "home_country": "US",
+    "account_opened_date": "2022-04-12",
+    "average_transaction_amount": 420.0
+  },
+  {
+    "customer_id": "cust-002",
+    "display_name": "Synthetic Customer Beta",
+    "account_number": "990000654321",
+    "segment": "small_business",
+    "risk_tier": "enhanced_monitoring",
+    "home_country": "US",
+    "account_opened_date": "2020-09-30",
+    "average_transaction_amount": 1800.0
+  },
+  {
+    "customer_id": "cust-003",
+    "display_name": "Synthetic Customer Gamma",
+    "account_number": "990000777888",
+    "segment": "retail",
+    "risk_tier": "standard",
+    "home_country": "CA",
+    "account_opened_date": "2023-01-18",
+    "average_transaction_amount": 220.0
+  }
+]
