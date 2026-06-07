@@ -5,6 +5,12 @@ export type AgentTraceItem = {
   output: Record<string, unknown>;
 };
 
+export type TokenUsage = {
+  prompt_tokens: number;
+  completion_tokens: number;
+  total_tokens: number;
+};
+
 export type PolicyReference = {
   title: string;
   source_filename: string;
@@ -58,13 +64,23 @@ export type InvestigationSummary = {
 export type ReviewerValidation = {
   is_evidence_supported: boolean;
   unsupported_claims: string[];
+  citation_issues?: unknown[];
+  policy_alignment?: string;
   human_review_required: boolean;
   review_notes: string[];
+  safety_flags?: string[];
 };
 
 export type InvestigationPackage = {
   case_id: string;
+  ai_provider: string;
+  ai_mode: string;
   agent_trace: AgentTraceItem[];
+  token_usage: TokenUsage;
+  latency_ms: number;
+  citations?: unknown[];
+  safety_flags: string[];
+  validation_result?: Record<string, unknown>;
   risk_indicators: RiskIndicator[];
   policy_references: PolicyReference[];
   similar_cases: SimilarCase[];

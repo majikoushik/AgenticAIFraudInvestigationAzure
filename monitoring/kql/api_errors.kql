@@ -1,0 +1,4 @@
+// API 5xx errors
+requests
+| where toint(resultCode) >= 500
+| summarize errors=count() by name, resultCode, bin(timestamp, 15m)

@@ -13,9 +13,12 @@ import { BeneficiaryDetailsCard } from "@/components/cases/BeneficiaryDetailsCar
 import { DeviceLocationCard } from "@/components/cases/DeviceLocationCard";
 import { RiskIndicatorPanel } from "@/components/cases/RiskIndicatorPanel";
 import { AgentTracePanel } from "@/components/cases/AgentTracePanel";
+import { AiProviderBadge } from "@/components/cases/AiProviderBadge";
 import { PolicyReferencePanel } from "@/components/cases/PolicyReferencePanel";
 import { SimilarCasesPanel } from "@/components/cases/SimilarCasesPanel";
 import { ReviewerValidationPanel } from "@/components/cases/ReviewerValidationPanel";
+import { SafetyFlagsPanel } from "@/components/cases/SafetyFlagsPanel";
+import { TokenUsagePanel } from "@/components/cases/TokenUsagePanel";
 import { HumanDecisionPanel } from "@/components/cases/HumanDecisionPanel";
 import { AuditTrailPanel } from "@/components/cases/AuditTrailPanel";
 import { HumanOverrideBanner } from "@/components/cases/HumanOverrideBanner";
@@ -135,7 +138,14 @@ export default function CaseDetailPage({ params }: PageProps) {
 
               {investigation && (
                 <>
+                  <AiProviderBadge
+                    provider={investigation.ai_provider}
+                    mode={investigation.ai_mode}
+                    fallbackUsed={investigation.agent_trace.some((item) => JSON.stringify(item.output).includes("\"fallback_used\":true"))}
+                  />
                   <RiskIndicatorPanel indicators={investigation.risk_indicators} title="AI Investigation Result" summary={investigation.investigation_summary} />
+                  <TokenUsagePanel usage={investigation.token_usage} latencyMs={investigation.latency_ms} />
+                  <SafetyFlagsPanel flags={investigation.safety_flags} citationIssues={investigation.reviewer_validation.citation_issues} />
                   <AgentTracePanel trace={investigation.agent_trace} />
                   <PolicyReferencePanel references={investigation.policy_references} />
                   <SimilarCasesPanel cases={investigation.similar_cases} />

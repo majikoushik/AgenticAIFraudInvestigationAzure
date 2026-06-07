@@ -91,6 +91,10 @@ Embedding generation is disabled by default. Set `USE_AZURE_OPENAI_EMBEDDINGS=tr
 
 Responses include citation metadata, scores, source filenames, chunk ids when available, and retrieval mode.
 
+## Observability
+
+RAG retrieval telemetry records retrieval mode, index name, result count, source count, citation count, empty results, and latency. Raw retrieved document content is not logged.
+
 ## Evaluation
 
 Run the local retrieval smoke evaluation:

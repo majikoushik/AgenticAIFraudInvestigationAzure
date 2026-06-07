@@ -1,0 +1,1 @@
+{"name":"Citation Validation Failure","condition":"CITATION_VALIDATION_FAILED count above threshold","severity":"Sev2","owner":"ai-governance","suggested_action":"Investigate invented or missing policy citations."}

@@ -1,0 +1,14 @@
+[
+  {
+    "case_id": "case-002",
+    "prompt": "Summarize a high-value transfer to a new beneficiary from an untrusted device.",
+    "expected_policy_sources": ["high-value-transfer-policy.md", "new-beneficiary-policy.md"],
+    "expected_human_review_required": true
+  },
+  {
+    "case_id": "case-001",
+    "prompt": "Validate a suspicious new device and new beneficiary review.",
+    "expected_policy_sources": ["new-beneficiary-policy.md"],
+    "expected_human_review_required": true
+  }
+]

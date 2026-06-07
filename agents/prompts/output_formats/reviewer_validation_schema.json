@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "required": [
+    "is_evidence_supported",
+    "unsupported_claims",
+    "citation_issues",
+    "policy_alignment",
+    "human_review_required",
+    "safety_flags",
+    "reviewer_notes"
+  ],
+  "properties": {
+    "is_evidence_supported": { "type": "boolean" },
+    "unsupported_claims": { "type": "array" },
+    "citation_issues": { "type": "array" },
+    "policy_alignment": { "type": "string" },
+    "human_review_required": { "type": "boolean" },
+    "safety_flags": { "type": "array" },
+    "reviewer_notes": { "type": "string" }
+  }
+}

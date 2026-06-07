@@ -44,6 +44,7 @@ Swagger UI is available at `http://localhost:8000/docs`.
 - `GET /api/v1/cases/{case_id}/audit`: return in-memory audit entries for the case.
 - `POST /api/v1/cases/{case_id}/investigate`: run the local deterministic agent orchestration and policy RAG simulation.
 - `GET /api/v1/agents/config`: return safe agent runtime configuration without API keys or secrets.
+- `GET /api/v1/agents/provider`: return active AI provider, fallback, JSON mode, logging flags, and human-review requirement without secrets.
 - `GET /api/v1/rag/policies/search?query=...`: search local or Azure AI Search-backed policy RAG.
 - `GET /api/v1/rag/health`: return local/Azure RAG configuration status without secrets.
 - `POST /api/v1/rag/search/policies`: search policy references with citation metadata.
@@ -68,6 +69,8 @@ Swagger UI is available at `http://localhost:8000/docs`.
 - `GET /api/v1/auth/mode`: return active auth mode.
 - `GET /api/v1/auth/me`: return authenticated user context.
 - `GET /api/v1/auth/permissions`: return permissions for the authenticated user.
+- `GET /api/v1/health/details`: return protected secret-safe health and observability details.
+- `GET /api/v1/observability/events`: return recent sanitized local telemetry events for admin users.
 
 Decision request body:
 
@@ -167,3 +170,40 @@ X-Demo-Email=fraud_analyst_01@example.com
 ```
 
 For Entra ID mode, set `AUTH_MODE=entra` and configure `ENTRA_TENANT_ID`, `ENTRA_CLIENT_ID`, `ENTRA_API_AUDIENCE`, and `ENTRA_AUTHORITY`. The backend validates Bearer JWTs and enforces role-based permissions.
+
+## AI Provider Modes
+
+Local deterministic mode is default:
+
+```env
+AI_PROVIDER=local
+```
+
+Azure OpenAI mode is backend-only and must use secure configuration:
+
+```env
+AI_PROVIDER=azure_openai
+AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com
+AZURE_OPENAI_API_KEY=<secure value>
+AZURE_OPENAI_CHAT_DEPLOYMENT=gpt-4o-mini
+LLM_LOG_PROMPTS=false
+LLM_LOG_RESPONSES=false
+```
+
+Investigation responses include provider, mode, token usage, latency, citations, safety flags, validation result, and `human_review_required=true`.
+
+## Observability
+
+Local telemetry is enabled by default and writes sanitized events to `data/synthetic/telemetry_events.json` when Application Insights is not configured.
+
+```env
+OBSERVABILITY_ENABLED=true
+OBSERVABILITY_MODE=local
+APPLICATIONINSIGHTS_CONNECTION_STRING=
+LOG_FORMAT=json
+TELEMETRY_LOG_PROMPTS=false
+TELEMETRY_LOG_RESPONSES=false
+TELEMETRY_LOG_PII=false
+```
+
+For Azure Monitor, set `APPLICATIONINSIGHTS_CONNECTION_STRING` through Key Vault or secure app configuration. Do not commit it.

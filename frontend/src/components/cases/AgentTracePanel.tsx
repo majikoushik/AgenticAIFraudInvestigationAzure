@@ -7,7 +7,7 @@ type AgentTracePanelProps = {
 
 export function AgentTracePanel({ trace }: AgentTracePanelProps) {
   return (
-    <CardFrame title="Agent Execution Trace" subtitle="Step-by-step deterministic agent outputs." fullSpan>
+    <CardFrame title="Agent Execution Trace" subtitle="Step-by-step agent outputs with provider metadata where available." fullSpan>
       <div className="panel-list">
         {trace.map((item, index) => (
           <div className="panel-item trace-item" key={`${item.agent}-${index}`}>

@@ -4,6 +4,8 @@ from statistics import mean
 from typing import Any
 
 from app.core.constants import AuditEventType, CaseStatus, normalize_decision
+from app.observability import telemetry_events
+from app.observability.telemetry_client import get_telemetry_client
 from app.repositories.audit_repository import AuditRepository
 from app.repositories.case_repository import CaseRepository
 from app.schemas.metrics_schema import (
@@ -37,7 +39,7 @@ class MetricsService:
         self.audit_repository = audit_repository or AuditRepository()
 
     def get_summary_metrics(self) -> MetricsSummaryResponse:
-        return MetricsSummaryResponse(
+        summary = MetricsSummaryResponse(
             case_status_metrics=self.get_case_status_metrics(),
             ai_recommendation_metrics=self.get_ai_recommendation_metrics(),
             human_decision_metrics=self.get_human_decision_metrics(),
@@ -49,6 +51,8 @@ class MetricsService:
             policy_citation_metrics=self.get_policy_citation_metrics(),
             audit_metrics=self.get_audit_metrics(),
         )
+        self._emit_business_metrics(summary)
+        return summary
 
     def get_case_status_metrics(self) -> CaseStatusMetrics:
         cases = self._cases()
@@ -436,6 +440,30 @@ class MetricsService:
     @staticmethod
     def _clean_date_counts(counter: Counter) -> dict[str, int]:
         return {key: value for key, value in sorted(counter.items()) if key}
+
+    @staticmethod
+    def _emit_business_metrics(summary: MetricsSummaryResponse) -> None:
+        try:
+            get_telemetry_client().track_event(
+                telemetry_events.BUSINESS_METRICS_CALCULATED,
+                {
+                    "total_cases": summary.case_status_metrics.total_cases,
+                    "pending_human_review_cases": summary.case_status_metrics.pending_human_review_cases,
+                    "escalated_cases": summary.case_status_metrics.escalated_cases,
+                    "closed_cases": summary.case_status_metrics.closed_cases,
+                    "total_overrides": summary.human_override_metrics.total_overrides,
+                    "policy_citation_accuracy_available": True,
+                },
+                {
+                    "override_rate_percentage": summary.human_override_metrics.override_rate_percentage,
+                    "ai_human_match_rate_percentage": summary.human_override_metrics.ai_human_match_rate_percentage,
+                    "average_investigation_duration_seconds": summary.investigation_time_metrics.average_ai_investigation_duration_seconds,
+                    "average_human_review_wait_time_seconds": summary.human_review_time_metrics.average_human_review_wait_time_seconds,
+                    "policy_citation_accuracy_percentage": summary.policy_citation_metrics.policy_reference_rate_percentage,
+                },
+            )
+        except Exception:
+            return None
 
 
 metrics_service = MetricsService()

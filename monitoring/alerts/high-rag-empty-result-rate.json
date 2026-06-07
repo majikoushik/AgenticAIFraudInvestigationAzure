@@ -1,0 +1,1 @@
+{"name":"High RAG Empty Result Rate","condition":"RAG_EMPTY_RESULT count above threshold","severity":"Sev3","owner":"search-platform","suggested_action":"Inspect index freshness, retriever queries, and ingestion status."}

@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "required": ["recommended_action", "confidence_level", "human_review_required", "rationale"],
+  "properties": {
+    "recommended_action": { "type": "string", "enum": ["APPROVE", "HOLD", "ESCALATE", "REJECT"] },
+    "confidence_level": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH"] },
+    "human_review_required": { "type": "boolean" },
+    "rationale": { "type": "string" }
+  }
+}

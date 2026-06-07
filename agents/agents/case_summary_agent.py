@@ -3,8 +3,9 @@ import logging
 
 from agents.agents.base_agent import BaseAgent
 from agents.llm.llm_client_factory import LLMClientFactory
-from agents.orchestration.guardrail_engine import GuardrailEngine
+from agents.llm.llm_response_parser import LLMResponseParser
 from agents.orchestration.state_manager import InvestigationState
+from agents.safety.guardrail_engine import GuardrailEngine
 
 logger = logging.getLogger(__name__)
 
@@ -15,48 +16,39 @@ class CaseSummaryAgent(BaseAgent):
     def __init__(self) -> None:
         self.llm_client = LLMClientFactory.create()
         self.guardrails = GuardrailEngine()
+        self.parser = LLMResponseParser()
 
     def run(self, state: InvestigationState) -> dict:
-        logger.info("Agent started.", extra={"agent": self.name, "llm_provider": self.llm_client.provider_name})
-        if self.llm_client.provider_name != "local" and self.llm_client.is_available():
-            summary = self._generate_llm_summary(state)
-        else:
+        logger.info("Agent started.", extra={"agent": self.name, "llm_provider": self.llm_client.get_provider_name()})
+        llm_response = self._generate_llm_summary(state)
+        summary = llm_response.get("json") or {}
+        parser_errors = self.parser.validate_required_fields(summary)
+        if llm_response.get("error") or parser_errors:
             logger.info("Fallback mode used.", extra={"agent": self.name, "llm_provider": "local"})
             summary = self._generate_local_summary(state)
+            llm_response["fallback_used"] = self.llm_client.get_provider_name() != "local"
 
-        guardrail_result = self.guardrails.validate_summary(summary)
+        summary = self.parser.normalize_summary(summary)
+        guardrail_result = self.guardrails.validate_summary(summary, state.outputs.get("PolicyRagAgent", {}).get("policy_references", []))
         summary["safety_flags"] = guardrail_result["safety_flags"]
-        summary["llm_provider"] = self.llm_client.provider_name
-        logger.info("Agent completed.", extra={"agent": self.name, "llm_provider": self.llm_client.provider_name})
+        summary["validation_result"] = guardrail_result
+        summary["llm_provider"] = self.llm_client.get_provider_name()
+        summary["llm_response_metadata"] = self._response_metadata(llm_response)
+        summary["human_review_required"] = True
+        logger.info("Agent completed.", extra={"agent": self.name, "llm_provider": self.llm_client.get_provider_name()})
         return summary
 
     def _generate_llm_summary(self, state: InvestigationState) -> dict:
-        prompt = json.dumps(
-            {
-                "case": state.case,
-                "agent_outputs": state.outputs,
-                "required_schema": {
-                    "case_overview": "string",
-                    "key_risk_indicators": [],
-                    "evidence_supporting_suspicion": [],
-                    "evidence_reducing_suspicion": [],
-                    "policy_references": [],
-                    "similar_cases": [],
-                    "recommended_action": "approve | hold | escalate | reject",
-                    "confidence_level": "low | medium | high",
-                    "missing_evidence": [],
-                    "human_review_requirement": "string",
-                },
-            },
-            default=str,
-        )
+        local = self._generate_local_summary(state)
+        prompt = json.dumps({"case": self.guardrails.sanitize_input(state.case), "agent_outputs": state.outputs, "required_schema": local}, default=str)
         system_prompt = (
             "You are a fraud investigation assistant. Return valid JSON only. "
             "Do not accuse customers. Require human review for high-impact actions."
         )
-        generated = self.llm_client.generate_json(prompt, system_prompt=system_prompt)
-        local = self._generate_local_summary(state)
-        return {**local, **{key: value for key, value in generated.items() if key in local}}
+        response = self.llm_client.generate_json(prompt, system_prompt=system_prompt, metadata={"agent": self.name})
+        generated = response.get("json") or {}
+        response["json"] = {**local, **{key: value for key, value in generated.items() if key in local}}
+        return response
 
     def _generate_local_summary(self, state: InvestigationState) -> dict:
         risk_indicators = self._collect_risk_indicators(state)
@@ -77,6 +69,9 @@ class CaseSummaryAgent(BaseAgent):
             "confidence_level": confidence_level,
             "missing_evidence": self._missing_evidence(state),
             "human_review_requirement": "Human investigator review is required before any high-impact action.",
+            "human_review_required": True,
+            "rationale": "Recommendation is based on deterministic risk indicators and retrieved policy references.",
+            "limitations": [],
             "grounding": self._grounding(state),
         }
 
@@ -148,4 +143,16 @@ class CaseSummaryAgent(BaseAgent):
             "policy_citation_count": policy_output.get("citation_count", 0),
             "historical_case_retrieval_mode": historical_output.get("retrieval_mode", "local"),
             "historical_case_source_count": historical_output.get("retrieved_source_count", 0),
+        }
+
+    @staticmethod
+    def _response_metadata(response: dict) -> dict:
+        return {
+            "provider": response.get("provider", "local"),
+            "model": response.get("model", ""),
+            "usage": response.get("usage", {}),
+            "latency_ms": response.get("latency_ms", 0),
+            "finish_reason": response.get("finish_reason", "unknown"),
+            "error": response.get("error"),
+            "fallback_used": response.get("fallback_used", False),
         }

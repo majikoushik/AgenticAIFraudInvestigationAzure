@@ -1,0 +1,3 @@
+customEvents
+| where name == "LLM_TOKEN_USAGE_RECORDED"
+| summarize total_tokens=sum(todouble(customMeasurements.total_tokens)) by tostring(customDimensions.provider), bin(timestamp, 1h)

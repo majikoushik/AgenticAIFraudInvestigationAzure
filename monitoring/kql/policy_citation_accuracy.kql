@@ -1,0 +1,3 @@
+customEvents
+| where name == "BUSINESS_METRICS_CALCULATED"
+| summarize citation_rate=avg(todouble(customMeasurements.policy_citation_accuracy_percentage)) by bin(timestamp, 1h)

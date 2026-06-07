@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "required": [
+    "case_overview",
+    "key_risk_indicators",
+    "evidence_supporting_suspicion",
+    "evidence_reducing_suspicion",
+    "policy_references",
+    "similar_cases",
+    "recommended_action",
+    "confidence_level",
+    "missing_evidence",
+    "human_review_required"
+  ],
+  "properties": {
+    "case_overview": { "type": "string" },
+    "key_risk_indicators": { "type": "array" },
+    "evidence_supporting_suspicion": { "type": "array" },
+    "evidence_reducing_suspicion": { "type": "array" },
+    "policy_references": { "type": "array" },
+    "similar_cases": { "type": "array" },
+    "recommended_action": { "type": "string", "enum": ["APPROVE", "HOLD", "ESCALATE", "REJECT"] },
+    "confidence_level": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH"] },
+    "missing_evidence": { "type": "array" },
+    "human_review_required": { "type": "boolean" },
+    "rationale": { "type": "string" },
+    "limitations": { "type": "array" }
+  }
+}

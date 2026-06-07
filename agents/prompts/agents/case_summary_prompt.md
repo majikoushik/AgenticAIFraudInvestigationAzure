@@ -1,15 +1,22 @@
-Generate a structured fraud investigation summary using only the provided case evidence.
+# Case Summary Prompt
+
+Create an evidence-grounded fraud investigation summary using only the provided case details, risk indicators, transaction signals, customer signals, device/location signals, beneficiary signals, policy RAG results, historical case RAG results, and missing evidence.
 
 Return JSON with:
-- case_overview
-- key_risk_indicators
-- evidence_supporting_suspicion
-- evidence_reducing_suspicion
-- policy_references
-- similar_cases
-- recommended_action
-- confidence_level
-- missing_evidence
-- human_review_requirement
 
-Recommended action must be one of: approve, hold, escalate, reject.
+```json
+{
+  "case_overview": "",
+  "key_risk_indicators": [],
+  "evidence_supporting_suspicion": [],
+  "evidence_reducing_suspicion": [],
+  "policy_references": [],
+  "similar_cases": [],
+  "recommended_action": "APPROVE | HOLD | ESCALATE | REJECT",
+  "confidence_level": "LOW | MEDIUM | HIGH",
+  "missing_evidence": [],
+  "human_review_required": true,
+  "rationale": "",
+  "limitations": []
+}
+```

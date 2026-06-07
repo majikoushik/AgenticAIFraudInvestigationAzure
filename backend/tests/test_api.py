@@ -69,7 +69,7 @@ def test_investigate_case_returns_agent_package_and_sets_pending_review() -> Non
     assert response.status_code == 200
     package = response.json()
     assert package["case_id"] == "case-002"
-    assert package["investigation_summary"]["recommended_action"] == "escalate"
+    assert package["investigation_summary"]["recommended_action"] == "ESCALATE"
 
     detail_response = client.get("/api/v1/cases/case-002")
     assert detail_response.json()["current_status"] == "PENDING_HUMAN_REVIEW"

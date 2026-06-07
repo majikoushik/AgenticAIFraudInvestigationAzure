@@ -1,0 +1,1 @@
+{"name":"High LLM Latency","condition":"Average LLM latency exceeds threshold","severity":"Sev3","owner":"ai-platform","suggested_action":"Check Azure OpenAI deployment latency, retries, and regional health."}

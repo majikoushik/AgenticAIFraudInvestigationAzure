@@ -1,0 +1,3 @@
+// API latency by route
+requests
+| summarize avg_duration_ms=avg(duration), p95_duration_ms=percentile(duration, 95) by name, bin(timestamp, 15m)

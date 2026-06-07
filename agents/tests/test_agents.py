@@ -159,7 +159,7 @@ def test_case_summary_agent_generates_structured_summary() -> None:
 
     output = CaseSummaryAgent().run(manager.state)
 
-    assert output["recommended_action"] == "escalate"
+    assert output["recommended_action"] == "ESCALATE"
     assert output["human_review_requirement"]
     assert output["key_risk_indicators"]
     assert output["llm_provider"] == "local"

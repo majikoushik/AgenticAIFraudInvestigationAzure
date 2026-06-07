@@ -1,0 +1,1 @@
+{"name":"High Human Override Rate","condition":"Override rate exceeds configured threshold","severity":"Sev2","owner":"fraud-leadership","suggested_action":"Review recommendation quality, policies, and reviewer feedback."}

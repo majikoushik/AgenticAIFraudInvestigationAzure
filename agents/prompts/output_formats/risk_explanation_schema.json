@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "required": ["risk_factors", "evidence_references", "limitations"],
+  "properties": {
+    "risk_factors": { "type": "array" },
+    "evidence_references": { "type": "array" },
+    "limitations": { "type": "array" }
+  }
+}

@@ -38,6 +38,15 @@
     "deployAzureOpenAIPlaceholder": {
       "value": false
     },
+    "observabilityEnabled": {
+      "value": "true"
+    },
+    "logLevel": {
+      "value": "INFO"
+    },
+    "telemetryEnvironment": {
+      "value": "prod"
+    },
     "tags": {
       "value": {
         "project": "agentic-ai-fraud-investigation-azure",

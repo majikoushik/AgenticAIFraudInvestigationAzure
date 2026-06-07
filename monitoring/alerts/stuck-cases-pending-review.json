@@ -1,0 +1,1 @@
+{"name":"Stuck Cases Pending Review","condition":"Cases in PENDING_HUMAN_REVIEW exceed age threshold","severity":"Sev3","owner":"fraud-operations","suggested_action":"Review queue staffing and case assignment."}

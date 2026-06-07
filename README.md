@@ -87,6 +87,10 @@ Microsoft Entra ID and local demo authentication are documented in [docs/entra-i
 
 Azure AI Search production RAG setup is documented in [docs/azure-ai-search-production-rag.md](docs/azure-ai-search-production-rag.md). The MVP remains local-first with deterministic keyword retrieval unless `USE_AZURE_SEARCH=true` and Azure Search settings are configured.
 
+Azure OpenAI and Azure AI Foundry production mode is documented in [docs/azure-openai-foundry-production-mode.md](docs/azure-openai-foundry-production-mode.md). Local mode remains the default through `AI_PROVIDER=local`; Azure OpenAI mode is enabled only through backend/agent environment variables.
+
+Production observability with local telemetry fallback and Azure Monitor-ready structure is documented in [docs/production-observability-monitoring.md](docs/production-observability-monitoring.md).
+
 Local verification:
 
 1. Start the backend and frontend with `start-local.bat`.

@@ -1,0 +1,1 @@
+{"name":"High Token Usage","condition":"Total token usage exceeds configured threshold","severity":"Sev3","owner":"ai-platform","suggested_action":"Review prompt size, RAG context size, and usage trend."}

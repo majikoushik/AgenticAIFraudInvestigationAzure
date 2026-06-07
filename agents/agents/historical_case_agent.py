@@ -2,10 +2,13 @@ import os
 from pathlib import Path
 
 from agents.agents.base_agent import BaseAgent
+from agents.observability.rag_telemetry import track_rag_event
 from agents.orchestration.state_manager import InvestigationState
+from app.observability import telemetry_events
 from rag.retrievers.azure_historical_case_retriever import AzureHistoricalCaseRetriever
 from rag.retrievers.citation_builder import build_citation
 from rag.retrievers.local_historical_case_retriever import LocalHistoricalCaseRetriever
+from time import perf_counter
 
 
 class HistoricalCaseAgent(BaseAgent):
@@ -23,9 +26,14 @@ class HistoricalCaseAgent(BaseAgent):
 
     def run(self, state: InvestigationState) -> dict:
         current_codes = self._current_indicator_codes(state)
+        case_id = state.case.get("metadata", {}).get("case_id")
         if self._use_azure():
             query = " ".join(sorted(current_codes))
+            started = perf_counter()
+            track_rag_event(telemetry_events.RAG_RETRIEVAL_STARTED, {"case_id": case_id, "retrieval_mode": "azure_ai_search", "index_name": "historical_cases", "top_k": 3})
             results = self.azure_retriever.search(query, top_k=3)
+            latency_ms = round((perf_counter() - started) * 1000, 2)
+            track_rag_event(telemetry_events.RAG_RETRIEVAL_COMPLETED, {"case_id": case_id, "retrieval_mode": "azure_ai_search", "index_name": "historical_cases", "result_count": len(results), "source_count": len({result.source_file for result in results})}, {"retrieval_latency_ms": latency_ms})
             return {
                 "retrieval_mode": "azure_ai_search",
                 "similar_cases": [
@@ -44,7 +52,13 @@ class HistoricalCaseAgent(BaseAgent):
             }
 
         query = " ".join(sorted(current_codes))
+        started = perf_counter()
+        track_rag_event(telemetry_events.RAG_RETRIEVAL_STARTED, {"case_id": case_id, "retrieval_mode": "local", "index_name": "historical_cases", "top_k": 3})
         local_results = self.local_retriever.search(query, top_k=3)
+        latency_ms = round((perf_counter() - started) * 1000, 2)
+        track_rag_event(telemetry_events.RAG_RETRIEVAL_COMPLETED, {"case_id": case_id, "retrieval_mode": "local", "index_name": "historical_cases", "result_count": len(local_results), "source_count": len({result.source_file for result in local_results})}, {"retrieval_latency_ms": latency_ms})
+        if not local_results:
+            track_rag_event(telemetry_events.RAG_EMPTY_RESULT, {"case_id": case_id, "retrieval_mode": "local", "index_name": "historical_cases"})
         scored_cases = [
             {
                 "case_id": result.metadata.get("case_id", result.title),

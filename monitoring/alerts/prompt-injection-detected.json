@@ -1,0 +1,1 @@
+{"name":"Prompt Injection Detected","condition":"PROMPT_INJECTION_DETECTED count >= 1","severity":"Sev1","owner":"security","suggested_action":"Review retrieved content and case input source. Do not expose raw prompt data."}

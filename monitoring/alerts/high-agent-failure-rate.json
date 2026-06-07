@@ -1,0 +1,1 @@
+{"name":"High Agent Failure Rate","condition":"AGENT_EXECUTION_FAILED count above threshold over 15 minutes","severity":"Sev2","owner":"ai-platform","suggested_action":"Review agent traces, provider fallback, and validation failures."}

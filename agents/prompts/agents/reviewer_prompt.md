@@ -1,10 +1,17 @@
-Validate the final recommendation.
+# Reviewer Prompt
 
-Check:
-- whether the recommendation is evidence-supported
-- unsupported claims
-- whether policy references are used properly
-- whether high-impact decisions require human review
-- whether language avoids direct customer accusation
+Validate whether the investigation summary is supported by retrieved evidence and policy citations.
 
-Return structured JSON.
+Return JSON with:
+
+```json
+{
+  "is_evidence_supported": true,
+  "unsupported_claims": [],
+  "citation_issues": [],
+  "policy_alignment": "ALIGNED | PARTIALLY_ALIGNED | NOT_ALIGNED | UNKNOWN",
+  "human_review_required": true,
+  "safety_flags": [],
+  "reviewer_notes": ""
+}
+```

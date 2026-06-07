@@ -142,6 +142,24 @@ button {
   font-size: 0.86rem;
 }
 
+.provider-row {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: space-between;
+}
+
+.provider-row strong {
+  display: block;
+  font-size: 1.05rem;
+}
+
+.provider-row p {
+  color: var(--muted);
+  margin: 4px 0 0;
+}
+
 .button.secondary {
   border: 1px solid var(--border);
   background: var(--surface);

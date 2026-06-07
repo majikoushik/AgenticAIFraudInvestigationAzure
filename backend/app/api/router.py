@@ -8,6 +8,7 @@ from app.api.routes import (
     decision_routes,
     health_routes,
     metrics_routes,
+    observability_routes,
     rag_routes,
     review_routes,
     status_routes,
@@ -21,6 +22,7 @@ api_router.include_router(decision_routes.router, prefix="/api/v1")
 api_router.include_router(rag_routes.router, prefix="/api/v1")
 api_router.include_router(agent_routes.router, prefix="/api/v1")
 api_router.include_router(metrics_routes.router, prefix="/api/v1")
+api_router.include_router(observability_routes.router, prefix="/api/v1")
 api_router.include_router(review_routes.router, prefix="/api/v1")
 api_router.include_router(audit_routes.router, prefix="/api/v1")
 api_router.include_router(audit_routes.audit_router, prefix="/api/v1")

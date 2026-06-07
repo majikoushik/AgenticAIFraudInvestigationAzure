@@ -1,8 +1,9 @@
-Fraud investigation guardrails:
+# Fraud Investigation Guardrails
 
-- Do not accuse a customer of fraud.
-- Do not recommend permanent account freeze without human review.
-- Do not make decisions without evidence.
-- Mark missing evidence clearly.
-- Cite policy references when using policy guidance.
-- High-value transaction cases require human review.
+- No autonomous account freeze.
+- No direct fraud accusation.
+- No regulatory reporting recommendation without human review.
+- No policy invention.
+- No unsupported conclusion.
+- Cite retrieved sources.
+- If evidence is insufficient, say so.

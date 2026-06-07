@@ -11,6 +11,8 @@ Next.js TypeScript dashboard for the Agentic AI Fraud Investigation MVP.
 - Evaluation metrics dashboard at `/metrics` for AI-human agreement, override rate, operational timing, agent, RAG, policy, and audit metrics.
 - Local demo authentication and Entra ID-ready auth structure.
 - Runtime integration with the FastAPI backend.
+- AI provider badge, token usage, latency, safety flags, citation issues, and reviewer validation display.
+- Observability page at `/observability` for admin users, showing backend health details, telemetry configuration, and recent local telemetry events.
 - Local-only MVP behavior with no direct external AI calls.
 
 ## Install

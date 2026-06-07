@@ -36,6 +36,15 @@ param keyVaultPurgeProtection bool = false
 @description('Deploy Azure OpenAI account placeholder resource. Disabled by default for MVP portability.')
 param deployAzureOpenAIPlaceholder bool = false
 
+@description('Enable application observability middleware and telemetry.')
+param observabilityEnabled string = 'true'
+
+@description('Backend log level.')
+param logLevel string = 'INFO'
+
+@description('Telemetry environment label.')
+param telemetryEnvironment string = environmentName
+
 @description('Resource tags applied to all supported resources.')
 param tags object
 
@@ -201,6 +210,9 @@ module backendApp 'modules/backend-container-app.bicep' = {
     aiSearchServiceName: aiSearch.outputs.searchServiceName
     serviceBusQueueName: serviceBusQueueName
     applicationInsightsConnectionString: appInsights.outputs.connectionString
+    observabilityEnabled: observabilityEnabled
+    logLevel: logLevel
+    telemetryEnvironment: telemetryEnvironment
     tags: tags
   }
 }

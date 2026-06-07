@@ -1,0 +1,3 @@
+customEvents
+| where name == "AGENT_EXECUTION_COMPLETED"
+| summarize avg_duration_ms=avg(todouble(customMeasurements.duration_ms)) by tostring(customDimensions.agent_name), bin(timestamp, 15m)

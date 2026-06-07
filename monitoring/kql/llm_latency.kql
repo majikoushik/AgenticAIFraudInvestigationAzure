@@ -1,0 +1,3 @@
+customEvents
+| where name == "LLM_CALL_COMPLETED"
+| summarize avg_latency_ms=avg(todouble(customMeasurements.latency_ms)), p95_latency_ms=percentile(todouble(customMeasurements.latency_ms), 95) by tostring(customDimensions.provider), bin(timestamp, 15m)

@@ -1,0 +1,1 @@
+{"name":"High API Error Rate","condition":"5xx error rate > 5% over 15 minutes","severity":"Sev2","owner":"platform","suggested_action":"Inspect failed requests, recent deployments, and backend exceptions."}

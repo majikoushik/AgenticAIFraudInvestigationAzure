@@ -1,0 +1,3 @@
+customEvents
+| where name == "BUSINESS_METRICS_CALCULATED"
+| summarize avg_seconds=avg(todouble(customMeasurements.average_investigation_duration_seconds)) by bin(timestamp, 1h)
