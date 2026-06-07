@@ -15,6 +15,7 @@ param applicationInsightsConnectionString string
 param observabilityEnabled string = 'true'
 param logLevel string = 'INFO'
 param telemetryEnvironment string = environmentName
+param alertingEnabled string = 'true'
 param tags object
 
 resource app 'Microsoft.App/containerApps@2023-05-01' = {
@@ -131,6 +132,22 @@ resource app 'Microsoft.App/containerApps@2023-05-01' = {
             }
             {
               name: 'AI_SAFETY_REQUIRE_HUMAN_REVIEW'
+              value: 'true'
+            }
+            {
+              name: 'ALERTING_ENABLED'
+              value: alertingEnabled
+            }
+            {
+              name: 'ALERTING_MODE'
+              value: 'local'
+            }
+            {
+              name: 'NOTIFICATIONS_ENABLED'
+              value: 'false'
+            }
+            {
+              name: 'INCIDENT_AUTO_CREATE_ENABLED'
               value: 'true'
             }
           ]

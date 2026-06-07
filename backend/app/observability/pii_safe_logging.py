@@ -13,6 +13,7 @@ SENSITIVE_KEY_PARTS = (
     "mobile",
     "email",
     "customer_id",
+    "customer_name",
 )
 
 

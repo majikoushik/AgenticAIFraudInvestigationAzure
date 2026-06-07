@@ -45,6 +45,9 @@ param logLevel string = 'INFO'
 @description('Telemetry environment label.')
 param telemetryEnvironment string = environmentName
 
+@description('Enable local or Azure-backed alerting configuration in the backend.')
+param alertingEnabled string = 'true'
+
 @description('Resource tags applied to all supported resources.')
 param tags object
 
@@ -213,6 +216,7 @@ module backendApp 'modules/backend-container-app.bicep' = {
     observabilityEnabled: observabilityEnabled
     logLevel: logLevel
     telemetryEnvironment: telemetryEnvironment
+    alertingEnabled: alertingEnabled
     tags: tags
   }
 }
@@ -229,6 +233,27 @@ module frontendApp 'modules/frontend-container-app.bicep' = {
     acrLoginServer: registry.outputs.loginServer
     imageName: '${registry.outputs.loginServer}/${frontendImageName}'
     backendApiBaseUrl: 'https://${backendApp.outputs.fqdn}'
+    tags: tags
+  }
+}
+
+module actionGroups 'modules/action-groups.bicep' = {
+  name: '${namePrefix}-action-groups-module'
+  scope: rg
+  params: {
+    namePrefix: namePrefix
+    location: location
+    tags: tags
+  }
+}
+
+module monitorAlertRules 'modules/monitor-alert-rules.bicep' = {
+  name: '${namePrefix}-alert-rules-module'
+  scope: rg
+  params: {
+    namePrefix: namePrefix
+    location: location
+    actionGroupId: actionGroups.outputs.actionGroupId
     tags: tags
   }
 }

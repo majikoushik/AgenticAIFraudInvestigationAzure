@@ -1,0 +1,3 @@
+customEvents
+| where name == "AUDIT_LOG_WRITE_FAILURE"
+| summarize failures=count() by bin(timestamp, 15m)

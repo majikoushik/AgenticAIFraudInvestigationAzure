@@ -1,0 +1,3 @@
+customEvents
+| where name == "PROMPT_INJECTION_DETECTED"
+| summarize detections=count() by tostring(customDimensions.severity), bin(timestamp, 15m)

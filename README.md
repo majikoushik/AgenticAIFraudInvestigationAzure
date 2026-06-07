@@ -91,6 +91,8 @@ Azure OpenAI and Azure AI Foundry production mode is documented in [docs/azure-o
 
 Production observability with local telemetry fallback and Azure Monitor-ready structure is documented in [docs/production-observability-monitoring.md](docs/production-observability-monitoring.md).
 
+Alerting and incident response with local alert stores, runbooks, KQL placeholders, incident workflow, and admin-only APIs is documented in [docs/alerting-and-incident-response.md](docs/alerting-and-incident-response.md).
+
 Local verification:
 
 1. Start the backend and frontend with `start-local.bat`.
@@ -100,6 +102,7 @@ Local verification:
 5. Confirm the audit trail records the authenticated actor and status change.
 6. Submit `ESCALATE` on `case-001` with an override reason to verify the override banner and `HUMAN_OVERRIDE_DETECTED` audit event.
 7. Open `http://localhost:3000/metrics` to review AI-human agreement, override rate, operational, RAG, agent, and audit metrics.
+8. Log in as `ADMIN`, open `http://localhost:3000/alerts`, simulate an alert, then open `http://localhost:3000/incidents` to review the generated incident.
 
 ## Agent Runtime Modes
 
@@ -133,11 +136,17 @@ Implemented:
 - Docker Compose wiring
 - Azure DevOps pipeline placeholder
 - Synthetic JSON seed files
-
-Not implemented yet:
-
 - Fraud case dashboard APIs
-- Agent investigation workflow
-- RAG retrieval logic
-- Human review workflow
+- Local deterministic agent investigation workflow
+- Local and Azure-ready RAG structure
+- Human review workflow with role permissions
 - Audit trail persistence
+- Evaluation metrics dashboard
+- Observability telemetry fallback
+- Alerting and incident response MVP with runbooks
+
+Still placeholder-only:
+
+- Production Azure Monitor alert deployment
+- Production Teams, email, and ticketing integrations
+- Real database persistence

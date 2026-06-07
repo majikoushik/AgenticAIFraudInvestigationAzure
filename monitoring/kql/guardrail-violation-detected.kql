@@ -1,0 +1,3 @@
+customEvents
+| where name == "GUARDRAIL_VIOLATION_DETECTED"
+| summarize violations=count() by bin(timestamp, 15m)

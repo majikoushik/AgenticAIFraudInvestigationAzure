@@ -1,0 +1,2 @@
+requests
+| summarize avg_latency_ms=avg(duration), p95_latency_ms=percentile(duration, 95) by bin(timestamp, 15m)

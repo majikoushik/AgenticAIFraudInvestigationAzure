@@ -1,0 +1,3 @@
+customEvents
+| where name == "LLM_COST_ESTIMATED"
+| summarize estimated_cost=sum(todouble(customMeasurements.estimated_cost)) by bin(timestamp, 1h)

@@ -47,6 +47,9 @@
     "telemetryEnvironment": {
       "value": "dev"
     },
+    "alertingEnabled": {
+      "value": "true"
+    },
     "tags": {
       "value": {
         "project": "agentic-ai-fraud-investigation-azure",

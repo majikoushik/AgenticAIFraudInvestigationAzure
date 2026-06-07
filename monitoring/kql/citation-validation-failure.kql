@@ -1,0 +1,3 @@
+customEvents
+| where name == "CITATION_VALIDATION_FAILED"
+| summarize failures=count() by bin(timestamp, 15m)

@@ -71,6 +71,17 @@ Swagger UI is available at `http://localhost:8000/docs`.
 - `GET /api/v1/auth/permissions`: return permissions for the authenticated user.
 - `GET /api/v1/health/details`: return protected secret-safe health and observability details.
 - `GET /api/v1/observability/events`: return recent sanitized local telemetry events for admin users.
+- `GET /api/v1/alerts`: list alert events for admin users.
+- `GET /api/v1/alerts/{alert_id}`: return a single alert event.
+- `POST /api/v1/alerts/evaluate`: evaluate local alert rules from metrics and telemetry.
+- `POST /api/v1/alerts/simulate`: create a synthetic alert and optional linked incident.
+- `POST /api/v1/alerts/{alert_id}/resolve`: mark an alert as resolved.
+- `GET /api/v1/incidents`: list incidents for admin users.
+- `GET /api/v1/incidents/{incident_id}`: return a single incident.
+- `PATCH /api/v1/incidents/{incident_id}/status`: update incident status through the allowed lifecycle.
+- `PATCH /api/v1/incidents/{incident_id}/assign`: assign an incident owner.
+- `POST /api/v1/incidents/{incident_id}/timeline`: append incident timeline notes.
+- `POST /api/v1/incidents/{incident_id}/close`: resolve and close an incident.
 
 Decision request body:
 
@@ -207,3 +218,17 @@ TELEMETRY_LOG_PII=false
 ```
 
 For Azure Monitor, set `APPLICATIONINSIGHTS_CONNECTION_STRING` through Key Vault or secure app configuration. Do not commit it.
+
+## Alerting And Incidents
+
+Alerting runs locally by default and reads sanitized telemetry from `data/synthetic/telemetry_events.json`. Alerts, incidents, and local notifications are stored in:
+
+```text
+data/synthetic/alerts.json
+data/synthetic/incidents.json
+data/synthetic/notifications.json
+```
+
+The evaluator covers API error rate, API latency, agent failures, RAG empty results, citation failures, LLM latency, token usage, security guardrail signals, human override rate, stuck review cases, and policy citation accuracy. SEV0 and SEV1 alerts auto-create incidents when `INCIDENT_AUTO_CREATE_ENABLED=true`.
+
+Runbooks are in `docs/runbooks/`, and the full design is documented in `docs/alerting-and-incident-response.md`.

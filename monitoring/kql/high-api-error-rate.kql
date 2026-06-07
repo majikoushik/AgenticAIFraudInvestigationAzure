@@ -1,0 +1,4 @@
+// 5xx error rate over 15 minutes
+requests
+| summarize total=count(), errors=countif(toint(resultCode) >= 500) by bin(timestamp, 15m)
+| extend error_rate_percent = todouble(errors) * 100.0 / todouble(total)

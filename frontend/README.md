@@ -13,6 +13,8 @@ Next.js TypeScript dashboard for the Agentic AI Fraud Investigation MVP.
 - Runtime integration with the FastAPI backend.
 - AI provider badge, token usage, latency, safety flags, citation issues, and reviewer validation display.
 - Observability page at `/observability` for admin users, showing backend health details, telemetry configuration, and recent local telemetry events.
+- Admin alerting page at `/alerts` for listing and simulating local alerts.
+- Admin incident pages at `/incidents` and `/incidents/[incidentId]` for triage, status updates, assignment, timeline notes, and closure.
 - Local-only MVP behavior with no direct external AI calls.
 
 ## Install
@@ -39,6 +41,8 @@ npm run dev
 The app runs at `http://localhost:3000`.
 
 Open `http://localhost:3000/metrics` to view the evaluation dashboard.
+Open `http://localhost:3000/alerts` as an admin to simulate and inspect alert events.
+Open `http://localhost:3000/incidents` as an admin to manage generated incidents.
 Open `http://localhost:3000/login` to select a local demo role when `NEXT_PUBLIC_AUTH_MODE=local`.
 
 ## Environment Variables

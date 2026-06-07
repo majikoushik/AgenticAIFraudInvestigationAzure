@@ -1,0 +1,4 @@
+customEvents
+| where name == "AGENT_EXECUTION_COMPLETED"
+| where todouble(customMeasurements.duration_ms) > 30000
+| summarize timeouts=count() by tostring(customDimensions.agent_name), bin(timestamp, 15m)

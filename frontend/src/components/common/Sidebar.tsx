@@ -14,6 +14,8 @@ export function Sidebar() {
       <nav className="sidebar-nav" aria-label="Primary navigation">
         <Link href="/dashboard">Dashboard</Link>
         <Link href="/cases">Cases</Link>
+        {hasPermission("ADMIN_CONFIG") && <Link href="/alerts">Alerts</Link>}
+        {hasPermission("ADMIN_CONFIG") && <Link href="/incidents">Incidents</Link>}
         <Link href="/metrics">Evaluation Metrics</Link>
         {hasPermission("ADMIN_CONFIG") && <Link href="/observability">Observability</Link>}
         {hasPermission("ADMIN_CONFIG") && <Link href="/dashboard">Admin Config</Link>}

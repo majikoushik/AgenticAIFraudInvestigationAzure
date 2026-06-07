@@ -1,0 +1,3 @@
+customEvents
+| where name == "RAG_EMPTY_RESULT"
+| summarize empty_results=count() by tostring(customDimensions.index_name), bin(timestamp, 15m)
