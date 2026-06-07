@@ -82,6 +82,16 @@ Swagger UI is available at `http://localhost:8000/docs`.
 - `PATCH /api/v1/incidents/{incident_id}/assign`: assign an incident owner.
 - `POST /api/v1/incidents/{incident_id}/timeline`: append incident timeline notes.
 - `POST /api/v1/incidents/{incident_id}/close`: resolve and close an incident.
+- `GET /api/v1/cost/health`: return safe cost monitoring configuration status.
+- `GET /api/v1/cost/summary`: return global token and estimated cost summary.
+- `GET /api/v1/cost/token-usage`: return token usage records and totals.
+- `GET /api/v1/cost/cases/{case_id}`: return case-level token and cost breakdown.
+- `GET /api/v1/cost/agents`: return agent-level cost aggregation.
+- `GET /api/v1/cost/models`: return model/deployment-level cost aggregation.
+- `GET /api/v1/cost/trends/daily`: return daily cost and token trends.
+- `GET /api/v1/cost/budget/status`: return local budget and token limit status.
+- `GET /api/v1/cost/anomalies`: return MVP anomaly checks.
+- `POST /api/v1/cost/recalculate`: rebuild cost records from token usage using current pricing config.
 
 Decision request body:
 
@@ -232,3 +242,14 @@ data/synthetic/notifications.json
 The evaluator covers API error rate, API latency, agent failures, RAG empty results, citation failures, LLM latency, token usage, security guardrail signals, human override rate, stuck review cases, and policy citation accuracy. SEV0 and SEV1 alerts auto-create incidents when `INCIDENT_AUTO_CREATE_ENABLED=true`.
 
 Runbooks are in `docs/runbooks/`, and the full design is documented in `docs/alerting-and-incident-response.md`.
+
+## Cost Monitoring
+
+Token usage and estimated cost records are stored locally in `data/synthetic/cost_records.json`. Pricing defaults to zero:
+
+```env
+DEFAULT_INPUT_TOKEN_COST_PER_1K=0.0000
+DEFAULT_OUTPUT_TOKEN_COST_PER_1K=0.0000
+```
+
+Use `POST /api/v1/cost/recalculate` after changing pricing values. The full design is documented in `docs/cost-monitoring-token-usage-dashboard.md`.

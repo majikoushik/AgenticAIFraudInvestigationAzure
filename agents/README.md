@@ -46,6 +46,10 @@ AZURE_AI_FOUNDRY_AGENT_ID=<agent-id>
 
 The shared client contract returns provider, model, content, parsed JSON, token usage, latency, finish reason, and structured error metadata.
 
+## Token Usage
+
+The LLM helpers estimate token usage with a local character-count fallback when provider usage metadata is unavailable. The backend persists token and estimated cost records after investigations through `TokenUsageService`. Raw prompts and raw responses are not stored.
+
 ## Agent Flow
 
 The default orchestrator runs:

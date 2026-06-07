@@ -10,6 +10,7 @@ class InvestigationPackage(BaseModel):
     ai_mode: str = "local_deterministic"
     agent_trace: list[dict[str, Any]]
     token_usage: dict[str, int] = Field(default_factory=lambda: {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0})
+    token_usage_records: list[dict[str, Any]] = Field(default_factory=list)
     latency_ms: float = 0.0
     citations: list[dict[str, Any]] = Field(default_factory=list)
     safety_flags: list[str] = Field(default_factory=list)

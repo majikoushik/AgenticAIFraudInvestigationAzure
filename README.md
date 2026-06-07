@@ -93,6 +93,8 @@ Production observability with local telemetry fallback and Azure Monitor-ready s
 
 Alerting and incident response with local alert stores, runbooks, KQL placeholders, incident workflow, and admin-only APIs is documented in [docs/alerting-and-incident-response.md](docs/alerting-and-incident-response.md).
 
+Cost monitoring and token usage dashboards are documented in [docs/cost-monitoring-token-usage-dashboard.md](docs/cost-monitoring-token-usage-dashboard.md). Cost estimates default to zero until pricing environment variables are configured.
+
 Local verification:
 
 1. Start the backend and frontend with `start-local.bat`.
@@ -103,6 +105,7 @@ Local verification:
 6. Submit `ESCALATE` on `case-001` with an override reason to verify the override banner and `HUMAN_OVERRIDE_DETECTED` audit event.
 7. Open `http://localhost:3000/metrics` to review AI-human agreement, override rate, operational, RAG, agent, and audit metrics.
 8. Log in as `ADMIN`, open `http://localhost:3000/alerts`, simulate an alert, then open `http://localhost:3000/incidents` to review the generated incident.
+9. Open `http://localhost:3000/cost` to review token usage, estimated cost, budgets, and anomaly indicators.
 
 ## Agent Runtime Modes
 
@@ -144,6 +147,7 @@ Implemented:
 - Evaluation metrics dashboard
 - Observability telemetry fallback
 - Alerting and incident response MVP with runbooks
+- Cost monitoring and token usage dashboard with local estimates
 
 Still placeholder-only:
 

@@ -48,6 +48,9 @@ param telemetryEnvironment string = environmentName
 @description('Enable local or Azure-backed alerting configuration in the backend.')
 param alertingEnabled string = 'true'
 
+@description('Enable local estimated cost monitoring configuration in the backend. Pricing values should be supplied by environment or pipeline variables.')
+param costMonitoringEnabled string = 'true'
+
 @description('Resource tags applied to all supported resources.')
 param tags object
 
@@ -217,6 +220,7 @@ module backendApp 'modules/backend-container-app.bicep' = {
     logLevel: logLevel
     telemetryEnvironment: telemetryEnvironment
     alertingEnabled: alertingEnabled
+    costMonitoringEnabled: costMonitoringEnabled
     tags: tags
   }
 }

@@ -16,6 +16,7 @@ param observabilityEnabled string = 'true'
 param logLevel string = 'INFO'
 param telemetryEnvironment string = environmentName
 param alertingEnabled string = 'true'
+param costMonitoringEnabled string = 'true'
 param tags object
 
 resource app 'Microsoft.App/containerApps@2023-05-01' = {
@@ -149,6 +150,42 @@ resource app 'Microsoft.App/containerApps@2023-05-01' = {
             {
               name: 'INCIDENT_AUTO_CREATE_ENABLED'
               value: 'true'
+            }
+            {
+              name: 'COST_MONITORING_ENABLED'
+              value: costMonitoringEnabled
+            }
+            {
+              name: 'COST_MONITORING_MODE'
+              value: 'local'
+            }
+            {
+              name: 'CURRENCY'
+              value: 'USD'
+            }
+            {
+              name: 'DEFAULT_INPUT_TOKEN_COST_PER_1K'
+              value: '0.0000'
+            }
+            {
+              name: 'DEFAULT_OUTPUT_TOKEN_COST_PER_1K'
+              value: '0.0000'
+            }
+            {
+              name: 'TOKEN_DAILY_LIMIT'
+              value: '1000000'
+            }
+            {
+              name: 'COST_DAILY_BUDGET_LIMIT'
+              value: '50'
+            }
+            {
+              name: 'COST_MONTHLY_BUDGET_LIMIT'
+              value: '1000'
+            }
+            {
+              name: 'AZURE_COST_MANAGEMENT_ENABLED'
+              value: 'false'
             }
           ]
           resources: {

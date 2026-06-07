@@ -17,6 +17,7 @@ export function Sidebar() {
         {hasPermission("ADMIN_CONFIG") && <Link href="/alerts">Alerts</Link>}
         {hasPermission("ADMIN_CONFIG") && <Link href="/incidents">Incidents</Link>}
         <Link href="/metrics">Evaluation Metrics</Link>
+        {hasPermission("VIEW_METRICS") && <Link href="/cost">Cost Monitoring</Link>}
         {hasPermission("ADMIN_CONFIG") && <Link href="/observability">Observability</Link>}
         {hasPermission("ADMIN_CONFIG") && <Link href="/dashboard">Admin Config</Link>}
       </nav>

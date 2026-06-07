@@ -6,6 +6,7 @@ from app.api.routes import (
     audit_routes,
     auth_routes,
     case_routes,
+    cost_routes,
     decision_routes,
     health_routes,
     incident_routes,
@@ -21,6 +22,7 @@ api_router.include_router(health_routes.router)
 api_router.include_router(auth_routes.router, prefix="/api/v1")
 api_router.include_router(alert_routes.router, prefix="/api/v1")
 api_router.include_router(case_routes.router, prefix="/api/v1")
+api_router.include_router(cost_routes.router, prefix="/api/v1")
 api_router.include_router(decision_routes.router, prefix="/api/v1")
 api_router.include_router(rag_routes.router, prefix="/api/v1")
 api_router.include_router(agent_routes.router, prefix="/api/v1")

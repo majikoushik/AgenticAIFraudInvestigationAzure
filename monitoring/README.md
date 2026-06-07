@@ -13,3 +13,7 @@ Dashboards and alerts are placeholders that document production intent and can b
 - `docs/runbooks/`: operational response runbooks referenced by backend alert and incident records.
 
 The local backend alert evaluator is deterministic and uses synthetic metrics and telemetry. Production deployment should connect these KQL assets to Azure Monitor action groups, Teams/email notifications, ticketing, and secure incident processes.
+
+## Cost Monitoring
+
+Cost monitoring uses local token and estimated cost records for the MVP. Production monitoring should add Azure Cost Management, budget alerts, and dashboards that reconcile local estimates with official Azure billing data.

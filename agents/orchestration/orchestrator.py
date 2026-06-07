@@ -87,8 +87,8 @@ class FraudInvestigationOrchestrator:
         summary = outputs["CaseSummaryAgent"]
         reviewer_validation = outputs["ReviewerAgent"]
         llm_metadata = [
-            output.get("llm_response_metadata", {})
-            for output in outputs.values()
+            {"agent_name": agent_name, **output.get("llm_response_metadata", {})}
+            for agent_name, output in outputs.items()
             if isinstance(output, dict) and output.get("llm_response_metadata")
         ]
         token_usage = add_usage(llm_metadata)
@@ -107,6 +107,23 @@ class FraudInvestigationOrchestrator:
             "ai_mode": "production" if ai_provider != "local" else "local_deterministic",
             "agent_trace": state_manager.state.agent_trace,
             "token_usage": token_usage,
+            "token_usage_records": [
+                {
+                    "case_id": case["metadata"]["case_id"],
+                    "agent_name": item.get("agent_name", "UNKNOWN"),
+                    "operation_name": "agent_llm_call",
+                    "ai_provider": item.get("provider", ai_provider),
+                    "model_or_deployment": item.get("model", ""),
+                    "prompt_tokens": item.get("usage", {}).get("prompt_tokens", 0),
+                    "completion_tokens": item.get("usage", {}).get("completion_tokens", 0),
+                    "total_tokens": item.get("usage", {}).get("total_tokens", 0),
+                    "latency_ms": item.get("latency_ms", 0),
+                    "fallback_used": item.get("fallback_used", False),
+                    "success": not bool(item.get("error")),
+                    "error_type": item.get("error"),
+                }
+                for item in llm_metadata
+            ],
             "latency_ms": latency_ms,
             "citations": citations,
             "safety_flags": safety_flags,

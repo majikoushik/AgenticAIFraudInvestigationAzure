@@ -7,12 +7,19 @@ from app.alerting.alert_rules import alert_rules
 from app.core.constants import AlertType, CaseStatus
 from app.repositories.case_repository import CaseRepository
 from app.services.metrics_service import MetricsService
+from app.cost.budget_service import BudgetService
+from app.cost.cost_anomaly_detector import CostAnomalyDetector
+from app.cost.cost_config import cost_monitoring_config
+from app.cost.cost_service import CostService
 
 
 class AlertEvaluator:
     def __init__(self, metrics_service: MetricsService | None = None, case_repository: CaseRepository | None = None) -> None:
         self.metrics_service = metrics_service or MetricsService()
         self.case_repository = case_repository or CaseRepository()
+        self.cost_service = CostService()
+        self.budget_service = BudgetService(self.cost_service.repository)
+        self.cost_anomaly_detector = CostAnomalyDetector(self.cost_service.repository)
 
     def evaluate_all_rules(self) -> list[dict]:
         results = []
@@ -53,6 +60,29 @@ class AlertEvaluator:
         elif alert_type == AlertType.HIGH_TOKEN_USAGE.value:
             metric_value = sum(self._measurement_values(telemetry, "LLM_TOKEN_USAGE_RECORDED", "total_tokens"))
             triggered = metric_value > rule["threshold_value"]
+        elif alert_type == AlertType.HIGH_COST_ESTIMATE.value:
+            metric_value = self.budget_service.check_daily_budget()["daily_estimated_cost"]
+            triggered = cost_monitoring_config.daily_budget_limit > 0 and metric_value > cost_monitoring_config.daily_budget_limit
+        elif alert_type == AlertType.BUDGET_WARNING.value:
+            status = self.budget_service.get_budget_status()["status"]
+            metric_value = self.budget_service.get_budget_status()["daily_budget_used_percentage"]
+            triggered = status == "WARNING"
+        elif alert_type == AlertType.BUDGET_EXCEEDED.value:
+            status = self.budget_service.get_budget_status()["status"]
+            metric_value = self.budget_service.get_budget_status()["daily_budget_used_percentage"]
+            triggered = status == "EXCEEDED"
+        elif alert_type == AlertType.COST_ANOMALY_DETECTED.value:
+            anomaly = self.cost_anomaly_detector.detect_daily_cost_anomaly()
+            metric_value = anomaly.get("increase_percentage", 0)
+            triggered = anomaly.get("status") == "ANOMALY"
+        elif alert_type == AlertType.HIGH_CASE_COST_DETECTED.value:
+            thresholds = self.budget_service.check_case_cost_thresholds()
+            metric_value = len(thresholds.get("exceeded_cases", []))
+            triggered = metric_value > 0
+        elif alert_type == AlertType.HIGH_AGENT_COST_DETECTED.value:
+            agents = self.cost_service.get_agent_cost_breakdown()["agents"]
+            metric_value = max((agent.get("estimated_cost", 0) for agent in agents), default=0)
+            triggered = cost_monitoring_config.daily_budget_limit > 0 and metric_value > cost_monitoring_config.daily_budget_limit
         elif alert_type == AlertType.PROMPT_INJECTION_DETECTED.value:
             metric_value = self._count_events(telemetry, "PROMPT_INJECTION_DETECTED")
             triggered = metric_value >= 1

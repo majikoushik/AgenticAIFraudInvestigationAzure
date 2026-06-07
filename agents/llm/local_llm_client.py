@@ -3,6 +3,7 @@ from time import perf_counter
 from typing import Any
 
 from agents.llm.base_llm_client import BaseLLMClient, llm_response
+from agents.llm.token_usage import build_usage
 from agents.observability.llm_telemetry import estimate_cost, track_llm_event
 
 try:
@@ -33,6 +34,7 @@ class LocalLLMClient(BaseLLMClient):
             provider=self.provider_name,
             model=self.model_name,
             content=content,
+            usage=build_usage(prompt, content),
             latency_ms=(perf_counter() - started) * 1000,
             finish_reason="stop",
         )
@@ -62,6 +64,7 @@ class LocalLLMClient(BaseLLMClient):
             model=self.model_name,
             content=json.dumps(payload, ensure_ascii=True),
             json_payload=payload,
+            usage=build_usage(prompt, json.dumps(payload, ensure_ascii=True)),
             latency_ms=(perf_counter() - started) * 1000,
             finish_reason="stop",
         )
