@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Header } from "@/components/common/Header";
+import { ProtectedRoute } from "@/auth/ProtectedRoute";
 import { Sidebar } from "@/components/common/Sidebar";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
 import { ErrorMessage } from "@/components/common/ErrorMessage";
@@ -29,7 +30,7 @@ export default function MetricsPage() {
   }, []);
 
   return (
-    <div className="app-layout">
+    <ProtectedRoute><div className="app-layout">
       <Sidebar />
       <main className="main-shell">
         <Header title="Evaluation Metrics" subtitle="AI recommendation quality, human acceptance, operational timing, RAG, agent, and audit metrics." />
@@ -61,6 +62,6 @@ export default function MetricsPage() {
           )}
         </section>
       </main>
-    </div>
+    </div></ProtectedRoute>
   );
 }

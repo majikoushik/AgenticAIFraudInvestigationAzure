@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { Header } from "@/components/common/Header";
+import { ProtectedRoute } from "@/auth/ProtectedRoute";
 import { Sidebar } from "@/components/common/Sidebar";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
 import { ErrorMessage } from "@/components/common/ErrorMessage";
@@ -90,7 +91,7 @@ export default function CaseDetailPage({ params }: PageProps) {
   }
 
   return (
-    <div className="app-layout">
+    <ProtectedRoute><div className="app-layout">
       <Sidebar />
       <main className="main-shell">
         <Header title="Case Investigation" subtitle={caseId ? `Detailed review workspace for ${caseId}` : "Loading case"} />
@@ -155,6 +156,6 @@ export default function CaseDetailPage({ params }: PageProps) {
           )}
         </section>
       </main>
-    </div>
+    </div></ProtectedRoute>
   );
 }

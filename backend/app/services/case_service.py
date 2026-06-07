@@ -63,7 +63,7 @@ class CaseService:
             audit_events=[],
         )
 
-    def submit_decision(self, case_id: str, request: DecisionRequest) -> DecisionResponse:
+    def submit_decision(self, case_id: str, request: DecisionRequest, actor_role: ReviewerRole = ReviewerRole.FRAUD_ANALYST) -> DecisionResponse:
         self.ensure_case_exists(case_id)
         normalized_decision = request.decision.strip().lower()
 
@@ -83,7 +83,7 @@ class CaseService:
             case_id=case_id,
             event_type=AuditEventType.HUMAN_DECISION_SUBMITTED,
             actor=normalized_request.reviewed_by,
-            actor_role=ReviewerRole.FRAUD_ANALYST,
+            actor_role=actor_role,
             decision=normalized_request.decision.upper(),
             comment=normalized_request.comment,
         )

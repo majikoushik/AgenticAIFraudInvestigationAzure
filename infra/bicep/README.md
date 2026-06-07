@@ -101,12 +101,33 @@ Add secrets manually through Key Vault, or from secure pipeline variables, after
 - `AZURE_OPENAI_API_KEY`
 - `AZURE_SEARCH_ENDPOINT`
 - `COSMOS_CONNECTION_STRING`
+- `AUTH_MODE`
+- `ENTRA_TENANT_ID`
+- `ENTRA_CLIENT_ID`
+- `ENTRA_API_AUDIENCE`
+- `ENTRA_AUTHORITY`
+- `NEXT_PUBLIC_AUTH_MODE`
+- `NEXT_PUBLIC_ENTRA_CLIENT_ID`
+- `NEXT_PUBLIC_ENTRA_TENANT_ID`
+- `NEXT_PUBLIC_ENTRA_AUTHORITY`
+- `NEXT_PUBLIC_API_SCOPE`
 
 Prefer managed identity over connection strings wherever supported.
 
 ## Azure OpenAI Placeholder
 
 `deployAzureOpenAIPlaceholder` is disabled by default. Enable it only in regions and subscriptions where Azure OpenAI is available and approved. Model deployments are intentionally not created in Bicep for this MVP.
+
+## Microsoft Entra ID Placeholders
+
+This MVP does not create Entra app registrations in Bicep. Create them manually or through a governed identity pipeline, then pass the resulting values to Container Apps as environment variables:
+
+- Frontend app registration client ID for `NEXT_PUBLIC_ENTRA_CLIENT_ID`
+- Backend API app registration application ID URI for `ENTRA_API_AUDIENCE` and `NEXT_PUBLIC_API_SCOPE`
+- Tenant ID for backend and frontend auth settings
+- App roles such as `Fraud.Analyst`, `Fraud.Manager`, `Compliance.Officer`, `Auditor`, and `Admin`
+
+Assign users or groups to Entra app roles before enabling `AUTH_MODE=entra`.
 
 ## Required Permissions
 

@@ -29,6 +29,7 @@ def test_patch_status_endpoint_validates_transition_and_creates_audit() -> None:
 
     response = client.patch(
         "/api/v1/cases/case-001/status",
+        headers={"X-Demo-Role": "ADMIN"},
         json={
             "target_status": "AI_INVESTIGATION_IN_PROGRESS",
             "actor": "system",
@@ -50,6 +51,7 @@ def test_patch_status_endpoint_rejects_invalid_transition() -> None:
 
     response = client.patch(
         "/api/v1/cases/case-001/status",
+        headers={"X-Demo-Role": "ADMIN"},
         json={
             "target_status": "CLOSED",
             "actor": "system",

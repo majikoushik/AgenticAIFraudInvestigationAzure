@@ -83,15 +83,17 @@ Human override tracking is documented in [docs/human-override-tracking.md](docs/
 
 The evaluation metrics dashboard is documented in [docs/evaluation-metrics-dashboard.md](docs/evaluation-metrics-dashboard.md).
 
+Microsoft Entra ID and local demo authentication are documented in [docs/entra-id-authentication.md](docs/entra-id-authentication.md).
+
 Local verification:
 
 1. Start the backend and frontend with `start-local.bat`.
-2. Open `http://localhost:3000/cases/case-001`.
-3. Submit a human review as `FRAUD_ANALYST` with `HOLD`.
-4. Confirm the audit trail records the decision and status change.
-5. Submit `ESCALATE` on `case-001` with an override reason to verify the override banner and `HUMAN_OVERRIDE_DETECTED` audit event.
-6. Open `http://localhost:3000/metrics` to review AI-human agreement, override rate, operational, RAG, agent, and audit metrics.
-7. Open `case-002`, run AI investigation, then submit review after it reaches `PENDING_HUMAN_REVIEW`.
+2. Open `http://localhost:3000/login` and select a demo role.
+3. Open `http://localhost:3000/cases/case-001`.
+4. Submit a human review as `FRAUD_ANALYST` with `HOLD`.
+5. Confirm the audit trail records the authenticated actor and status change.
+6. Submit `ESCALATE` on `case-001` with an override reason to verify the override banner and `HUMAN_OVERRIDE_DETECTED` audit event.
+7. Open `http://localhost:3000/metrics` to review AI-human agreement, override rate, operational, RAG, agent, and audit metrics.
 
 ## Agent Runtime Modes
 

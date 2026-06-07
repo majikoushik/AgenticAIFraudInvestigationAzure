@@ -1,12 +1,13 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
+import { decisionOptionsByRole } from "@/auth/authConfig";
+import { useAuth } from "@/auth/useAuth";
 import { CardFrame } from "@/components/cases/CardFrame";
 import { submitHumanReview } from "@/services/reviewService";
 import type { HumanReviewDecision, ReasonCode, ReviewerRole } from "@/types/review.types";
 
 const reviewerRoles: ReviewerRole[] = ["FRAUD_ANALYST", "FRAUD_MANAGER", "COMPLIANCE_OFFICER", "AUDITOR"];
-const decisions: HumanReviewDecision[] = ["APPROVE", "HOLD", "ESCALATE", "REJECT"];
 const reasonCodes: ReasonCode[] = [
   "CUSTOMER_CONFIRMED",
   "SUSPICIOUS_DEVICE",
@@ -26,8 +27,13 @@ type HumanDecisionPanelProps = {
 };
 
 export function HumanDecisionPanel({ caseId, currentStatus, aiRecommendation, onDecisionRecorded }: HumanDecisionPanelProps) {
-  const [decision, setDecision] = useState<HumanReviewDecision>("HOLD");
-  const [reviewerRole, setReviewerRole] = useState<ReviewerRole>("FRAUD_ANALYST");
+  const { user } = useAuth();
+  const allowedDecisions = useMemo(
+    () => (user ? decisionOptionsByRole[user.role] : ["HOLD"]) as HumanReviewDecision[],
+    [user]
+  );
+  const [decision, setDecision] = useState<HumanReviewDecision>(allowedDecisions[0] ?? "HOLD");
+  const [reviewerRole, setReviewerRole] = useState<ReviewerRole>((user?.role as ReviewerRole | undefined) ?? "FRAUD_ANALYST");
   const [reasonCode, setReasonCode] = useState<ReasonCode>("SUSPICIOUS_DEVICE");
   const [comment, setComment] = useState("");
   const [reviewedBy, setReviewedBy] = useState("");
@@ -38,19 +44,29 @@ export function HumanDecisionPanel({ caseId, currentStatus, aiRecommendation, on
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (!user) return;
+    setReviewerRole(user.role as ReviewerRole);
+    setReviewedBy(user.user_id);
+    if (!allowedDecisions.includes(decision) && allowedDecisions[0]) {
+      setDecision(allowedDecisions[0]);
+    }
+  }, [allowedDecisions, decision, user]);
+
   const isPendingReview = currentStatus === "PENDING_HUMAN_REVIEW";
+  const isAuditor = user?.role === "AUDITOR";
   const isOverride = Boolean(aiRecommendation && aiRecommendation !== decision);
   const hasAiRecommendation = Boolean(aiRecommendation);
   const validationErrors = useMemo(() => {
     const errors: string[] = [];
     if (!reviewedBy.trim()) errors.push("Reviewer name is required.");
-    if (reviewerRole === "AUDITOR") errors.push("AUDITOR role is view-only and cannot submit decisions.");
+    if (isAuditor || allowedDecisions.length === 0) errors.push("Auditor role can view the case but cannot submit a decision.");
     if (comment.trim().length < 10) errors.push("Comment must be at least 10 characters.");
     if (!evidenceAcknowledged) errors.push("Evidence acknowledgement is required.");
     if (!policyAcknowledged) errors.push("Policy acknowledgement is required.");
     if (isOverride && overrideReason.trim().length < 10) errors.push("Override reason must be at least 10 characters when decision differs from AI recommendation.");
     return errors;
-  }, [comment, evidenceAcknowledged, isOverride, overrideReason, policyAcknowledged, reviewedBy, reviewerRole]);
+  }, [allowedDecisions.length, comment, evidenceAcknowledged, isAuditor, isOverride, overrideReason, policyAcknowledged, reviewedBy]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -97,6 +113,14 @@ export function HumanDecisionPanel({ caseId, currentStatus, aiRecommendation, on
     );
   }
 
+  if (isAuditor) {
+    return (
+      <CardFrame title="Human Decision Panel" subtitle="Decision submission is restricted by role.">
+        <div className="message">Auditor role can view the case but cannot submit a decision.</div>
+      </CardFrame>
+    );
+  }
+
   return (
     <CardFrame title="Human Decision Panel" subtitle="Human review is required before any final case action is accepted.">
       <form className="form-grid" onSubmit={handleSubmit}>
@@ -111,12 +135,12 @@ export function HumanDecisionPanel({ caseId, currentStatus, aiRecommendation, on
         <div className="field">
           <label htmlFor="decision">Decision</label>
           <select id="decision" value={decision} onChange={(event) => setDecision(event.target.value as HumanReviewDecision)}>
-            {decisions.map((item) => <option value={item} key={item}>{item}</option>)}
+            {allowedDecisions.map((item) => <option value={item} key={item}>{item}</option>)}
           </select>
         </div>
         <div className="field">
           <label htmlFor="reviewer_role">Reviewer role</label>
-          <select id="reviewer_role" value={reviewerRole} onChange={(event) => setReviewerRole(event.target.value as ReviewerRole)}>
+          <select id="reviewer_role" value={reviewerRole} onChange={(event) => setReviewerRole(event.target.value as ReviewerRole)} disabled>
             {reviewerRoles.map((item) => <option value={item} key={item}>{item}</option>)}
           </select>
         </div>

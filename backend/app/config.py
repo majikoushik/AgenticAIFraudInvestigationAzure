@@ -15,6 +15,12 @@ class Settings(BaseSettings):
     use_azure_ai_foundry_agent_service: bool = False
     azure_ai_foundry_project_endpoint: str = ""
     azure_ai_foundry_agent_id: str = ""
+    auth_mode: str = "local"
+    entra_tenant_id: str = ""
+    entra_client_id: str = ""
+    entra_api_audience: str = ""
+    entra_authority: str = ""
+    entra_allow_default_role: bool = False
 
     model_config = SettingsConfigDict(
         env_file=".env",

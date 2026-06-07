@@ -60,6 +60,9 @@ Swagger UI is available at `http://localhost:8000/docs`.
 - `GET /api/v1/metrics/operations`: return investigation timing, review timing, agent, and RAG metrics.
 - `GET /api/v1/metrics/audit`: return audit event distribution metrics.
 - `GET /api/v1/metrics/timeseries`: return simple daily counts.
+- `GET /api/v1/auth/mode`: return active auth mode.
+- `GET /api/v1/auth/me`: return authenticated user context.
+- `GET /api/v1/auth/permissions`: return permissions for the authenticated user.
 
 Decision request body:
 
@@ -147,3 +150,15 @@ To reset local audit data:
 ## Evaluation Metrics
 
 Metrics are calculated locally from `data/synthetic/fraud_alerts.json` and `data/synthetic/audit_events.json`. The service is centralized in `app/services/metrics_service.py` so the MVP can later move the same calculations to Cosmos DB, Azure Monitor, Log Analytics, or Power BI.
+
+## Authentication
+
+Local development uses `AUTH_MODE=local`. The backend accepts development-only demo headers:
+
+```text
+X-Demo-User=fraud_analyst_01
+X-Demo-Role=FRAUD_ANALYST
+X-Demo-Email=fraud_analyst_01@example.com
+```
+
+For Entra ID mode, set `AUTH_MODE=entra` and configure `ENTRA_TENANT_ID`, `ENTRA_CLIENT_ID`, `ENTRA_API_AUDIENCE`, and `ENTRA_AUTHORITY`. The backend validates Bearer JWTs and enforces role-based permissions.

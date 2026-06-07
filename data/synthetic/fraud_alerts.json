@@ -7,16 +7,29 @@
     "beneficiary_id": "ben-001",
     "device_id": "dev-002",
     "severity": "medium",
-    "status": "PENDING_HUMAN_REVIEW",
-    "status_updated_at": null,
-    "status_updated_by": null,
-    "status_comment": null,
+    "status": "APPROVED",
+    "status_updated_at": "2026-06-07T08:37:12.065857+00:00",
+    "status_updated_by": "manager_01",
+    "status_comment": "Synthetic review comment with enough detail.",
     "ai_recommendation": "HOLD",
     "investigation_summary": {
       "recommended_action": "HOLD",
       "confidence_level": "HIGH"
     },
-    "human_review": null,
+    "human_review": {
+      "decision": "APPROVE",
+      "human_decision": "APPROVE",
+      "reviewed_by": "manager_01",
+      "reviewer_role": "FRAUD_MANAGER",
+      "reason_code": "CUSTOMER_CONFIRMED",
+      "comment": "Synthetic review comment with enough detail.",
+      "ai_recommendation": "APPROVE",
+      "human_override": false,
+      "override_reason": null,
+      "override_comparison_status": "MATCHED",
+      "override_detected_at": null,
+      "override_detected_by": null
+    },
     "policy_references": [
       {
         "title": "New Beneficiary Policy",
@@ -37,7 +50,16 @@
         "description": "Beneficiary was first observed on the transaction date.",
         "severity": "medium"
       }
-    ]
+    ],
+    "override_summary": {
+      "has_override": false,
+      "ai_recommendation": "APPROVE",
+      "human_decision": "APPROVE",
+      "override_reason": null,
+      "override_detected_at": null,
+      "override_detected_by": null,
+      "override_comparison_status": "MATCHED"
+    }
   },
   {
     "alert_id": "alert-002",

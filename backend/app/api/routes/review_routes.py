@@ -1,5 +1,7 @@
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Depends, Query
 
+from app.auth.current_user import AuthenticatedUser
+from app.auth.permissions import Permission, require_permission, validate_decision_permission
 from app.core.constants import ReviewerRole
 from app.repositories.case_repository import CaseRepository
 from app.schemas.review_schema import (
@@ -19,17 +21,34 @@ review_service = HumanReviewService(CaseRepository(), audit_service, case_status
 
 
 @router.post("/{case_id}/review", response_model=HumanReviewResponse)
-def submit_review(case_id: str, request: HumanReviewRequest) -> HumanReviewResponse:
+def submit_review(
+    case_id: str,
+    request: HumanReviewRequest,
+    current_user: AuthenticatedUser = Depends(require_permission(Permission.SUBMIT_HUMAN_REVIEW)),
+) -> HumanReviewResponse:
+    validate_decision_permission(current_user, request.decision.value)
+    request.reviewed_by = current_user.user_id
+    request.reviewer_role = ReviewerRole(current_user.primary_role)
     return review_service.submit_review(case_id, request)
 
 
 @router.get("/{case_id}/override-summary", response_model=OverrideSummaryResponse)
-def get_override_summary(case_id: str) -> OverrideSummaryResponse:
+def get_override_summary(
+    case_id: str,
+    current_user: AuthenticatedUser = Depends(require_permission(Permission.VIEW_CASE_DETAILS)),
+) -> OverrideSummaryResponse:
+    del current_user
     return OverrideSummaryResponse(**review_service.get_override_summary(case_id))
 
 
 @router.post("/{case_id}/close", response_model=CloseCaseResponse)
-def close_case(case_id: str, request: CloseCaseRequest) -> CloseCaseResponse:
+def close_case(
+    case_id: str,
+    request: CloseCaseRequest,
+    current_user: AuthenticatedUser = Depends(require_permission(Permission.CLOSE_CASE)),
+) -> CloseCaseResponse:
+    request.closed_by = current_user.user_id
+    request.closer_role = ReviewerRole(current_user.primary_role)
     return review_service.close_case(case_id, request)
 
 

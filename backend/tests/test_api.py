@@ -93,6 +93,7 @@ def test_submit_review_successfully_as_fraud_manager_with_approve() -> None:
     reset_case("case-001", ai_recommendation="APPROVE")
     response = client.post(
         "/api/v1/cases/case-001/review",
+        headers={"X-Demo-User": "synthetic.manager", "X-Demo-Role": "FRAUD_MANAGER"},
         json=review_payload(
             decision="APPROVE",
             reviewer_role="FRAUD_MANAGER",
@@ -108,6 +109,7 @@ def test_reject_auditor_decision_submission_with_403() -> None:
     reset_case("case-001")
     response = client.post(
         "/api/v1/cases/case-001/review",
+        headers={"X-Demo-Role": "AUDITOR"},
         json=review_payload(reviewer_role="AUDITOR"),
     )
 
@@ -184,6 +186,7 @@ def test_close_case_successfully_as_fraud_manager() -> None:
     reset_case("case-001", CaseStatus.HELD)
     response = client.post(
         "/api/v1/cases/case-001/close",
+        headers={"X-Demo-User": "synthetic.manager", "X-Demo-Role": "FRAUD_MANAGER"},
         json={
             "closed_by": "synthetic.manager",
             "closer_role": "FRAUD_MANAGER",
@@ -199,6 +202,7 @@ def test_reject_close_case_when_status_is_not_eligible() -> None:
     reset_case("case-001", CaseStatus.PENDING_HUMAN_REVIEW)
     response = client.post(
         "/api/v1/cases/case-001/close",
+        headers={"X-Demo-User": "synthetic.manager", "X-Demo-Role": "FRAUD_MANAGER"},
         json={
             "closed_by": "synthetic.manager",
             "closer_role": "FRAUD_MANAGER",
@@ -213,6 +217,7 @@ def test_validate_status_transition_rules() -> None:
     reset_case("case-001", CaseStatus.NEW)
     response = client.post(
         "/api/v1/cases/case-001/close",
+        headers={"X-Demo-User": "synthetic.manager", "X-Demo-Role": "FRAUD_MANAGER"},
         json={
             "closed_by": "synthetic.manager",
             "closer_role": "FRAUD_MANAGER",
@@ -240,7 +245,7 @@ def test_policy_search_endpoint_uses_local_fallback() -> None:
 
 
 def test_agent_config_endpoint_does_not_expose_secrets() -> None:
-    response = client.get("/api/v1/agents/config")
+    response = client.get("/api/v1/agents/config", headers={"X-Demo-Role": "ADMIN"})
 
     assert response.status_code == 200
     assert "api_key" not in response.text.lower()

@@ -19,6 +19,12 @@ ALLOWED_DECISIONS_BY_ROLE: dict[ReviewerRole, set[ReviewDecision]] = {
         ReviewDecision.HOLD,
     },
     ReviewerRole.AUDITOR: set(),
+    ReviewerRole.ADMIN: {
+        ReviewDecision.APPROVE,
+        ReviewDecision.HOLD,
+        ReviewDecision.ESCALATE,
+        ReviewDecision.REJECT,
+    },
     ReviewerRole.SYSTEM: set(),
 }
 

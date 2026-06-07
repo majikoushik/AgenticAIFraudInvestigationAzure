@@ -1,5 +1,7 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
+from app.auth.current_user import AuthenticatedUser
+from app.auth.permissions import Permission, require_permission
 from app.repositories.case_repository import CaseRepository
 from app.core.constants import AUDIT_EVENT_CATEGORY_BY_TYPE, AuditEventType
 from app.schemas.audit_schema import AuditEventListResponse
@@ -12,7 +14,8 @@ case_service = CaseService(CaseRepository(), audit_service, case_status_service)
 
 
 @router.get("/{case_id}/audit", response_model=AuditEventListResponse)
-def get_case_audit(case_id: str) -> AuditEventListResponse:
+def get_case_audit(case_id: str, current_user: AuthenticatedUser = Depends(require_permission(Permission.VIEW_AUDIT))) -> AuditEventListResponse:
+    del current_user
     case_service.ensure_case_exists(case_id)
     return audit_service.get_case_audit_trail(case_id)
 
@@ -28,12 +31,15 @@ def search_audit_events(
     actor_role: str | None = None,
     start_date: str | None = None,
     end_date: str | None = None,
+    current_user: AuthenticatedUser = Depends(require_permission(Permission.VIEW_AUDIT)),
 ) -> AuditEventListResponse:
+    del current_user
     return audit_service.search_audit_events(case_id, event_type, actor, actor_role, start_date, end_date)
 
 
 @audit_router.get("/event-types")
-def get_audit_event_types() -> dict:
+def get_audit_event_types(current_user: AuthenticatedUser = Depends(require_permission(Permission.VIEW_AUDIT))) -> dict:
+    del current_user
     return {
         "event_types": [
             {
@@ -46,7 +52,8 @@ def get_audit_event_types() -> dict:
 
 
 @audit_router.get("/summary")
-def get_audit_summary() -> dict:
+def get_audit_summary(current_user: AuthenticatedUser = Depends(require_permission(Permission.VIEW_AUDIT))) -> dict:
+    del current_user
     events = audit_service.search_audit_events().events
     by_category: dict[str, int] = {}
     by_type: dict[str, int] = {}

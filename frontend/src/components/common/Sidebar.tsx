@@ -1,6 +1,10 @@
+"use client";
+
 import Link from "next/link";
+import { useAuth } from "@/auth/useAuth";
 
 export function Sidebar() {
+  const { hasPermission } = useAuth();
   return (
     <aside className="sidebar">
       <div className="sidebar-brand">
@@ -11,6 +15,7 @@ export function Sidebar() {
         <Link href="/dashboard">Dashboard</Link>
         <Link href="/cases">Cases</Link>
         <Link href="/metrics">Evaluation Metrics</Link>
+        {hasPermission("ADMIN_CONFIG") && <Link href="/dashboard">Admin Config</Link>}
       </nav>
     </aside>
   );

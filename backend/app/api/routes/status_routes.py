@@ -1,5 +1,7 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
+from app.auth.current_user import AuthenticatedUser
+from app.auth.permissions import Permission, require_permission
 from app.repositories.case_repository import CaseRepository
 from app.schemas.status_schema import CaseStatusResponse, CaseStatusUpdateRequest, CaseStatusUpdateResponse
 from app.services.case_service import CaseService
@@ -12,7 +14,8 @@ case_service = CaseService(case_repository, audit_service, case_status_service)
 
 
 @router.get("/{case_id}/status", response_model=CaseStatusResponse)
-def get_case_status(case_id: str) -> CaseStatusResponse:
+def get_case_status(case_id: str, current_user: AuthenticatedUser = Depends(require_permission(Permission.VIEW_CASE_DETAILS))) -> CaseStatusResponse:
+    del current_user
     detail = case_service.get_case_detail(case_id)
     return CaseStatusResponse(
         case_id=case_id,
@@ -25,12 +28,16 @@ def get_case_status(case_id: str) -> CaseStatusResponse:
 
 
 @router.patch("/{case_id}/status", response_model=CaseStatusUpdateResponse)
-def update_case_status(case_id: str, request: CaseStatusUpdateRequest) -> CaseStatusUpdateResponse:
+def update_case_status(
+    case_id: str,
+    request: CaseStatusUpdateRequest,
+    current_user: AuthenticatedUser = Depends(require_permission(Permission.ADMIN_CONFIG)),
+) -> CaseStatusUpdateResponse:
     result = case_status_service.transition_case_status(
         case_id=case_id,
         target_status=request.target_status,
-        actor=request.actor,
-        actor_role=request.actor_role,
+        actor=current_user.user_id,
+        actor_role=current_user.primary_role,
         comment=request.comment,
     )
     return CaseStatusUpdateResponse(**result)
