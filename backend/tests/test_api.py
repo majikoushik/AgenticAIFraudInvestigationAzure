@@ -240,8 +240,31 @@ def test_policy_search_endpoint_uses_local_fallback() -> None:
 
     assert response.status_code == 200
     payload = response.json()
-    assert payload["retrieval_mode"] in {"local", "azure_search"}
+    assert payload["retrieval_mode"] in {"local", "azure_ai_search"}
     assert payload["results"]
+    assert payload["results"][0]["citation"]
+
+
+def test_rag_health_endpoint_returns_configuration_status() -> None:
+    response = client.get("/api/v1/rag/health")
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["status"] == "ok"
+    assert "policies" in payload["indexes"]
+
+
+def test_rag_search_all_endpoint_uses_local_fallback() -> None:
+    response = client.post(
+        "/api/v1/rag/search/all",
+        json={"query": "high amount new beneficiary", "top_k": 2, "case_id": "case-002"},
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["policies"]
+    assert payload["historical_cases"]
+    assert payload["case_evidence"]
 
 
 def test_agent_config_endpoint_does_not_expose_secrets() -> None:

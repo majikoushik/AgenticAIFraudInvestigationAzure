@@ -18,8 +18,11 @@ resource search 'Microsoft.Search/searchServices@2023-11-01' = {
   }
 }
 
-// Search indexes are intentionally not created in Bicep.
-// They should be created by deployment scripts after the app policy schema is finalized.
+// Search indexes are intentionally managed by rag/indexes/*.py scripts.
+// This keeps index schema evolution independent from base infrastructure deployment.
 
 output searchServiceName string = search.name
 output searchEndpoint string = 'https://${search.name}.search.windows.net'
+output policyIndexName string = 'fraud-policies'
+output historicalCaseIndexName string = 'historical-fraud-cases'
+output caseEvidenceIndexName string = 'case-evidence'

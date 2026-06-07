@@ -45,6 +45,11 @@ Swagger UI is available at `http://localhost:8000/docs`.
 - `POST /api/v1/cases/{case_id}/investigate`: run the local deterministic agent orchestration and policy RAG simulation.
 - `GET /api/v1/agents/config`: return safe agent runtime configuration without API keys or secrets.
 - `GET /api/v1/rag/policies/search?query=...`: search local or Azure AI Search-backed policy RAG.
+- `GET /api/v1/rag/health`: return local/Azure RAG configuration status without secrets.
+- `POST /api/v1/rag/search/policies`: search policy references with citation metadata.
+- `POST /api/v1/rag/search/historical-cases`: search similar synthetic historical case references.
+- `POST /api/v1/rag/search/case-evidence`: search synthetic case evidence records.
+- `POST /api/v1/rag/search/all`: search policy, historical case, and case evidence indexes together.
 - `POST /api/v1/cases/{case_id}/review`: submit human review decision with role, reason, acknowledgements, and override tracking.
 - `GET /api/v1/cases/{case_id}/override-summary`: return latest AI-vs-human override comparison for a case.
 - `POST /api/v1/cases/{case_id}/close`: close an approved, held, escalated, or rejected case.

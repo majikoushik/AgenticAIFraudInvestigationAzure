@@ -1,8 +1,6 @@
-from pathlib import Path
+from rag.ingestion.document_loader import DocumentLoader, LoadedDocument
 
 
-def load_markdown_documents(directory: str) -> list[tuple[str, str]]:
-    documents: list[tuple[str, str]] = []
-    for path in Path(directory).glob("*.md"):
-        documents.append((path.name, path.read_text(encoding="utf-8")))
-    return documents
+class MarkdownLoader:
+    def load(self, path: str) -> LoadedDocument:
+        return DocumentLoader().load_markdown_file(path)

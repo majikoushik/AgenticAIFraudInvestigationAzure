@@ -1,0 +1,10 @@
+{
+  "case_id": "case-hist-002",
+  "customer_id": "cust-002",
+  "outcome": "confirmed_customer_activity",
+  "summary": "Synthetic business transfer later confirmed by an authorized reviewer.",
+  "risk_indicators": ["HIGH_AMOUNT", "CROSS_BORDER_BENEFICIARY"],
+  "case_type": "business_wire_review",
+  "amount_band": "high",
+  "channel": "wire"
+}

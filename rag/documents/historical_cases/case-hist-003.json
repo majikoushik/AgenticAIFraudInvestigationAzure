@@ -1,0 +1,10 @@
+{
+  "case_id": "case-hist-003",
+  "customer_id": "cust-002",
+  "outcome": "escalated_review",
+  "summary": "Synthetic prior escalation caused by new-device login and international transfer.",
+  "risk_indicators": ["UNTRUSTED_DEVICE", "HIGH_AMOUNT", "NEW_BENEFICIARY"],
+  "case_type": "transfer_review",
+  "amount_band": "high",
+  "channel": "mobile"
+}

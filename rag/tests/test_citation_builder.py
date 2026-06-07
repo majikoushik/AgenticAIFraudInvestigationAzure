@@ -17,4 +17,6 @@ def test_citation_builder_adds_policy_reference_fields() -> None:
     assert citation["source_filename"] == "fraud-policy.md"
     assert citation["matched_section"] == "Human Review"
     assert citation["snippet"] == "Human review is required."
+    assert citation["retrieval_mode"] == "local"
+    assert citation["citation"]["chunk_id"] == ""
     assert citation["explanation"]

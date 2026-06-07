@@ -347,6 +347,12 @@ td {
   padding-bottom: 0;
 }
 
+.caption {
+  color: var(--muted);
+  font-size: 0.82rem;
+  margin: 0;
+}
+
 .meta-label {
   color: var(--muted);
 }

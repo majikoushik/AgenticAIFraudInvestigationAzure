@@ -1,0 +1,10 @@
+{
+  "case_id": "case-hist-001",
+  "customer_id": "cust-001",
+  "outcome": "false_positive",
+  "summary": "Synthetic historical case where the customer confirmed a large electronics purchase.",
+  "risk_indicators": ["REMOTE_CHANNEL", "UNUSUAL_CUSTOMER_AMOUNT"],
+  "case_type": "retail_card_review",
+  "amount_band": "medium",
+  "channel": "online"
+}

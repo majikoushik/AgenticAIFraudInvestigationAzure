@@ -67,6 +67,10 @@ class ReviewerAgent(BaseAgent):
         if summary["recommended_action"] == "reject":
             unsupported_claims.append("Reject is high-impact and should not be recommended by the MVP agents.")
 
+        grounding = summary.get("grounding", {})
+        if summary["recommended_action"] in {"hold", "escalate"} and grounding.get("policy_citation_count", 0) == 0:
+            unsupported_claims.append("Hold or escalate recommendation requires at least one policy citation.")
+
         return {
             "is_evidence_supported": len(unsupported_claims) == 0,
             "unsupported_claims": unsupported_claims,

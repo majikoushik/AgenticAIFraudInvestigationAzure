@@ -49,7 +49,7 @@ def sample_events() -> list[dict]:
         {"case_id": "case-001", "event_type": "AGENT_EXECUTION_COMPLETED", "agent_name": "CaseSummaryAgent", "metadata": {"duration_ms": 20}, "timestamp": "2026-01-01T00:01:00Z"},
         {"case_id": "case-001", "event_type": "AGENT_EXECUTION_FAILED", "agent_name": "ReviewerAgent", "timestamp": "2026-01-01T00:01:01Z"},
         {"case_id": "case-001", "event_type": "RAG_RETRIEVAL_COMPLETED", "rag_sources": ["new-beneficiary-policy.md"], "metadata": {"retrieval_mode": "local", "result_count": 2}, "timestamp": "2026-01-01T00:01:02Z"},
-        {"case_id": "case-001", "event_type": "RAG_RETRIEVAL_FAILED", "metadata": {"retrieval_mode": "azure_search"}, "timestamp": "2026-01-01T00:01:03Z"},
+        {"case_id": "case-001", "event_type": "RAG_RETRIEVAL_FAILED", "metadata": {"retrieval_mode": "azure_ai_search"}, "timestamp": "2026-01-01T00:01:03Z"},
         {"case_id": "case-001", "event_type": "CASE_STATUS_CHANGED", "event_category": "CASE", "actor_role": "SYSTEM", "timestamp": "2026-01-01T00:01:04Z"},
     ]
 

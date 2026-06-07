@@ -21,7 +21,7 @@ class HybridPolicyRetriever:
 
     def search(self, query: str, top_k: int = 3) -> list[RetrievalResult]:
         if self._use_azure():
-            self.last_retrieval_mode = "azure_search"
+            self.last_retrieval_mode = "azure_ai_search"
             return self.azure_retriever.search(query, top_k)
 
         self.last_retrieval_mode = "local"

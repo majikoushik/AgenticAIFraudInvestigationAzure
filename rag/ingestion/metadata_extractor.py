@@ -12,13 +12,33 @@ class MetadataExtractor:
         metadata.setdefault("source_file", document.source_file)
         metadata.setdefault("tags", self._tags_from_text(document.content))
 
-        if document.document_type == "policy":
+        doc_type = document.document_type.upper()
+        if doc_type == "POLICY":
             metadata.setdefault("policy_name", document.title)
             metadata.setdefault("section_title", self._first_section(document.content) or document.title)
+            metadata.setdefault("policy_version", metadata.get("version"))
+            metadata.setdefault("effective_date", metadata.get("effective_date"))
 
-        if document.document_type == "historical_case":
-            metadata.setdefault("case_type", "historical_fraud_case")
+        if doc_type == "HISTORICAL_CASE":
+            metadata.setdefault("historical_case_id", metadata.get("case_id") or metadata.get("historical_case_id"))
+            metadata.setdefault("case_type", metadata.get("case_type", "historical_fraud_case"))
             metadata.setdefault("risk_indicators", metadata.get("risk_indicators", []))
+            metadata.setdefault("outcome", metadata.get("outcome", "unknown"))
+            metadata.setdefault("channel", metadata.get("channel"))
+            metadata.setdefault("amount_band", metadata.get("amount_band"))
+            metadata.setdefault("customer_segment", metadata.get("customer_segment"))
+
+        if doc_type in {"SOP", "REGULATORY"}:
+            metadata.setdefault("regulation_name", metadata.get("regulation_name") or document.title)
+            metadata.setdefault("region", metadata.get("region"))
+            metadata.setdefault("section_title", self._first_section(document.content) or document.title)
+            metadata.setdefault("topic", metadata.get("topic"))
+
+        if doc_type == "CASE_EVIDENCE":
+            metadata.setdefault("case_id", metadata.get("case_id"))
+            metadata.setdefault("evidence_type", metadata.get("evidence_type"))
+            metadata.setdefault("evidence_source", metadata.get("evidence_source") or document.source_file)
+            metadata.setdefault("created_by", metadata.get("created_by"))
 
         return metadata
 

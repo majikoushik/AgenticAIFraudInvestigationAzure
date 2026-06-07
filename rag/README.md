@@ -1,78 +1,102 @@
 # RAG
 
-Local and Azure AI Search-ready retrieval layer for fraud investigation policies and historical cases.
+Local-first and Azure AI Search-ready retrieval layer for fraud investigation policies, historical cases, SOPs, and synthetic case evidence.
 
-## Local Retrieval
+## Local Mode
 
-Local mode requires no Azure credentials. Policy markdown documents are loaded from:
-
-```text
-rag/sample_documents/policies/
-```
-
-The local retriever performs keyword matching over markdown section text and returns policy references with source filenames and matched sections.
-
-Set:
+Local mode is the default and requires no Azure credentials:
 
 ```env
 USE_AZURE_SEARCH=false
 ```
 
-## Azure AI Search Retrieval
+The investigation agents use:
 
-Azure mode uses Azure AI Search indexes for policy and historical case retrieval. If Azure Search is enabled but required settings are missing, the hybrid policy retriever falls back to local mode.
+- `rag/sample_documents/policies/` for policy keyword retrieval
+- `data/synthetic/historical_cases.json` for historical case similarity
+- `data/synthetic/*.json` for local case evidence search APIs
 
-Required environment variables:
+## Azure AI Search Mode
+
+Azure mode is enabled only when explicitly configured:
 
 ```env
-AZURE_SEARCH_ENDPOINT=
-AZURE_SEARCH_ADMIN_KEY=
+USE_AZURE_SEARCH=true
+AZURE_SEARCH_ENDPOINT=https://placeholder.search.windows.net
+AZURE_SEARCH_QUERY_KEY=placeholder-only
+AZURE_SEARCH_ADMIN_KEY=placeholder-only
 AZURE_SEARCH_POLICY_INDEX=fraud-policies
-AZURE_SEARCH_CASE_INDEX=historical-fraud-cases
-AZURE_OPENAI_ENDPOINT=
-AZURE_OPENAI_API_KEY=
-AZURE_OPENAI_EMBEDDING_DEPLOYMENT=text-embedding-3-small
-USE_AZURE_SEARCH=false
+AZURE_SEARCH_HISTORICAL_CASE_INDEX=historical-fraud-cases
+AZURE_SEARCH_EVIDENCE_INDEX=case-evidence
+AZURE_SEARCH_SEMANTIC_CONFIG=fraud-semantic-config
 ```
 
-`AZURE_OPENAI_*` variables are only required when generating embeddings. Without them, ingestion uploads empty vectors and prints a warning.
+Use secure configuration for real deployments. `.env.example` values are placeholders only.
 
-## Create Indexes
+## Indexes
+
+Create or update indexes:
 
 ```bash
 python -m rag.indexes.create_indexes
 ```
 
-The script creates or updates:
-
-- `fraud-policies`
-- `historical-fraud-cases`
-
-Index schemas are stored under `rag/indexes/`.
-
-## Ingest Policy Documents
+Reset indexes:
 
 ```bash
-python -m rag.ingestion.ingest_policy_documents
+python -m rag.indexes.reset_indexes --confirm
 ```
 
-This loads markdown policies, chunks them, optionally generates embeddings, and uploads documents to the policy index.
-
-## Ingest Historical Cases
+Delete indexes:
 
 ```bash
-python -m rag.ingestion.ingest_historical_cases
+python -m rag.indexes.delete_indexes --confirm
 ```
 
-This loads `data/synthetic/historical_cases.json`, converts cases into searchable documents, optionally generates embeddings, and uploads them to the historical case index.
+Index schema modules:
 
-## Agents
+- `rag/indexes/policy_index_schema.py`
+- `rag/indexes/historical_case_index_schema.py`
+- `rag/indexes/case_evidence_index_schema.py`
 
-`PolicyRagAgent` uses `HybridPolicyRetriever`:
+## Ingestion
 
-- Azure AI Search when `USE_AZURE_SEARCH=true` and Azure Search config is present
-- Local keyword retrieval otherwise
+Policy documents:
 
-`HistoricalCaseAgent` uses Azure AI Search for historical cases when configured, with local JSON similarity fallback.
+```bash
+python -m rag.ingestion.ingest_policy_documents --input rag/documents/policies
+```
 
-Both modes return the same response shape to the backend orchestration layer.
+Historical cases:
+
+```bash
+python -m rag.ingestion.ingest_historical_cases --input rag/documents/historical_cases
+```
+
+Synthetic case evidence:
+
+```bash
+python -m rag.ingestion.ingest_case_evidence --input data/synthetic
+```
+
+Embedding generation is disabled by default. Set `USE_AZURE_OPENAI_EMBEDDINGS=true` and configure Azure OpenAI embedding values only when you want vector or hybrid search.
+
+## Backend APIs
+
+- `GET /api/v1/rag/health`
+- `POST /api/v1/rag/search/policies`
+- `POST /api/v1/rag/search/historical-cases`
+- `POST /api/v1/rag/search/case-evidence`
+- `POST /api/v1/rag/search/all`
+
+Responses include citation metadata, scores, source filenames, chunk ids when available, and retrieval mode.
+
+## Evaluation
+
+Run the local retrieval smoke evaluation:
+
+```bash
+python -m rag.evaluation.run_local_eval
+```
+
+The dataset lives in `rag/evaluation/evaluation_dataset.json`.

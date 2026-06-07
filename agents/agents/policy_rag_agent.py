@@ -44,6 +44,10 @@ class PolicyRagAgent(BaseAgent):
             "query": query,
             "retrieval_mode": self.retriever.retrieval_mode,
             "policy_references": references,
+            "retrieved_source_count": len({reference["source_filename"] for reference in references}),
+            "citation_count": len([reference for reference in references if reference.get("citation")]),
+            "top_sources": [reference["source_filename"] for reference in references],
+            "message": "" if references else "No matching policy snippets were retrieved for this case.",
         }
 
     @staticmethod

@@ -7,7 +7,9 @@ from rag.ingestion.document_loader import LoadedDocument
 @dataclass(frozen=True)
 class DocumentChunk:
     chunk_id: str
+    document_id: str
     source_file: str
+    source_path: str
     title: str
     document_type: str
     content: str
@@ -32,20 +34,22 @@ class DocumentChunker:
 
         chunks: list[DocumentChunk] = []
         start = 0
-        chunk_number = 1
+        chunk_number = 0
 
         while start < len(content):
             end = min(start + self.chunk_size, len(content))
             chunk_content = content[start:end].strip()
             chunks.append(
                 DocumentChunk(
-                    chunk_id=f"{document.source_file}-{chunk_number}",
+                    chunk_id=f"{document.document_id or document.source_file}-{chunk_number}",
+                    document_id=document.document_id or document.source_file,
                     source_file=document.source_file,
+                    source_path=document.source_path,
                     title=document.title,
                     document_type=document.document_type,
                     content=chunk_content,
                     created_at=document.created_at,
-                    metadata={**document.metadata, "chunk_number": chunk_number},
+                    metadata={**document.metadata, "chunk_index": chunk_number},
                 )
             )
             if end == len(content):

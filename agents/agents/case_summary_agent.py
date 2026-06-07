@@ -77,6 +77,7 @@ class CaseSummaryAgent(BaseAgent):
             "confidence_level": confidence_level,
             "missing_evidence": self._missing_evidence(state),
             "human_review_requirement": "Human investigator review is required before any high-impact action.",
+            "grounding": self._grounding(state),
         }
 
     @staticmethod
@@ -111,6 +112,9 @@ class CaseSummaryAgent(BaseAgent):
         similar_cases = state.outputs.get("HistoricalCaseAgent", {}).get("similar_cases", [])
         if similar_cases:
             evidence.append("Similar historical synthetic cases were found with overlapping risk indicators.")
+        policy_references = state.outputs.get("PolicyRagAgent", {}).get("policy_references", [])
+        if policy_references:
+            evidence.append("Retrieved policy citations support the review criteria applied to this synthetic case.")
         return evidence
 
     @staticmethod
@@ -130,4 +134,18 @@ class CaseSummaryAgent(BaseAgent):
             missing.append("Beneficiary profile is not available for this transaction.")
         if not state.outputs.get("PolicyRagAgent", {}).get("policy_references"):
             missing.append("No matching policy reference was retrieved.")
+        if not all(reference.get("citation") for reference in state.outputs.get("PolicyRagAgent", {}).get("policy_references", [])):
+            missing.append("One or more retrieved policy references is missing citation metadata.")
         return missing
+
+    @staticmethod
+    def _grounding(state: InvestigationState) -> dict:
+        policy_output = state.outputs.get("PolicyRagAgent", {})
+        historical_output = state.outputs.get("HistoricalCaseAgent", {})
+        return {
+            "policy_retrieval_mode": policy_output.get("retrieval_mode", "local"),
+            "policy_source_count": policy_output.get("retrieved_source_count", 0),
+            "policy_citation_count": policy_output.get("citation_count", 0),
+            "historical_case_retrieval_mode": historical_output.get("retrieval_mode", "local"),
+            "historical_case_source_count": historical_output.get("retrieved_source_count", 0),
+        }

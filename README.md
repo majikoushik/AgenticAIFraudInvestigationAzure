@@ -85,6 +85,8 @@ The evaluation metrics dashboard is documented in [docs/evaluation-metrics-dashb
 
 Microsoft Entra ID and local demo authentication are documented in [docs/entra-id-authentication.md](docs/entra-id-authentication.md).
 
+Azure AI Search production RAG setup is documented in [docs/azure-ai-search-production-rag.md](docs/azure-ai-search-production-rag.md). The MVP remains local-first with deterministic keyword retrieval unless `USE_AZURE_SEARCH=true` and Azure Search settings are configured.
+
 Local verification:
 
 1. Start the backend and frontend with `start-local.bat`.

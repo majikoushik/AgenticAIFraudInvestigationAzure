@@ -1,0 +1,12 @@
+[
+  {
+    "query": "high value transfer new beneficiary untrusted device",
+    "expected_sources": ["high-value-transfer-policy.md", "new-beneficiary-policy.md"],
+    "expected_indicators": ["HIGH_AMOUNT", "NEW_BENEFICIARY", "UNTRUSTED_DEVICE"]
+  },
+  {
+    "query": "human review evidence standard prohibited claims",
+    "expected_sources": ["fraud-investigation-policy.md"],
+    "expected_indicators": ["HUMAN_REVIEW_REQUIRED"]
+  }
+]
