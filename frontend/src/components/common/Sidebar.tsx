@@ -10,6 +10,7 @@ export function Sidebar() {
       <nav className="sidebar-nav" aria-label="Primary navigation">
         <Link href="/dashboard">Dashboard</Link>
         <Link href="/cases">Cases</Link>
+        <Link href="/metrics">Evaluation Metrics</Link>
       </nav>
     </aside>
   );

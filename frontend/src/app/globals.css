@@ -167,6 +167,21 @@ button {
   grid-template-columns: repeat(5, minmax(150px, 1fr));
 }
 
+.metrics-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.metrics-grid > .card,
+.metrics-summary-grid {
+  grid-column: 1 / -1;
+}
+
+.metrics-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(150px, 1fr));
+  gap: 16px;
+}
+
 .detail-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -204,6 +219,32 @@ button {
 
 .stat-card {
   padding: 18px;
+}
+
+.metric-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  padding: 18px;
+}
+
+.metric-card-success {
+  border-color: #abefc6;
+}
+
+.metric-card-warning {
+  border-color: #fedf89;
+}
+
+.metric-card-danger {
+  border-color: #fecdca;
+}
+
+.metric-detail {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.86rem;
 }
 
 .stat-label {
@@ -529,6 +570,59 @@ td {
   padding: 10px 0 10px 14px;
 }
 
+.metric-bars {
+  display: grid;
+  gap: 12px;
+}
+
+.metric-bars.compact {
+  gap: 10px;
+}
+
+.metric-bar-row {
+  display: grid;
+  gap: 7px;
+}
+
+.metric-bar-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.metric-bar-label strong {
+  color: var(--foreground);
+}
+
+.metric-bar-track {
+  overflow: hidden;
+  height: 9px;
+  border-radius: 999px;
+  background: #e5eaf1;
+}
+
+.metric-bar-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+}
+
+.two-column-panel,
+.three-column-panel {
+  display: grid;
+  gap: 16px;
+}
+
+.two-column-panel {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.three-column-panel {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .timeline-item h4 {
   margin: 0 0 6px;
   font-size: 0.95rem;
@@ -551,6 +645,15 @@ td {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .metrics-summary-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .metrics-grid,
+  .three-column-panel {
+    grid-template-columns: 1fr;
+  }
+
   .detail-grid {
     grid-template-columns: 1fr;
   }
@@ -568,6 +671,11 @@ td {
 
   .sidebar-nav {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .metrics-summary-grid,
+  .two-column-panel {
+    grid-template-columns: 1fr;
   }
 
   .header,

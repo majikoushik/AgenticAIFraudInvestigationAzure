@@ -54,6 +54,12 @@ Swagger UI is available at `http://localhost:8000/docs`.
 - `GET /api/v1/audit/search`: search local audit events by case, type, actor, role, or date range.
 - `GET /api/v1/audit/event-types`: list supported audit event types and categories.
 - `GET /api/v1/audit/summary`: aggregate local audit events by category and type.
+- `GET /api/v1/metrics/summary`: return all evaluation dashboard metric groups.
+- `GET /api/v1/metrics/case-status`: return case lifecycle status metrics.
+- `GET /api/v1/metrics/ai-vs-human`: return AI recommendation, human decision, and override metrics.
+- `GET /api/v1/metrics/operations`: return investigation timing, review timing, agent, and RAG metrics.
+- `GET /api/v1/metrics/audit`: return audit event distribution metrics.
+- `GET /api/v1/metrics/timeseries`: return simple daily counts.
 
 Decision request body:
 
@@ -137,3 +143,7 @@ To reset local audit data:
 ```json
 []
 ```
+
+## Evaluation Metrics
+
+Metrics are calculated locally from `data/synthetic/fraud_alerts.json` and `data/synthetic/audit_events.json`. The service is centralized in `app/services/metrics_service.py` so the MVP can later move the same calculations to Cosmos DB, Azure Monitor, Log Analytics, or Power BI.

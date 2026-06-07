@@ -17,6 +17,12 @@
       "confidence_level": "HIGH"
     },
     "human_review": null,
+    "policy_references": [
+      {
+        "title": "New Beneficiary Policy",
+        "source": "new-beneficiary-policy.md"
+      }
+    ],
     "audit_events": [],
     "reason": "New device and new beneficiary used for an unusually high card-not-present purchase.",
     "created_at": "2026-01-15T10:35:00Z",
@@ -48,6 +54,12 @@
     "ai_recommendation": null,
     "investigation_summary": null,
     "human_review": null,
+    "policy_references": [
+      {
+        "title": "High Value Transfer Policy",
+        "source": "high-value-transfer-policy.md"
+      }
+    ],
     "audit_events": [],
     "reason": "High-value international transfer from a new device to a new beneficiary.",
     "created_at": "2026-01-16T02:20:00Z",
@@ -109,7 +121,29 @@
     "status_comment": null,
     "ai_recommendation": "HOLD",
     "investigation_summary": null,
-    "human_review": null,
+    "human_review": {
+      "decision": "HOLD",
+      "human_decision": "HOLD",
+      "reviewed_by": "synthetic.reviewer",
+      "reviewer_role": "FRAUD_ANALYST",
+      "reason_code": "SUSPICIOUS_DEVICE",
+      "comment": "Synthetic held case reviewed with matching AI recommendation.",
+      "ai_recommendation": "HOLD",
+      "human_override": false,
+      "override_reason": null,
+      "override_comparison_status": "MATCHED",
+      "override_detected_at": null,
+      "override_detected_by": null
+    },
+    "override_summary": {
+      "has_override": false,
+      "ai_recommendation": "HOLD",
+      "human_decision": "HOLD",
+      "override_reason": null,
+      "override_detected_at": null,
+      "override_detected_by": null,
+      "override_comparison_status": "MATCHED"
+    },
     "audit_events": [],
     "reason": "Synthetic held case for lifecycle testing.",
     "created_at": "2026-01-18T09:00:00Z",
@@ -138,7 +172,29 @@
       "recommended_action": "ESCALATE",
       "confidence_level": "HIGH"
     },
-    "human_review": null,
+    "human_review": {
+      "decision": "ESCALATE",
+      "human_decision": "ESCALATE",
+      "reviewed_by": "synthetic.manager",
+      "reviewer_role": "FRAUD_MANAGER",
+      "reason_code": "HIGH_VALUE_TRANSFER",
+      "comment": "Synthetic escalated case reviewed with matching AI recommendation.",
+      "ai_recommendation": "ESCALATE",
+      "human_override": false,
+      "override_reason": null,
+      "override_comparison_status": "MATCHED",
+      "override_detected_at": null,
+      "override_detected_by": null
+    },
+    "override_summary": {
+      "has_override": false,
+      "ai_recommendation": "ESCALATE",
+      "human_decision": "ESCALATE",
+      "override_reason": null,
+      "override_detected_at": null,
+      "override_detected_by": null,
+      "override_comparison_status": "MATCHED"
+    },
     "audit_events": [],
     "reason": "Synthetic escalated case for lifecycle testing.",
     "created_at": "2026-01-18T10:00:00Z",
@@ -164,7 +220,29 @@
     "status_comment": null,
     "ai_recommendation": "APPROVE",
     "investigation_summary": null,
-    "human_review": null,
+    "human_review": {
+      "decision": "REJECT",
+      "human_decision": "REJECT",
+      "reviewed_by": "synthetic.compliance",
+      "reviewer_role": "COMPLIANCE_OFFICER",
+      "reason_code": "POLICY_THRESHOLD_BREACH",
+      "comment": "Synthetic closed case where reviewer overrode an approve recommendation.",
+      "ai_recommendation": "APPROVE",
+      "human_override": true,
+      "override_reason": "Synthetic policy threshold evidence required rejection despite approve recommendation.",
+      "override_comparison_status": "OVERRIDDEN",
+      "override_detected_at": "2026-01-18T11:20:00Z",
+      "override_detected_by": "synthetic.compliance"
+    },
+    "override_summary": {
+      "has_override": true,
+      "ai_recommendation": "APPROVE",
+      "human_decision": "REJECT",
+      "override_reason": "Synthetic policy threshold evidence required rejection despite approve recommendation.",
+      "override_detected_at": "2026-01-18T11:20:00Z",
+      "override_detected_by": "synthetic.compliance",
+      "override_comparison_status": "OVERRIDDEN"
+    },
     "audit_events": [],
     "reason": "Synthetic closed case for lifecycle testing.",
     "created_at": "2026-01-18T11:00:00Z",

@@ -8,6 +8,7 @@ Next.js TypeScript dashboard for the Agentic AI Fraud Investigation MVP.
 - Fraud case queue with risk badges and case navigation.
 - Case detail workspace with customer, transaction, beneficiary, device, risk indicator, AI investigation, reviewer validation, decision, and audit panels.
 - Human review workflow with role-based decision form, evidence acknowledgement, policy acknowledgement, override reason handling, and audit timeline.
+- Evaluation metrics dashboard at `/metrics` for AI-human agreement, override rate, operational timing, agent, RAG, policy, and audit metrics.
 - Runtime integration with the FastAPI backend.
 - Local-only MVP behavior with no direct external AI calls.
 
@@ -33,6 +34,8 @@ npm run dev
 ```
 
 The app runs at `http://localhost:3000`.
+
+Open `http://localhost:3000/metrics` to view the evaluation dashboard.
 
 ## Environment Variables
 

@@ -81,6 +81,8 @@ The structured audit trail is documented in [docs/audit-trail.md](docs/audit-tra
 
 Human override tracking is documented in [docs/human-override-tracking.md](docs/human-override-tracking.md).
 
+The evaluation metrics dashboard is documented in [docs/evaluation-metrics-dashboard.md](docs/evaluation-metrics-dashboard.md).
+
 Local verification:
 
 1. Start the backend and frontend with `start-local.bat`.
@@ -88,7 +90,8 @@ Local verification:
 3. Submit a human review as `FRAUD_ANALYST` with `HOLD`.
 4. Confirm the audit trail records the decision and status change.
 5. Submit `ESCALATE` on `case-001` with an override reason to verify the override banner and `HUMAN_OVERRIDE_DETECTED` audit event.
-6. Open `case-002`, run AI investigation, then submit review after it reaches `PENDING_HUMAN_REVIEW`.
+6. Open `http://localhost:3000/metrics` to review AI-human agreement, override rate, operational, RAG, agent, and audit metrics.
+7. Open `case-002`, run AI investigation, then submit review after it reaches `PENDING_HUMAN_REVIEW`.
 
 ## Agent Runtime Modes
 
