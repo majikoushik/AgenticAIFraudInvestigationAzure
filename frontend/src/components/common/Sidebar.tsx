@@ -19,12 +19,18 @@ export function Sidebar() {
         {hasPermission("VIEW_TEAM_QUEUE") && <Link href="/queues/team">Team Queue</Link>}
         {hasPermission("VIEW_TEAM_QUEUE") && <Link href="/queues/sla-risk">SLA Risk Queue</Link>}
         {hasPermission("VIEW_TEAM_QUEUE") && <Link href="/assignment/workload">Workload</Link>}
+        {hasPermission("VIEW_NOTIFICATIONS") && <Link href="/notifications">Notifications</Link>}
+        {hasPermission("VIEW_NOTIFICATIONS") && <Link href="/notifications/preferences">Notification Preferences</Link>}
+        {hasPermission("SUBMIT_AI_FEEDBACK") && <Link href="/feedback">AI Feedback</Link>}
+        {hasPermission("VIEW_AI_FEEDBACK") && <Link href="/feedback/backlog">Improvement Backlog</Link>}
+        {hasPermission("VIEW_AI_FEEDBACK") && <Link href="/feedback/analytics">Feedback Analytics</Link>}
         {hasPermission("ADMIN_CONFIG") && <Link href="/alerts">Alerts</Link>}
         {hasPermission("ADMIN_CONFIG") && <Link href="/incidents">Incidents</Link>}
         <Link href="/metrics">Evaluation Metrics</Link>
         {hasPermission("VIEW_METRICS") && <Link href="/cost">Cost Monitoring</Link>}
         {hasPermission("ADMIN_CONFIG") && <Link href="/observability">Observability</Link>}
         {hasPermission("ADMIN_CONFIG") && <Link href="/admin/config">Admin Config</Link>}
+        {hasPermission("ADMIN_CONFIG") && <Link href="/admin/notifications">Notification Admin</Link>}
       </nav>
     </aside>
   );

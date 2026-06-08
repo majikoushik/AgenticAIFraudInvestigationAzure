@@ -17,3 +17,13 @@ The local backend alert evaluator is deterministic and uses synthetic metrics an
 ## Cost Monitoring
 
 Cost monitoring uses local token and estimated cost records for the MVP. Production monitoring should add Azure Cost Management, budget alerts, and dashboards that reconcile local estimates with official Azure billing data.
+## Notification Monitoring
+
+- `kql/notification-failures.kql`: placeholder KQL for failed notification dispatches.
+- `alerts/notification-failure-rate-high.json`: disabled alert rule placeholder for production wiring.
+- Runbook: `docs/runbooks/notification-failures.md`.
+
+Production notification secrets such as SMTP passwords and webhook URLs must come from Key Vault or secure app settings, never from monitoring files.
+# AI Feedback Alerts
+
+Feedback alert placeholders cover high negative feedback rate, critical AI feedback, wrong citation feedback, and incorrect recommendation feedback. The KQL files are local scaffolds for future Azure Monitor alert rules.

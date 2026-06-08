@@ -97,3 +97,6 @@ Agent telemetry is emitted through lightweight wrappers in `agents/observability
 3. Add the agent to `AgentRegistry`.
 4. Add tests under `agents/tests/`.
 5. Keep external calls behind client abstractions.
+# Feedback Loop
+
+Investigator feedback can identify weak agent outputs, unsupported recommendations, and poor explanations. Accepted feedback can be exported into evaluation datasets before prompt or orchestration changes are made.

@@ -1,0 +1,20 @@
+[
+  {
+    "user_id": "fraud_analyst_01",
+    "role": "FRAUD_ANALYST",
+    "team": "Fraud Operations",
+    "enabled": true,
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "event_preferences": {},
+    "quiet_hours": {
+      "enabled": false,
+      "start": "22:00",
+      "end": "07:00",
+      "timezone": "Asia/Kolkata"
+    },
+    "updated_at": "2026-06-08T16:00:00.218637+00:00"
+  }
+]

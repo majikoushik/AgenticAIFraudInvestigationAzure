@@ -4,6 +4,7 @@ from typing import Any
 from app.assignment.assignment_config import assignment_config
 from app.assignment.assignment_repository import AssignmentRepository
 from app.core.constants import SlaStatus
+from app.notifications.integrations.sla_notifications import notify_sla_event
 
 
 class SlaService:
@@ -37,7 +38,8 @@ class SlaService:
         for case in self.repository.list_cases():
             next_status = self.calculate_sla_status(case.get("sla_due_at"))
             if next_status != case.get("sla_status"):
-                self.repository.update_case_assignment(case["case_id"], {"sla_status": next_status})
+                updated = self.repository.update_case_assignment(case["case_id"], {"sla_status": next_status})
+                notify_sla_event(updated)
                 updated_count += 1
         return {"updated_count": updated_count}
 

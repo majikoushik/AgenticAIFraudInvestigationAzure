@@ -57,6 +57,27 @@ param adminConfigEnabled string = 'true'
 @description('Enable case assignment and investigator queue features.')
 param caseAssignmentEnabled string = 'true'
 
+@description('Enable local-first notification system. Production secrets should come from Key Vault; async delivery can later use Service Bus.')
+param notificationSystemEnabled string = 'true'
+
+@description('Enable local-first AI feedback loop and improvement backlog.')
+param feedbackLoopEnabled string = 'true'
+
+@description('Use managed identity for runtime Azure access.')
+param useManagedIdentity string = 'true'
+
+@description('Enable Key Vault-backed secret loading.')
+param keyVaultEnabled string = 'true'
+
+@description('Secret provider used by backend runtime.')
+param secretProvider string = 'key_vault'
+
+@description('Enable private endpoint scaffolding.')
+param privateEndpointsEnabled bool = false
+
+@description('Disable public network access for supported resources when private endpoints are enabled.')
+param disablePublicNetworkAccess bool = false
+
 @description('Resource tags applied to all supported resources.')
 param tags object
 
@@ -64,6 +85,8 @@ var namePrefix = 'fraud-ai-${environmentName}'
 var resourceGroupName = '${namePrefix}-rg'
 var backendContainerName = 'backend'
 var frontendContainerName = 'frontend'
+var publicNetworkAccessValue = disablePublicNetworkAccess ? 'Disabled' : 'Enabled'
+var searchPublicNetworkAccessValue = disablePublicNetworkAccess ? 'disabled' : 'enabled'
 
 resource rg 'Microsoft.Resources/resourceGroups@2024-03-01' = {
   name: resourceGroupName
@@ -124,6 +147,7 @@ module keyVault 'modules/key-vault.bicep' = {
     namePrefix: namePrefix
     location: location
     purgeProtectionEnabled: keyVaultPurgeProtection
+    publicNetworkAccess: publicNetworkAccessValue
     tags: tags
   }
 }
@@ -134,6 +158,7 @@ module storage 'modules/storage-account.bicep' = {
   params: {
     namePrefix: namePrefix
     location: location
+    publicNetworkAccess: publicNetworkAccessValue
     tags: tags
   }
 }
@@ -146,6 +171,7 @@ module cosmosDb 'modules/cosmos-db.bicep' = {
     location: location
     databaseName: cosmosDbDatabaseName
     containerName: cosmosDbContainerName
+    publicNetworkAccess: publicNetworkAccessValue
     tags: tags
   }
 }
@@ -157,6 +183,7 @@ module aiSearch 'modules/ai-search.bicep' = {
     namePrefix: namePrefix
     location: location
     skuName: aiSearchSku
+    publicNetworkAccess: searchPublicNetworkAccessValue
     tags: tags
   }
 }
@@ -168,6 +195,7 @@ module serviceBus 'modules/service-bus.bicep' = {
     namePrefix: namePrefix
     location: location
     queueName: serviceBusQueueName
+    publicNetworkAccess: publicNetworkAccessValue
     tags: tags
   }
 }
@@ -229,7 +257,28 @@ module backendApp 'modules/backend-container-app.bicep' = {
     costMonitoringEnabled: costMonitoringEnabled
     adminConfigEnabled: adminConfigEnabled
     caseAssignmentEnabled: caseAssignmentEnabled
+    notificationSystemEnabled: notificationSystemEnabled
+    feedbackLoopEnabled: feedbackLoopEnabled
+    useManagedIdentity: useManagedIdentity
+    keyVaultEnabled: keyVaultEnabled
+    keyVaultUri: keyVault.outputs.keyVaultUri
+    secretProvider: secretProvider
+    privateEndpointsEnabled: string(privateEndpointsEnabled)
+    disablePublicNetworkAccess: string(disablePublicNetworkAccess)
     tags: tags
+  }
+}
+
+module roleAssignments 'modules/role-assignments.bicep' = {
+  name: '${namePrefix}-roles-module'
+  scope: rg
+  params: {
+    principalId: identity.outputs.principalId
+    keyVaultResourceId: keyVault.outputs.keyVaultResourceId
+    acrResourceId: registry.outputs.registryResourceId
+    storageResourceId: storage.outputs.storageAccountResourceId
+    serviceBusResourceId: serviceBus.outputs.namespaceResourceId
+    aiSearchResourceId: aiSearch.outputs.searchResourceId
   }
 }
 

@@ -8,6 +8,7 @@ pool:
 
 variables:
   azureServiceConnection: 'TODO-AZURE-SERVICE-CONNECTION'
+  securityVariableGroup: 'TODO-KEYVAULT-BACKED-VARIABLE-GROUP'
   azureLocation: 'eastus'
   devParametersFile: 'infra/bicep/parameters/dev.parameters.json'
   containerRegistryName: 'TODO_ACR_NAME_FROM_INFRA_OUTPUT'
@@ -79,9 +80,32 @@ stages:
                   --template-file infra/bicep/main.bicep \
                   --parameters @$(devParametersFile)
 
+  - stage: security_validation
+    displayName: Security validation
+    dependsOn: run_tests
+    variables:
+      - group: $(securityVariableGroup) # Key Vault-backed variable group placeholder. Do not store secret values in YAML.
+    jobs:
+      - job: no_secret_scan
+        steps:
+          - script: ./scripts/security/check-no-secrets.sh
+            displayName: Scan repository for likely hardcoded secrets
+          - script: python scripts/security/generate-security-report.py
+            displayName: Generate local security hardening report
+          - task: AzureCLI@2
+            displayName: Bicep what-if placeholder
+            inputs:
+              azureSubscription: '$(azureServiceConnection)'
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                echo "Placeholder: run az deployment sub what-if with secure variable groups and approvals."
+
   - stage: deploy_infra_dev
     displayName: Deploy infrastructure dev
-    dependsOn: validate_infra
+    dependsOn:
+      - validate_infra
+      - security_validation
     jobs:
       - deployment: deploy_infra_dev
         environment: dev
@@ -169,3 +193,13 @@ stages:
         steps:
           - script: echo "Deployment placeholders are now split across infra, image, and app stages."
             displayName: Placeholder deploy step
+
+  - stage: post_deployment_security_validation
+    displayName: Post-deployment security validation
+    dependsOn: deploy_apps_dev
+    jobs:
+      - job: post_deployment_security_validation
+        steps:
+          - script: |
+              echo "Placeholder: validate Key Vault access, managed identity role assignments, private endpoints, and public network access."
+            displayName: Post-deployment security checks placeholder

@@ -1,0 +1,4 @@
+// Placeholder KQL: incorrect recommendation feedback rate.
+customEvents
+| where name == "AI_FEEDBACK_SUBMITTED"
+| where tostring(customDimensions.target_type) == "AI_RECOMMENDATION"

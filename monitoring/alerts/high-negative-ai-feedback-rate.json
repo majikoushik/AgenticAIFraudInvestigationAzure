@@ -1,0 +1,6 @@
+{
+  "name": "high-negative-ai-feedback-rate",
+  "description": "Placeholder alert for elevated negative AI feedback rate.",
+  "severity": "warning",
+  "queryFile": "monitoring/kql/high-negative-ai-feedback-rate.kql"
+}

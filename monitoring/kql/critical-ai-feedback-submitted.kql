@@ -1,0 +1,4 @@
+// Placeholder KQL: critical AI feedback submitted.
+customEvents
+| where name == "AI_FEEDBACK_CRITICAL_SUBMITTED"
+| summarize criticalFeedback=count() by bin(timestamp, 15m)

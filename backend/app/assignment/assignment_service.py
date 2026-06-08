@@ -10,6 +10,7 @@ from app.auth.current_user import AuthenticatedUser
 from app.core.constants import AssignmentStatus, AuditEventType, CaseStatus, ReviewerRole
 from app.observability.telemetry_client import get_telemetry_client
 from app.observability import telemetry_events
+from app.notifications.integrations.assignment_notifications import notify_assignment_event
 from app.schemas.assignment_schema import (
     CaseAcceptRequest,
     CaseAssignmentRequest,
@@ -58,6 +59,7 @@ class AssignmentService:
         }
         updated = self.repository.update_case_assignment(case_id, updates)
         self._record_action("ASSIGNED", case, updated, actor_user, request.comment, AuditEventType.CASE_ASSIGNED)
+        notify_assignment_event("CASE_ASSIGNED", updated)
         return self._response(updated, "Case assigned.")
 
     def reassign_case(self, case_id: str, request: CaseReassignmentRequest, actor_user: AuthenticatedUser) -> dict:
@@ -81,6 +83,7 @@ class AssignmentService:
         }
         updated = self.repository.update_case_assignment(case_id, updates)
         self._record_action("REASSIGNED", case, updated, actor_user, request.comment, AuditEventType.CASE_REASSIGNED)
+        notify_assignment_event("CASE_REASSIGNED", updated)
         return self._response(updated, "Case reassigned.")
 
     def accept_case(self, case_id: str, request: CaseAcceptRequest, actor_user: AuthenticatedUser) -> dict:
@@ -104,6 +107,7 @@ class AssignmentService:
                 updates["sla_status"] = self.sla_service.calculate_sla_status(due_at)
         updated = self.repository.update_case_assignment(case_id, updates)
         self._record_action("ACCEPTED", case, updated, actor_user, request.comment, AuditEventType.CASE_ACCEPTED)
+        notify_assignment_event("CASE_ACCEPTED", updated)
         return self._response(updated, "Case accepted.")
 
     def release_case(self, case_id: str, request: CaseReleaseRequest, actor_user: AuthenticatedUser) -> dict:
@@ -122,6 +126,7 @@ class AssignmentService:
         }
         updated = self.repository.update_case_assignment(case_id, updates)
         self._record_action("RELEASED", case, updated, actor_user, request.comment or request.reason, AuditEventType.CASE_RELEASED)
+        notify_assignment_event("CASE_RELEASED", updated)
         return self._response(updated, "Case released to unassigned queue.")
 
     def transfer_case(self, case_id: str, request: CaseTransferRequest, actor_user: AuthenticatedUser) -> dict:
@@ -133,6 +138,7 @@ class AssignmentService:
         case["assignment_status"] = AssignmentStatus.TRANSFERRED.value
         updated = self.repository.update_case_assignment(case_id, {"last_assignment_action": "TRANSFERRED", "assignment_status": AssignmentStatus.TRANSFERRED.value})
         self._record_action("TRANSFERRED", self.repository.get_case(case_id) or {}, updated, actor_user, request.comment, AuditEventType.CASE_TRANSFERRED)
+        notify_assignment_event("CASE_TRANSFERRED", updated)
         return self._response(updated, "Case transferred.")
 
     def get_assignment_history(self, case_id: str, actor_user: AuthenticatedUser | None = None) -> dict:

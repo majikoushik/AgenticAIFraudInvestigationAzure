@@ -1,5 +1,6 @@
 param namePrefix string
 param location string
+param publicNetworkAccess string = 'Enabled'
 param tags object
 
 var storageAccountName = replace('${namePrefix}st', '-', '')
@@ -16,6 +17,7 @@ resource storage 'Microsoft.Storage/storageAccounts@2023-05-01' = {
     allowBlobPublicAccess: false
     minimumTlsVersion: 'TLS1_2'
     supportsHttpsTrafficOnly: true
+    publicNetworkAccess: publicNetworkAccess
   }
 }
 

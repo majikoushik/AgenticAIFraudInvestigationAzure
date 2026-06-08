@@ -59,6 +59,27 @@
     "caseAssignmentEnabled": {
       "value": "true"
     },
+    "notificationSystemEnabled": {
+      "value": "true"
+    },
+    "feedbackLoopEnabled": {
+      "value": "true"
+    },
+    "useManagedIdentity": {
+      "value": "true"
+    },
+    "keyVaultEnabled": {
+      "value": "true"
+    },
+    "secretProvider": {
+      "value": "key_vault"
+    },
+    "privateEndpointsEnabled": {
+      "value": true
+    },
+    "disablePublicNetworkAccess": {
+      "value": true
+    },
     "tags": {
       "value": {
         "project": "agentic-ai-fraud-investigation-azure",

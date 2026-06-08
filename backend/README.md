@@ -99,6 +99,16 @@ Swagger UI is available at `http://localhost:8000/docs`.
 - `GET /api/v1/admin/config/health`: return safe admin configuration health.
 - `GET /api/v1/admin/feature-flags`: list feature flags.
 - `PATCH /api/v1/admin/feature-flags/{flag_key}`: update one feature flag.
+- `GET /api/v1/notifications/me`: return notifications for the authenticated user.
+- `GET /api/v1/notifications/summary`: return unread and priority notification counts.
+- `POST /api/v1/notifications/{notification_id}/read`: mark a notification as read.
+- `POST /api/v1/notifications/read-all`: mark all current user notifications as read.
+- `POST /api/v1/notifications/{notification_id}/archive`: archive a notification.
+- `GET /api/v1/notifications/preferences/me`: return current user notification preferences.
+- `PATCH /api/v1/notifications/preferences/me`: update current user notification preferences.
+- `POST /api/v1/notifications/test`: send a local/admin test notification.
+- `GET /api/v1/admin/notifications`: list notifications for admins.
+- `GET /api/v1/admin/notifications/health`: return safe notification system health.
 - `GET /api/v1/queues/my`: return cases assigned to the authenticated user.
 - `GET /api/v1/queues/unassigned`: return unassigned cases for manager/admin assignment.
 - `GET /api/v1/queues/team`: return team cases for managers, compliance, auditors, and admins.
@@ -286,3 +296,14 @@ All admin config endpoints require `ADMIN_CONFIG`. Secret values, connection str
 ## Case Assignment
 
 Assignment data remains local-first in `data/synthetic/fraud_alerts.json`, `data/synthetic/assignment_history.json`, and `data/synthetic/investigators.json`. The backend enforces role permissions for assignment actions and rejects assignment changes for closed cases. The full design is documented in `docs/case-assignment-investigator-queue.md`.
+
+## Notifications
+
+Notifications are stored locally in `data/synthetic/notifications.json` with preferences in `data/synthetic/notification_preferences.json` and templates in `data/synthetic/notification_templates.json`. Email, Teams, and webhook channels are safe placeholders until configured through secure production settings. The full design is documented in `docs/notification-system.md`.
+# AI Feedback Loop
+
+Feedback APIs are available under `/api/v1/feedback`. The backend enforces role permissions, sanitizes comments and metadata, records audit/telemetry events, creates improvement backlog items for critical feedback, and exports accepted feedback without raw prompts or raw model responses.
+
+# Security Health
+
+Deployment hardening helpers are under `app/security`. Admins can call `/api/v1/security/health` or `/api/v1/health/details` to inspect Key Vault, managed identity, private endpoint, and required-secret status without exposing secret values.

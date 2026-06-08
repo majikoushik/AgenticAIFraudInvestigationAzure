@@ -1,6 +1,7 @@
 param namePrefix string
 param location string
 param queueName string
+param publicNetworkAccess string = 'Enabled'
 param tags object
 
 resource namespace 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' = {
@@ -11,7 +12,10 @@ resource namespace 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' = {
     name: 'Standard'
     tier: 'Standard'
   }
-  properties: {}
+  properties: {
+    publicNetworkAccess: publicNetworkAccess
+    disableLocalAuth: false // TODO: switch to true when every client uses managed identity.
+  }
 }
 
 resource queue 'Microsoft.ServiceBus/namespaces/queues@2022-10-01-preview' = {
@@ -26,4 +30,5 @@ resource queue 'Microsoft.ServiceBus/namespaces/queues@2022-10-01-preview' = {
 }
 
 output namespaceName string = namespace.name
+output namespaceResourceId string = namespace.id
 output queueName string = queue.name

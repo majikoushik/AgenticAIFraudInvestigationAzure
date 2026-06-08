@@ -99,6 +99,8 @@ The safe Admin Configuration Panel is documented in [docs/admin-configuration-pa
 
 Case assignment and investigator queues are documented in [docs/case-assignment-investigator-queue.md](docs/case-assignment-investigator-queue.md). The MVP includes local JSON assignment history, role-enforced assignment APIs, queue pages, workload metrics, and SLA risk indicators.
 
+The notification system is documented in [docs/notification-system.md](docs/notification-system.md). It includes local in-app notifications, preferences, templates, delivery history, external channel placeholders, audit, telemetry, and frontend inbox pages.
+
 Local verification:
 
 1. Start the backend and frontend with `start-local.bat`.
@@ -112,6 +114,7 @@ Local verification:
 9. Open `http://localhost:3000/cost` to review token usage, estimated cost, budgets, and anomaly indicators.
 10. Open `http://localhost:3000/admin/config` as `ADMIN` to inspect safe configuration, update `RAG_TOP_K`, and review config history.
 11. Open `http://localhost:3000/queues/my` as `FRAUD_ANALYST` or `http://localhost:3000/queues/team` as `FRAUD_MANAGER` to verify assignment queues.
+12. Open `http://localhost:3000/admin/notifications` as `ADMIN`, send a test notification, then review it at `http://localhost:3000/notifications`.
 
 ## Agent Runtime Modes
 
@@ -156,9 +159,17 @@ Implemented:
 - Cost monitoring and token usage dashboard with local estimates
 - Admin Configuration Panel with safe non-secret runtime overrides and feature flags
 - Case assignment, investigator queues, workload summary, assignment history, and SLA risk tracking
+- Notification system with in-app inbox, local delivery history, templates, preferences, audit, and telemetry
 
 Still placeholder-only:
 
 - Production Azure Monitor alert deployment
 - Production Teams, email, and ticketing integrations
 - Real database persistence
+# AI Feedback Loop
+
+Investigators can submit structured feedback on AI summaries, recommendations, policy citations, similar cases, risk indicators, reviewer validation, and agent traces from the case detail page after running an AI investigation. Feedback is stored locally in `data/synthetic/ai_feedback.json`, critical items create backlog records in `data/synthetic/ai_improvement_backlog.json`, and accepted feedback can be exported as a sanitized evaluation dataset.
+
+# Deployment Hardening
+
+Production deployment is prepared for Key Vault-backed secrets, managed identity, RBAC, public network access controls, and private endpoint scaffolding. Local mode remains available without Azure dependencies. See `docs/deployment-hardening-key-vault-private-endpoints-managed-identity.md`.

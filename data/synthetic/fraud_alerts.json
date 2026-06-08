@@ -8,12 +8,25 @@
     "device_id": "dev-002",
     "severity": "medium",
     "status": "NEW",
-    "status_updated_at": null,
-    "status_updated_by": null,
+    "status_updated_at": "2026-06-08T16:00:05.500709+00:00",
+    "status_updated_by": "test",
     "status_comment": null,
     "ai_recommendation": null,
     "investigation_summary": null,
-    "human_review": null,
+    "human_review": {
+      "decision": "ESCALATE",
+      "human_decision": "ESCALATE",
+      "reviewed_by": "local_demo_user",
+      "reviewer_role": "FRAUD_ANALYST",
+      "reason_code": "SUSPICIOUS_DEVICE",
+      "comment": "Synthetic review comment with enough detail.",
+      "ai_recommendation": "HOLD",
+      "human_override": true,
+      "override_reason": "Beneficiary linked to multiple suspicious synthetic cases.",
+      "override_comparison_status": "OVERRIDDEN",
+      "override_detected_at": "2026-06-08T16:00:05.081848+00:00",
+      "override_detected_by": "local_demo_user"
+    },
     "policy_references": [
       {
         "title": "New Beneficiary Policy",
@@ -23,17 +36,17 @@
     "audit_events": [],
     "reason": "New device and new beneficiary used for an unusually high card-not-present purchase.",
     "created_at": "2026-06-05T10:35:00Z",
-    "assigned_to": null,
-    "assigned_to_name": null,
-    "assigned_to_role": null,
+    "assigned_to": "fraud_analyst_01",
+    "assigned_to_name": "Fraud Analyst 01",
+    "assigned_to_role": "FRAUD_ANALYST",
     "assigned_team": "Fraud Operations",
-    "assigned_by": null,
-    "assigned_at": null,
-    "assignment_status": "UNASSIGNED",
-    "assignment_priority": "MEDIUM",
-    "sla_due_at": null,
-    "sla_status": "NOT_APPLICABLE",
-    "last_assignment_action": null,
+    "assigned_by": "fraud_manager_01",
+    "assigned_at": "2026-06-08T15:59:50.937057+00:00",
+    "assignment_status": "ASSIGNED",
+    "assignment_priority": "HIGH",
+    "sla_due_at": "2026-06-09T15:59:50.937057+00:00",
+    "sla_status": "ON_TRACK",
+    "last_assignment_action": "ASSIGNED",
     "risk_indicators": [
       {
         "code": "NEW_DEVICE",
@@ -45,7 +58,16 @@
         "description": "Beneficiary was first observed on the transaction date.",
         "severity": "medium"
       }
-    ]
+    ],
+    "override_summary": {
+      "has_override": true,
+      "ai_recommendation": "HOLD",
+      "human_decision": "ESCALATE",
+      "override_reason": "Beneficiary linked to multiple suspicious synthetic cases.",
+      "override_detected_at": "2026-06-08T16:00:05.081848+00:00",
+      "override_detected_by": "local_demo_user",
+      "override_comparison_status": "OVERRIDDEN"
+    }
   },
   {
     "alert_id": "alert-002",
@@ -55,13 +77,26 @@
     "beneficiary_id": "ben-002",
     "device_id": "dev-003",
     "severity": "high",
-    "status": "NEW",
-    "status_updated_at": null,
-    "status_updated_by": null,
-    "status_comment": null,
+    "status": "PENDING_HUMAN_REVIEW",
+    "status_updated_at": "2026-06-08T16:00:03.882203+00:00",
+    "status_updated_by": "system",
+    "status_comment": "Case is ready for human review",
     "ai_recommendation": null,
     "investigation_summary": null,
-    "human_review": null,
+    "human_review": {
+      "decision": "HOLD",
+      "human_decision": "HOLD",
+      "reviewed_by": "local_demo_user",
+      "reviewer_role": "FRAUD_ANALYST",
+      "reason_code": "SUSPICIOUS_DEVICE",
+      "comment": "Synthetic review comment with enough detail.",
+      "ai_recommendation": null,
+      "human_override": false,
+      "override_reason": null,
+      "override_comparison_status": "AI_RECOMMENDATION_MISSING",
+      "override_detected_at": null,
+      "override_detected_by": null
+    },
     "policy_references": [
       {
         "title": "High Value Transfer Policy",
@@ -77,11 +112,11 @@
     "assigned_team": "Fraud Operations",
     "assigned_by": "fraud_manager_01",
     "assigned_at": "2026-06-08T03:00:00Z",
-    "assignment_status": "ASSIGNED",
+    "assignment_status": "ACCEPTED",
     "assignment_priority": "HIGH",
     "sla_due_at": "2026-06-09T03:00:00Z",
     "sla_status": "ON_TRACK",
-    "last_assignment_action": "ASSIGNED",
+    "last_assignment_action": "ACCEPTED",
     "risk_indicators": [
       {
         "code": "HIGH_VALUE_TRANSFER",
@@ -98,7 +133,16 @@
         "description": "Device is not yet trusted for this synthetic customer.",
         "severity": "high"
       }
-    ]
+    ],
+    "override_summary": {
+      "has_override": false,
+      "ai_recommendation": null,
+      "human_decision": "HOLD",
+      "override_reason": null,
+      "override_detected_at": null,
+      "override_detected_by": null,
+      "override_comparison_status": "AI_RECOMMENDATION_MISSING"
+    }
   },
   {
     "alert_id": "alert-003",

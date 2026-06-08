@@ -1,0 +1,6 @@
+{
+  "name": "critical-ai-feedback-submitted",
+  "description": "Placeholder alert for critical AI feedback.",
+  "severity": "critical",
+  "queryFile": "monitoring/kql/critical-ai-feedback-submitted.kql"
+}

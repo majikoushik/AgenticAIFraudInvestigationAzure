@@ -1,0 +1,6 @@
+{
+  "name": "high-incorrect-recommendation-feedback-rate",
+  "description": "Placeholder alert for incorrect AI recommendation feedback.",
+  "severity": "warning",
+  "queryFile": "monitoring/kql/high-incorrect-recommendation-feedback-rate.kql"
+}

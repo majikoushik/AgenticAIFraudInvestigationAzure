@@ -142,6 +142,42 @@ button {
   font-size: 0.86rem;
 }
 
+.notification-bell {
+  position: relative;
+}
+
+.notification-critical {
+  border-color: #fecdca;
+  color: var(--danger);
+}
+
+.notification-dropdown {
+  position: absolute;
+  right: 0;
+  top: 44px;
+  z-index: 10;
+  display: grid;
+  gap: 8px;
+  width: 320px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  padding: 12px;
+}
+
+.notification-row {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-muted);
+  color: var(--foreground);
+  padding: 10px;
+  text-align: left;
+}
+
 .provider-row {
   align-items: center;
   display: flex;
@@ -904,4 +940,65 @@ td {
   .content {
     padding: 20px 16px;
   }
+}
+.feedback-button {
+  width: fit-content;
+}
+
+.feedback-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.feedback-modal {
+  max-width: 760px;
+}
+
+.feedback-form {
+  display: grid;
+  gap: 14px;
+}
+
+.feedback-form label {
+  display: grid;
+  gap: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.feedback-form input,
+.feedback-form select,
+.feedback-form textarea {
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font: inherit;
+}
+
+.feedback-chip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px;
+}
+
+.feedback-chip {
+  align-items: center;
+  border: 1px solid #d8dee8;
+  border-radius: 6px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+}
+
+.feedback-two-col {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.success-inline {
+  color: #166534;
+  font-weight: 600;
 }

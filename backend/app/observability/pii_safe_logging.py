@@ -1,6 +1,8 @@
 import copy
 from typing import Any
 
+from app.security.secret_redaction import is_sensitive_key
+
 
 SENSITIVE_KEY_PARTS = (
     "password",
@@ -32,7 +34,7 @@ def _sanitize(value: Any) -> Any:
                 sanitized[key] = "[REDACTED_PROMPT]"
             elif "response" in lowered:
                 sanitized[key] = "[REDACTED_RESPONSE]"
-            elif any(part in lowered for part in SENSITIVE_KEY_PARTS):
+            elif any(part in lowered for part in SENSITIVE_KEY_PARTS) or is_sensitive_key(str(key)):
                 sanitized[key] = "***MASKED***"
             else:
                 sanitized[key] = _sanitize(item)

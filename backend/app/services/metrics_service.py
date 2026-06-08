@@ -4,6 +4,7 @@ from statistics import mean
 from typing import Any
 
 from app.core.constants import AuditEventType, CaseStatus, normalize_decision
+from app.feedback.feedback_analytics_service import FeedbackAnalyticsService
 from app.observability import telemetry_events
 from app.observability.telemetry_client import get_telemetry_client
 from app.repositories.audit_repository import AuditRepository
@@ -37,6 +38,7 @@ class MetricsService:
     ) -> None:
         self.case_repository = case_repository or CaseRepository()
         self.audit_repository = audit_repository or AuditRepository()
+        self.feedback_analytics_service = FeedbackAnalyticsService()
 
     def get_summary_metrics(self) -> MetricsSummaryResponse:
         summary = MetricsSummaryResponse(
@@ -286,6 +288,20 @@ class MetricsService:
             "human_decisions_by_date": self._clean_date_counts(human_decisions),
             "overrides_by_date": self._clean_date_counts(overrides),
             "audit_events_by_date": self._clean_date_counts(audit_events),
+        }
+
+    def get_feedback_metrics(self) -> dict:
+        metrics = self.feedback_analytics_service.get_all_metrics()
+        return {
+            "total_feedback": metrics["summary"]["total_feedback"],
+            "negative_feedback_rate_percentage": metrics["summary"]["negative_feedback_rate_percentage"],
+            "critical_feedback_count": metrics["summary"]["critical_feedback_count"],
+            "feedback_by_target_type": metrics["by_target_type"],
+            "feedback_by_issue_type": metrics["by_issue_type"],
+            "feedback_by_agent": metrics["by_agent"],
+            "wrong_policy_citation_feedback_count": metrics["rag_quality"]["wrong_policy_citation_count"],
+            "incorrect_recommendation_feedback_count": metrics["recommendation_quality"]["incorrect_recommendation_count"],
+            "open_feedback_backlog_count": metrics["summary"]["open_backlog_count"],
         }
 
     @staticmethod

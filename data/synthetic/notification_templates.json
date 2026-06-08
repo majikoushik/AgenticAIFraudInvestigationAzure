@@ -1,0 +1,119 @@
+[
+  {
+    "template_id": "TPL-CASE-ASSIGNED",
+    "event_type": "CASE_ASSIGNED",
+    "title_template": "Case {{case_id}} assigned",
+    "message_template": "Case {{case_id}} has been assigned to {{assigned_to_name}} with priority {{assignment_priority}}.",
+    "default_priority": "HIGH",
+    "default_channels": ["IN_APP", "LOCAL"],
+    "enabled": true
+  },
+  {
+    "template_id": "TPL-CASE-REASSIGNED",
+    "event_type": "CASE_REASSIGNED",
+    "title_template": "Case {{case_id}} reassigned",
+    "message_template": "Case {{case_id}} has a new assignment owner.",
+    "default_priority": "MEDIUM",
+    "default_channels": ["IN_APP", "LOCAL"],
+    "enabled": true
+  },
+  {
+    "template_id": "TPL-HUMAN-REVIEW-REQUIRED",
+    "event_type": "HUMAN_REVIEW_REQUIRED",
+    "title_template": "Human review required",
+    "message_template": "Case {{case_id}} requires human review.",
+    "default_priority": "HIGH",
+    "default_channels": ["IN_APP", "LOCAL"],
+    "enabled": true
+  },
+  {
+    "template_id": "TPL-HUMAN-OVERRIDE",
+    "event_type": "HUMAN_OVERRIDE_DETECTED",
+    "title_template": "Human override detected",
+    "message_template": "Case {{case_id}} has a human decision that differs from the AI recommendation.",
+    "default_priority": "HIGH",
+    "default_channels": ["IN_APP", "LOCAL"],
+    "enabled": true
+  },
+  {
+    "template_id": "TPL-SLA-AT-RISK",
+    "event_type": "SLA_AT_RISK",
+    "title_template": "SLA at risk for {{case_id}}",
+    "message_template": "Case {{case_id}} is approaching SLA due time {{sla_due_at}}.",
+    "default_priority": "HIGH",
+    "default_channels": ["IN_APP", "LOCAL"],
+    "enabled": true
+  },
+  {
+    "template_id": "TPL-SLA-BREACHED",
+    "event_type": "SLA_BREACHED",
+    "title_template": "SLA breached for {{case_id}}",
+    "message_template": "Case {{case_id}} has breached its assignment SLA.",
+    "default_priority": "CRITICAL",
+    "default_channels": ["IN_APP", "LOCAL"],
+    "enabled": true
+  },
+  {
+    "template_id": "TPL-ALERT-CREATED",
+    "event_type": "ALERT_CREATED",
+    "title_template": "Operational alert created",
+    "message_template": "{{title}}",
+    "default_priority": "HIGH",
+    "default_channels": ["IN_APP", "LOCAL"],
+    "enabled": true
+  },
+  {
+    "template_id": "TPL-INCIDENT-CREATED",
+    "event_type": "INCIDENT_CREATED",
+    "title_template": "Incident {{incident_id}} created",
+    "message_template": "{{title}}",
+    "default_priority": "HIGH",
+    "default_channels": ["IN_APP", "LOCAL"],
+    "enabled": true
+  },
+  {
+    "template_id": "TPL-BUDGET-WARNING",
+    "event_type": "BUDGET_WARNING",
+    "title_template": "Budget warning",
+    "message_template": "Cost monitoring has reached warning status.",
+    "default_priority": "HIGH",
+    "default_channels": ["IN_APP", "LOCAL"],
+    "enabled": true
+  },
+  {
+    "template_id": "TPL-BUDGET-EXCEEDED",
+    "event_type": "BUDGET_EXCEEDED",
+    "title_template": "Budget exceeded",
+    "message_template": "Cost monitoring has exceeded the configured budget.",
+    "default_priority": "CRITICAL",
+    "default_channels": ["IN_APP", "LOCAL"],
+    "enabled": true
+  },
+  {
+    "template_id": "TPL-PROMPT-INJECTION",
+    "event_type": "PROMPT_INJECTION_DETECTED",
+    "title_template": "Prompt injection signal detected",
+    "message_template": "A safety signal requires admin and compliance review.",
+    "default_priority": "CRITICAL",
+    "default_channels": ["IN_APP", "LOCAL"],
+    "enabled": true
+  },
+  {
+    "template_id": "TPL-GUARDRAIL",
+    "event_type": "GUARDRAIL_VIOLATION_DETECTED",
+    "title_template": "Guardrail violation detected",
+    "message_template": "A guardrail signal requires admin and compliance review.",
+    "default_priority": "CRITICAL",
+    "default_channels": ["IN_APP", "LOCAL"],
+    "enabled": true
+  },
+  {
+    "template_id": "TPL-ADMIN-CONFIG",
+    "event_type": "ADMIN_CONFIG_UPDATED",
+    "title_template": "Admin configuration updated",
+    "message_template": "Configuration key {{key}} was updated.",
+    "default_priority": "INFO",
+    "default_channels": ["IN_APP", "LOCAL"],
+    "enabled": true
+  }
+]

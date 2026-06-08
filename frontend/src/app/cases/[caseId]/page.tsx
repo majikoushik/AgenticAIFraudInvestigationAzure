@@ -28,10 +28,12 @@ import { AssignmentHistoryPanel } from "@/components/assignment/AssignmentHistor
 import { AssignmentPriorityBadge } from "@/components/assignment/AssignmentPriorityBadge";
 import { AssignmentStatusBadge } from "@/components/assignment/AssignmentStatusBadge";
 import { SlaStatusBadge } from "@/components/assignment/SlaStatusBadge";
+import { FeedbackButton } from "@/components/feedback/FeedbackButton";
 import { getAssignmentHistory } from "@/services/assignmentService";
 import { getAuditTrail } from "@/services/auditService";
 import { runInvestigation } from "@/services/agentService";
 import { getCaseDetail } from "@/services/caseService";
+import { getCaseFeedback } from "@/services/feedbackService";
 import { getCaseStatus } from "@/services/statusService";
 import type { InvestigationPackage } from "@/types/agent.types";
 import type { AuditTrail } from "@/types/audit.types";
@@ -50,6 +52,7 @@ export default function CaseDetailPage({ params }: PageProps) {
   const [assignmentHistory, setAssignmentHistory] = useState<AssignmentHistoryRecord[]>([]);
   const [statusInfo, setStatusInfo] = useState<CaseStatusInfo | null>(null);
   const [investigation, setInvestigation] = useState<InvestigationPackage | null>(null);
+  const [feedbackCount, setFeedbackCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [investigating, setInvestigating] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -62,16 +65,18 @@ export default function CaseDetailPage({ params }: PageProps) {
     if (!caseId) {
       return;
     }
-    const [detail, audit, status, history] = await Promise.all([
+    const [detail, audit, status, history, feedback] = await Promise.all([
       getCaseDetail(caseId),
       getAuditTrail(caseId),
       getCaseStatus(caseId),
-      getAssignmentHistory(caseId).catch(() => ({ history: [] }))
+      getAssignmentHistory(caseId).catch(() => ({ history: [] })),
+      getCaseFeedback(caseId).catch(() => ({ count: 0, feedback_records: [] }))
     ]);
     setCaseDetail(detail);
     setAuditTrail(audit);
     setStatusInfo(status);
     setAssignmentHistory(history.history);
+    setFeedbackCount(feedback.count);
   }, [caseId]);
 
   useEffect(() => {
@@ -83,13 +88,15 @@ export default function CaseDetailPage({ params }: PageProps) {
       getCaseDetail(caseId),
       getAuditTrail(caseId),
       getCaseStatus(caseId),
-      getAssignmentHistory(caseId).catch(() => ({ history: [] }))
+      getAssignmentHistory(caseId).catch(() => ({ history: [] })),
+      getCaseFeedback(caseId).catch(() => ({ count: 0, feedback_records: [] }))
     ])
-      .then(([detail, audit, status, history]) => {
+      .then(([detail, audit, status, history, feedback]) => {
         setCaseDetail(detail);
         setAuditTrail(audit);
         setStatusInfo(status);
         setAssignmentHistory(history.history);
+        setFeedbackCount(feedback.count);
       })
       .catch((err: Error) => setError(err.message))
       .finally(() => setLoading(false));
@@ -129,6 +136,7 @@ export default function CaseDetailPage({ params }: PageProps) {
                 <div>
                   <h2>{caseDetail.metadata.case_id}</h2>
                   <p>{caseDetail.metadata.reason}</p>
+                  <p className="muted">{feedbackCount} AI feedback records for this case</p>
                 </div>
                 <button className="button" onClick={handleRunInvestigation} disabled={investigating}>
                   {investigating ? "Running Investigation" : "Run AI Investigation"}
@@ -177,12 +185,30 @@ export default function CaseDetailPage({ params }: PageProps) {
                     fallbackUsed={investigation.agent_trace.some((item) => JSON.stringify(item.output).includes("\"fallback_used\":true"))}
                   />
                   <RiskIndicatorPanel indicators={investigation.risk_indicators} title="AI Investigation Result" summary={investigation.investigation_summary} />
+                  <div className="feedback-inline full-span">
+                    <FeedbackButton caseId={caseId} targetType="INVESTIGATION_SUMMARY" actualAiRecommendation={investigation.investigation_summary.recommended_action} snapshot={investigation.investigation_summary as unknown as Record<string, unknown>} onSubmitted={refreshCase} />
+                    <FeedbackButton caseId={caseId} targetType="AI_RECOMMENDATION" actualAiRecommendation={investigation.investigation_summary.recommended_action} snapshot={{ recommended_action: investigation.investigation_summary.recommended_action, confidence_level: investigation.investigation_summary.confidence_level }} onSubmitted={refreshCase} />
+                    <FeedbackButton caseId={caseId} targetType="RISK_INDICATOR" actualAiRecommendation={investigation.investigation_summary.recommended_action} snapshot={{ risk_indicators: investigation.risk_indicators }} onSubmitted={refreshCase} />
+                    <FeedbackButton caseId={caseId} targetType="OVERALL_AI_OUTPUT" actualAiRecommendation={investigation.investigation_summary.recommended_action} snapshot={{ recommended_action: investigation.investigation_summary.recommended_action, confidence_level: investigation.investigation_summary.confidence_level, policy_references: investigation.policy_references, safety_flags: investigation.safety_flags }} onSubmitted={refreshCase} />
+                  </div>
                   <TokenUsagePanel usage={investigation.token_usage} latencyMs={investigation.latency_ms} />
                   <SafetyFlagsPanel flags={investigation.safety_flags} citationIssues={investigation.reviewer_validation.citation_issues} />
                   <AgentTracePanel trace={investigation.agent_trace} />
+                  <div className="feedback-inline full-span">
+                    <FeedbackButton caseId={caseId} targetType="AGENT_TRACE" actualAiRecommendation={investigation.investigation_summary.recommended_action} agentName="AgentOrchestrator" snapshot={{ agent_name: "AgentOrchestrator" }} onSubmitted={refreshCase} />
+                  </div>
                   <PolicyReferencePanel references={investigation.policy_references} />
+                  <div className="feedback-inline full-span">
+                    <FeedbackButton caseId={caseId} targetType="POLICY_CITATION" actualAiRecommendation={investigation.investigation_summary.recommended_action} policySourceFile={investigation.policy_references[0]?.source_filename} policyChunkId={investigation.policy_references[0]?.chunk_id} snapshot={{ policy_references: investigation.policy_references }} onSubmitted={refreshCase} />
+                  </div>
                   <SimilarCasesPanel cases={investigation.similar_cases} />
+                  <div className="feedback-inline full-span">
+                    <FeedbackButton caseId={caseId} targetType="SIMILAR_CASE_RETRIEVAL" actualAiRecommendation={investigation.investigation_summary.recommended_action} snapshot={{ similar_cases: investigation.similar_cases }} onSubmitted={refreshCase} />
+                  </div>
                   <ReviewerValidationPanel validation={investigation.reviewer_validation} humanReviewRequired={investigation.human_review_required} />
+                  <div className="feedback-inline full-span">
+                    <FeedbackButton caseId={caseId} targetType="REVIEWER_VALIDATION" actualAiRecommendation={investigation.investigation_summary.recommended_action} snapshot={{ validation_result: investigation.reviewer_validation, human_review_required: investigation.human_review_required }} onSubmitted={refreshCase} />
+                  </div>
                 </>
               )}
 

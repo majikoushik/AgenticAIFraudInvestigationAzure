@@ -29,6 +29,12 @@ class Permission(StrEnum):
     ACCEPT_CASE = "ACCEPT_CASE"
     TRANSFER_CASE = "TRANSFER_CASE"
     VIEW_ASSIGNMENT_HISTORY = "VIEW_ASSIGNMENT_HISTORY"
+    VIEW_NOTIFICATIONS = "VIEW_NOTIFICATIONS"
+    MANAGE_NOTIFICATIONS = "MANAGE_NOTIFICATIONS"
+    SUBMIT_AI_FEEDBACK = "SUBMIT_AI_FEEDBACK"
+    VIEW_AI_FEEDBACK = "VIEW_AI_FEEDBACK"
+    MANAGE_AI_FEEDBACK = "MANAGE_AI_FEEDBACK"
+    EXPORT_AI_FEEDBACK = "EXPORT_AI_FEEDBACK"
 
 
 PERMISSIONS_BY_ROLE: dict[str, set[Permission]] = {
@@ -46,6 +52,8 @@ PERMISSIONS_BY_ROLE: dict[str, set[Permission]] = {
         Permission.ACCEPT_CASE,
         Permission.RELEASE_CASE,
         Permission.VIEW_ASSIGNMENT_HISTORY,
+        Permission.VIEW_NOTIFICATIONS,
+        Permission.SUBMIT_AI_FEEDBACK,
     },
     "FRAUD_MANAGER": {
         Permission.VIEW_CASES,
@@ -68,6 +76,10 @@ PERMISSIONS_BY_ROLE: dict[str, set[Permission]] = {
         Permission.ACCEPT_CASE,
         Permission.TRANSFER_CASE,
         Permission.VIEW_ASSIGNMENT_HISTORY,
+        Permission.VIEW_NOTIFICATIONS,
+        Permission.SUBMIT_AI_FEEDBACK,
+        Permission.VIEW_AI_FEEDBACK,
+        Permission.MANAGE_AI_FEEDBACK,
     },
     "COMPLIANCE_OFFICER": {
         Permission.VIEW_CASES,
@@ -84,6 +96,10 @@ PERMISSIONS_BY_ROLE: dict[str, set[Permission]] = {
         Permission.ACCEPT_CASE,
         Permission.RELEASE_CASE,
         Permission.VIEW_ASSIGNMENT_HISTORY,
+        Permission.VIEW_NOTIFICATIONS,
+        Permission.SUBMIT_AI_FEEDBACK,
+        Permission.VIEW_AI_FEEDBACK,
+        Permission.MANAGE_AI_FEEDBACK,
     },
     "AUDITOR": {
         Permission.VIEW_CASES,
@@ -92,6 +108,8 @@ PERMISSIONS_BY_ROLE: dict[str, set[Permission]] = {
         Permission.VIEW_METRICS,
         Permission.VIEW_TEAM_QUEUE,
         Permission.VIEW_ASSIGNMENT_HISTORY,
+        Permission.VIEW_NOTIFICATIONS,
+        Permission.VIEW_AI_FEEDBACK,
     },
     "ADMIN": set(Permission),
 }

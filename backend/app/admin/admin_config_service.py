@@ -14,6 +14,8 @@ from app.observability import telemetry_events
 from app.observability.telemetry_client import get_telemetry_client
 from app.services.audit_service import audit_service
 from app.services.errors import ApiError
+from app.notifications.integrations.safety_notifications import notify_safety_event
+from app.security.security_health import security_health_service
 
 
 class AdminConfigService:
@@ -59,6 +61,7 @@ class AdminConfigService:
             self.history_service.append_history_record(key, old_value, new_value, definition.category, updated_by, comment)
             updated_items.append(self._build_item(definition))
             audit_service.record_event(None, AuditEventType.ADMIN_CONFIG_UPDATED, updated_by, ReviewerRole.ADMIN, metadata={"key": key, "old_value": old_value, "new_value": new_value, "category": definition.category, "requires_restart": definition.requires_restart})
+            notify_safety_event("FEATURE_FLAG_UPDATED" if key.startswith("FEATURE_") else "ADMIN_CONFIG_UPDATED", {"key": key, "category": definition.category, "updated_by": updated_by, "priority": "INFO"})
         self._track(telemetry_events.ADMIN_CONFIG_UPDATED, {"updated_count": len(updated_items)})
         return {"updated_count": len(updated_items), "failed_count": 0, "updated_items": updated_items, "validation_errors": [], "message": "Configuration updated successfully."}
 
@@ -81,12 +84,24 @@ class AdminConfigService:
     def get_config_health(self) -> dict:
         editable = [definition for definition in SAFE_CONFIG_REGISTRY.values() if definition.editable and not definition.secret]
         restart = [definition for definition in SAFE_CONFIG_REGISTRY.values() if definition.requires_restart]
+        security_health = security_health_service.get_security_health()
         return {
             **admin_config_settings.safe_summary(),
             "local_store_accessible": self._path_accessible(self.repository.path),
             "history_store_accessible": self._path_accessible(self.history_service.path),
             "azure_app_configuration_enabled": AzureAppConfigClient().is_enabled(),
             "key_vault_enabled": KeyVaultConfigClient().is_enabled(),
+            "deployment_security": {
+                "deployment_mode": security_health["deployment_mode"],
+                "secret_provider": security_health["secret_provider"],
+                "key_vault_configured": security_health["key_vault_configured"],
+                "managed_identity_enabled": security_health["managed_identity_enabled"],
+                "managed_identity_configured": security_health["managed_identity_configured"],
+                "private_endpoints_enabled": security_health["private_endpoints_enabled"],
+                "public_network_access_disabled": security_health["public_network_access_disabled"],
+                "status": security_health["status"],
+                "warnings": security_health["warnings"],
+            },
             "secret_values_redacted": True,
             "editable_config_count": len(editable),
             "requires_restart_count": len(restart),

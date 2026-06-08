@@ -7,6 +7,7 @@ from typing import Any
 from app.observability.correlation import get_correlation_id
 from app.observability.observability_config import observability_config
 from app.observability.pii_safe_logging import sanitize_telemetry_properties
+from app.security.secure_config_loader import secure_config_loader
 
 logger = logging.getLogger(__name__)
 
@@ -15,7 +16,8 @@ class TelemetryClient:
     def __init__(self, local_store_path: Path | None = None) -> None:
         self.config = observability_config
         self.local_store_path = local_store_path or Path(__file__).resolve().parents[3] / "data" / "synthetic" / "telemetry_events.json"
-        self._azure_enabled = self.config.enabled and self.config.application_insights_configured
+        self._applicationinsights_connection_string = secure_config_loader.get_secret("APPLICATIONINSIGHTS_CONNECTION_STRING") or self.config.applicationinsights_connection_string
+        self._azure_enabled = self.config.enabled and bool(self._applicationinsights_connection_string or self.config.applicationinsights_instrumentation_key)
         if self._azure_enabled:
             self._try_configure_azure_monitor()
 
@@ -73,7 +75,7 @@ class TelemetryClient:
         try:
             from azure.monitor.opentelemetry import configure_azure_monitor
 
-            configure_azure_monitor(connection_string=self.config.applicationinsights_connection_string)
+            configure_azure_monitor(connection_string=self._applicationinsights_connection_string)
         except Exception:
             logger.warning("Azure Monitor exporter unavailable; using local telemetry fallback.")
             self._azure_enabled = False

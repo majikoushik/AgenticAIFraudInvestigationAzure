@@ -104,3 +104,6 @@ python -m rag.evaluation.run_local_eval
 ```
 
 The dataset lives in `rag/evaluation/evaluation_dataset.json`.
+# Feedback Loop
+
+Policy citation and similar-case feedback feeds the RAG improvement backlog. Use these records to tune chunking, indexing, filters, and retrieval ranking before moving to Azure AI Search.

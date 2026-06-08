@@ -11,6 +11,7 @@ from app.observability.pii_safe_logging import sanitize_telemetry_properties
 from app.observability.telemetry_client import get_telemetry_client
 from app.services.audit_service import audit_service
 from app.services.errors import ApiError
+from app.notifications.integrations.alert_incident_notifications import notify_incident_event
 
 
 class IncidentService:
@@ -53,6 +54,7 @@ class IncidentService:
         self.repository.append_incident(incident)
         audit_service.record_event(None, AuditEventType.INCIDENT_CREATED, "system", ReviewerRole.SYSTEM, metadata={"incident_id": incident["incident_id"], "alert_id": alert["alert_id"]})
         get_telemetry_client().track_event(telemetry_events.INCIDENT_CREATED if hasattr(telemetry_events, "INCIDENT_CREATED") else "INCIDENT_CREATED", {"incident_id": incident["incident_id"], "alert_id": alert["alert_id"]})
+        notify_incident_event("INCIDENT_CREATED", incident)
         return incident
 
     def update_incident_status(self, incident_id: str, target_status: str, actor: str, comment: str | None = None) -> dict:
@@ -72,6 +74,7 @@ class IncidentService:
         event_type = AuditEventType.INCIDENT_CLOSED if target_status == IncidentStatus.CLOSED.value else AuditEventType.INCIDENT_STATUS_CHANGED
         audit_service.record_event(None, event_type, actor, ReviewerRole.ADMIN, metadata={"incident_id": incident_id, "target_status": target_status})
         get_telemetry_client().track_event("INCIDENT_STATUS_CHANGED", {"incident_id": incident_id, "target_status": target_status})
+        notify_incident_event("INCIDENT_CLOSED" if target_status == IncidentStatus.CLOSED.value else "INCIDENT_STATUS_CHANGED", updated)
         return updated
 
     def assign_incident(self, incident_id: str, assigned_to: str, actor: str, comment: str | None = None) -> dict:
@@ -80,6 +83,7 @@ class IncidentService:
         timeline = [*incident.get("timeline", []), {"timestamp": now, "actor": actor, "action": "INCIDENT_ASSIGNED", "comment": comment or f"Assigned to {assigned_to}."}]
         updated = self.repository.update_incident(incident_id, {"assigned_to": assigned_to, "updated_at": now, "timeline": timeline})
         audit_service.record_event(None, AuditEventType.INCIDENT_ASSIGNED, actor, ReviewerRole.ADMIN, metadata={"incident_id": incident_id, "assigned_to": assigned_to})
+        notify_incident_event("INCIDENT_ASSIGNED", updated)
         return updated
 
     def add_timeline_event(self, incident_id: str, actor: str, action: str, comment: str) -> dict:

@@ -1,6 +1,7 @@
 param namePrefix string
 param location string
 param purgeProtectionEnabled bool
+param publicNetworkAccess string = 'Enabled'
 param tags object
 
 var keyVaultName = '${namePrefix}-kv'
@@ -18,7 +19,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
     enableSoftDelete: true
     enablePurgeProtection: purgeProtectionEnabled
     enableRbacAuthorization: true
-    publicNetworkAccess: 'Enabled'
+    publicNetworkAccess: publicNetworkAccess
   }
 }
 
@@ -30,3 +31,4 @@ resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
 
 output keyVaultName string = keyVault.name
 output keyVaultUri string = keyVault.properties.vaultUri
+output keyVaultResourceId string = keyVault.id

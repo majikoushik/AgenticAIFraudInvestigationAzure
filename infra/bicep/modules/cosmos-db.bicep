@@ -2,6 +2,7 @@ param namePrefix string
 param location string
 param databaseName string
 param containerName string
+param publicNetworkAccess string = 'Enabled'
 param tags object
 
 resource account 'Microsoft.DocumentDB/databaseAccounts@2024-05-15' = {
@@ -21,6 +22,7 @@ resource account 'Microsoft.DocumentDB/databaseAccounts@2024-05-15' = {
     consistencyPolicy: {
       defaultConsistencyLevel: 'Session'
     }
+    publicNetworkAccess: publicNetworkAccess
     enableFreeTier: true
   }
 }
@@ -52,5 +54,6 @@ resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/container
 }
 
 output accountName string = account.name
+output accountResourceId string = account.id
 output databaseName string = database.name
 output containerName string = container.name

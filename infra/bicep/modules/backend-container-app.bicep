@@ -19,6 +19,14 @@ param alertingEnabled string = 'true'
 param costMonitoringEnabled string = 'true'
 param adminConfigEnabled string = 'true'
 param caseAssignmentEnabled string = 'true'
+param notificationSystemEnabled string = 'true'
+param feedbackLoopEnabled string = 'true'
+param useManagedIdentity string = 'true'
+param keyVaultEnabled string = 'true'
+param keyVaultUri string = ''
+param secretProvider string = 'key_vault'
+param privateEndpointsEnabled string = 'false'
+param disablePublicNetworkAccess string = 'false'
 param tags object
 
 resource app 'Microsoft.App/containerApps@2023-05-01' = {
@@ -106,6 +114,34 @@ resource app 'Microsoft.App/containerApps@2023-05-01' = {
               value: managedIdentityClientId
             }
             {
+              name: 'DEPLOYMENT_MODE'
+              value: environmentName
+            }
+            {
+              name: 'USE_MANAGED_IDENTITY'
+              value: useManagedIdentity
+            }
+            {
+              name: 'KEY_VAULT_ENABLED'
+              value: keyVaultEnabled
+            }
+            {
+              name: 'KEY_VAULT_URI'
+              value: keyVaultUri
+            }
+            {
+              name: 'SECRET_PROVIDER'
+              value: secretProvider
+            }
+            {
+              name: 'PRIVATE_ENDPOINTS_ENABLED'
+              value: privateEndpointsEnabled
+            }
+            {
+              name: 'DISABLE_PUBLIC_NETWORK_ACCESS'
+              value: disablePublicNetworkAccess
+            }
+            {
               name: 'AI_PROVIDER'
               value: 'local'
             }
@@ -147,6 +183,70 @@ resource app 'Microsoft.App/containerApps@2023-05-01' = {
             }
             {
               name: 'NOTIFICATIONS_ENABLED'
+              value: 'false'
+            }
+            {
+              name: 'NOTIFICATION_SYSTEM_ENABLED'
+              value: notificationSystemEnabled
+            }
+            {
+              name: 'NOTIFICATION_MODE'
+              value: 'local'
+            }
+            {
+              name: 'NOTIFICATION_ENABLE_IN_APP'
+              value: 'true'
+            }
+            {
+              name: 'NOTIFICATION_ENABLE_LOCAL'
+              value: 'true'
+            }
+            {
+              name: 'NOTIFICATION_ENABLE_EMAIL'
+              value: 'false'
+            }
+            {
+              name: 'NOTIFICATION_ENABLE_TEAMS'
+              value: 'false'
+            }
+            {
+              name: 'NOTIFICATION_ENABLE_WEBHOOK'
+              value: 'false'
+            }
+            {
+              name: 'NOTIFICATION_DEFAULT_CHANNELS'
+              value: 'IN_APP,LOCAL'
+            }
+            {
+              name: 'NOTIFICATION_MAX_RETRY_COUNT'
+              value: '3'
+            }
+            {
+              name: 'FEEDBACK_LOOP_ENABLED'
+              value: feedbackLoopEnabled
+            }
+            {
+              name: 'FEEDBACK_MODE'
+              value: 'local'
+            }
+            {
+              name: 'FEEDBACK_REQUIRE_COMMENT_FOR_NEGATIVE_RATING'
+              value: 'true'
+            }
+            {
+              name: 'FEEDBACK_MIN_COMMENT_LENGTH'
+              value: '10'
+            }
+            {
+              name: 'FEEDBACK_AUTO_CREATE_BACKLOG_FOR_CRITICAL'
+              value: 'true'
+            }
+            {
+              name: 'FEEDBACK_AUTO_NOTIFY_ADMIN_FOR_CRITICAL'
+              value: 'true'
+            }
+            {
+              name: 'FEEDBACK_AUTO_EXPORT_ACCEPTED_TO_EVAL'
               value: 'false'
             }
             {

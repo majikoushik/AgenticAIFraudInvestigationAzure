@@ -1,0 +1,4 @@
+// Placeholder KQL: high negative AI feedback rate.
+customEvents
+| where name == "AI_FEEDBACK_NEGATIVE_SUBMITTED"
+| summarize negativeFeedback=count() by bin(timestamp, 1h)

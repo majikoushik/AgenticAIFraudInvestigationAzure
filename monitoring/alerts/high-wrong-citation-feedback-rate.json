@@ -1,0 +1,6 @@
+{
+  "name": "high-wrong-citation-feedback-rate",
+  "description": "Placeholder alert for poor policy citation feedback.",
+  "severity": "warning",
+  "queryFile": "monitoring/kql/high-wrong-citation-feedback-rate.kql"
+}

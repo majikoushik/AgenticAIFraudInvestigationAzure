@@ -16,5 +16,9 @@ resource identity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' 
 // - AcrPull is assigned in main.bicep for Container Apps image pulls.
 
 output identityResourceId string = identity.id
+output managedIdentityName string = identity.name
+output managedIdentityResourceId string = identity.id
+output managedIdentityClientId string = identity.properties.clientId
+output managedIdentityPrincipalId string = identity.properties.principalId
 output principalId string = identity.properties.principalId
 output clientId string = identity.properties.clientId

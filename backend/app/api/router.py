@@ -10,12 +10,15 @@ from app.api.routes import (
     case_routes,
     cost_routes,
     decision_routes,
+    feedback_routes,
     health_routes,
     incident_routes,
     metrics_routes,
+    notification_routes,
     observability_routes,
     rag_routes,
     review_routes,
+    security_routes,
     status_routes,
 )
 
@@ -28,12 +31,17 @@ api_router.include_router(alert_routes.router, prefix="/api/v1")
 api_router.include_router(case_routes.router, prefix="/api/v1")
 api_router.include_router(cost_routes.router, prefix="/api/v1")
 api_router.include_router(decision_routes.router, prefix="/api/v1")
+api_router.include_router(feedback_routes.router, prefix="/api/v1")
+api_router.include_router(feedback_routes.case_router, prefix="/api/v1")
 api_router.include_router(rag_routes.router, prefix="/api/v1")
 api_router.include_router(agent_routes.router, prefix="/api/v1")
 api_router.include_router(metrics_routes.router, prefix="/api/v1")
+api_router.include_router(notification_routes.router, prefix="/api/v1")
+api_router.include_router(notification_routes.admin_router, prefix="/api/v1")
 api_router.include_router(incident_routes.router, prefix="/api/v1")
 api_router.include_router(observability_routes.router, prefix="/api/v1")
 api_router.include_router(review_routes.router, prefix="/api/v1")
+api_router.include_router(security_routes.router, prefix="/api/v1")
 api_router.include_router(audit_routes.router, prefix="/api/v1")
 api_router.include_router(audit_routes.audit_router, prefix="/api/v1")
 api_router.include_router(status_routes.router, prefix="/api/v1")

@@ -1,0 +1,152 @@
+{
+  "feedback_records": [
+    {
+      "case_id": "case-001",
+      "target_type": "AI_RECOMMENDATION",
+      "target_id": null,
+      "rating": "POOR",
+      "issue_types": [
+        "INCORRECT_RECOMMENDATION"
+      ],
+      "severity": "HIGH",
+      "comment": "The recommendation should escalate due to beneficiary risk.",
+      "suggested_correction": null,
+      "expected_recommendation": "ESCALATE",
+      "actual_ai_recommendation": "HOLD",
+      "human_decision": "ESCALATE",
+      "policy_source_file": null,
+      "policy_chunk_id": null,
+      "agent_name": null,
+      "sanitized_ai_output_snapshot": {},
+      "ai_provider": "local",
+      "model_or_deployment": "local-deterministic",
+      "metadata": {
+        "case_severity": "medium",
+        "case_status": "NEW",
+        "risk_indicator_codes": [
+          "NEW_DEVICE",
+          "NEW_BENEFICIARY"
+        ]
+      },
+      "feedback_id": "FB-[masked-number]-747750",
+      "submitted_by": "fraud_analyst_01",
+      "submitted_by_role": "FRAUD_ANALYST",
+      "disposition": "NEW",
+      "case_status_at_feedback": "NEW",
+      "created_at": "[masked-phone]T15:56:35.786928+00:00",
+      "updated_at": "[masked-phone]T15:56:35.786928+00:00"
+    },
+    {
+      "case_id": "case-001",
+      "target_type": "POLICY_CITATION",
+      "target_id": null,
+      "rating": "POOR",
+      "issue_types": [
+        "WRONG_POLICY_CITATION"
+      ],
+      "severity": "HIGH",
+      "comment": "Wrong policy citation was selected.",
+      "suggested_correction": null,
+      "expected_recommendation": null,
+      "actual_ai_recommendation": null,
+      "human_decision": "ESCALATE",
+      "policy_source_file": "fraud-investigation-policy.md",
+      "policy_chunk_id": null,
+      "agent_name": null,
+      "sanitized_ai_output_snapshot": {},
+      "ai_provider": "local",
+      "model_or_deployment": "local-deterministic",
+      "metadata": {
+        "case_severity": "medium",
+        "case_status": "NEW",
+        "risk_indicator_codes": [
+          "NEW_DEVICE",
+          "NEW_BENEFICIARY"
+        ],
+        "disposition_updated_by": "fraud_manager_01",
+        "disposition_comment": null
+      },
+      "feedback_id": "FB-[masked-number]-23b7b9",
+      "submitted_by": "fraud_manager_01",
+      "submitted_by_role": "FRAUD_MANAGER",
+      "disposition": "ACCEPTED_FOR_IMPROVEMENT",
+      "case_status_at_feedback": "NEW",
+      "created_at": "[masked-phone]T15:56:36.049311+00:00",
+      "updated_at": "[masked-phone]T15:56:36.144608+00:00"
+    },
+    {
+      "case_id": "case-001",
+      "target_type": "AI_RECOMMENDATION",
+      "target_id": null,
+      "rating": "POOR",
+      "issue_types": [
+        "INCORRECT_RECOMMENDATION"
+      ],
+      "severity": "HIGH",
+      "comment": "The recommendation should escalate due to beneficiary risk.",
+      "suggested_correction": null,
+      "expected_recommendation": "ESCALATE",
+      "actual_ai_recommendation": "HOLD",
+      "human_decision": "ESCALATE",
+      "policy_source_file": null,
+      "policy_chunk_id": null,
+      "agent_name": null,
+      "sanitized_ai_output_snapshot": {},
+      "ai_provider": "local",
+      "model_or_deployment": "local-deterministic",
+      "metadata": {
+        "case_severity": "medium",
+        "case_status": "NEW",
+        "risk_indicator_codes": [
+          "NEW_DEVICE",
+          "NEW_BENEFICIARY"
+        ]
+      },
+      "feedback_id": "FB-[masked-number]-dee485",
+      "submitted_by": "fraud_analyst_01",
+      "submitted_by_role": "FRAUD_ANALYST",
+      "disposition": "NEW",
+      "case_status_at_feedback": "NEW",
+      "created_at": "[masked-phone]T15:59:54.049948+00:00",
+      "updated_at": "[masked-phone]T15:59:54.049948+00:00"
+    },
+    {
+      "case_id": "case-001",
+      "target_type": "POLICY_CITATION",
+      "target_id": null,
+      "rating": "POOR",
+      "issue_types": [
+        "WRONG_POLICY_CITATION"
+      ],
+      "severity": "HIGH",
+      "comment": "Wrong policy citation was selected.",
+      "suggested_correction": null,
+      "expected_recommendation": null,
+      "actual_ai_recommendation": null,
+      "human_decision": "ESCALATE",
+      "policy_source_file": "fraud-investigation-policy.md",
+      "policy_chunk_id": null,
+      "agent_name": null,
+      "sanitized_ai_output_snapshot": {},
+      "ai_provider": "local",
+      "model_or_deployment": "local-deterministic",
+      "metadata": {
+        "case_severity": "medium",
+        "case_status": "NEW",
+        "risk_indicator_codes": [
+          "NEW_DEVICE",
+          "NEW_BENEFICIARY"
+        ],
+        "disposition_updated_by": "fraud_manager_01",
+        "disposition_comment": null
+      },
+      "feedback_id": "FB-[masked-number]-1df50c",
+      "submitted_by": "fraud_manager_01",
+      "submitted_by_role": "FRAUD_MANAGER",
+      "disposition": "ACCEPTED_FOR_IMPROVEMENT",
+      "case_status_at_feedback": "NEW",
+      "created_at": "[masked-phone]T15:59:54.429905+00:00",
+      "updated_at": "[masked-phone]T15:59:54.547230+00:00"
+    }
+  ]
+}

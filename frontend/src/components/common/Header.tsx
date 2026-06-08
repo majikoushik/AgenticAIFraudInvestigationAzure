@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuth } from "@/auth/useAuth";
+import { NotificationBell } from "@/components/notifications/NotificationBell";
 
 type HeaderProps = {
   title: string;
@@ -16,6 +17,7 @@ export function Header({ title, subtitle }: HeaderProps) {
         <p>{subtitle}</p>
       </div>
       <div className="header-user">
+        {user && <NotificationBell />}
         <span className="header-status">{authMode === "local" ? "Local Auth" : "Entra ID"}</span>
         {user && <span>{user.display_name} | {user.role}</span>}
         {user && <button className="button secondary" onClick={logout}>Logout</button>}

@@ -1,0 +1,4 @@
+// Placeholder KQL: wrong policy citation feedback rate.
+customEvents
+| where name == "AI_FEEDBACK_SUBMITTED"
+| where tostring(customDimensions.target_type) == "POLICY_CITATION"

@@ -1,0 +1,8 @@
+// Notification failure count placeholder for Azure Monitor / Log Analytics.
+// Production deployments should bind this query to Application Insights customEvents.
+customEvents
+| where name in ("NOTIFICATION_DISPATCH_FAILED", "NOTIFICATION_DISPATCH_COMPLETED")
+| extend status = tostring(customDimensions.status)
+| where status == "FAILED" or name == "NOTIFICATION_DISPATCH_FAILED"
+| summarize failed_count = count() by bin(timestamp, 15m)
+| where failed_count > 5

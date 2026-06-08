@@ -4,6 +4,7 @@ from app.cost.cost_config import cost_monitoring_config
 from app.cost.cost_repository import CostRepository
 from app.observability import telemetry_events
 from app.observability.telemetry_client import get_telemetry_client
+from app.notifications.integrations.cost_notifications import notify_budget_event
 
 
 class BudgetService:
@@ -77,7 +78,9 @@ class BudgetService:
         try:
             if result["status"] == "WARNING":
                 get_telemetry_client().track_event(telemetry_events.BUDGET_WARNING, {"currency": cost_monitoring_config.currency}, {"daily_budget_used_percentage": result["daily_budget_used_percentage"]})
+                notify_budget_event("BUDGET_WARNING", result)
             if result["status"] == "EXCEEDED":
                 get_telemetry_client().track_event(telemetry_events.BUDGET_EXCEEDED, {"currency": cost_monitoring_config.currency}, {"daily_budget_used_percentage": result["daily_budget_used_percentage"]})
+                notify_budget_event("BUDGET_EXCEEDED", result)
         except Exception:
             return None

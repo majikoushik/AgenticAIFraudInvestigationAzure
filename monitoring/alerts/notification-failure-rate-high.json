@@ -1,0 +1,10 @@
+{
+  "name": "notification-failure-rate-high",
+  "description": "Placeholder alert rule for high notification delivery failure rate.",
+  "severity": "Sev2",
+  "enabled": false,
+  "queryFile": "../kql/notification-failures.kql",
+  "threshold": 5,
+  "timeWindow": "PT15M",
+  "notes": "Wire to Azure Monitor scheduled query rules in production. Do not include webhook URLs or SMTP credentials here."
+}

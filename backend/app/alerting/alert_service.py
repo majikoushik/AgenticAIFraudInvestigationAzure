@@ -14,6 +14,7 @@ from app.observability.pii_safe_logging import sanitize_telemetry_properties
 from app.observability.telemetry_client import get_telemetry_client
 from app.services.audit_service import audit_service
 from app.services.errors import ApiError
+from app.notifications.integrations.alert_incident_notifications import notify_alert_created
 
 
 class AlertService:
@@ -50,6 +51,7 @@ class AlertService:
         if alerting_config.incident_auto_create_enabled and alert["severity"] in {AlertSeverity.SEV0_CRITICAL.value, AlertSeverity.SEV1_HIGH.value}:
             incident = self.incident_service.create_incident_from_alert(alert)
         self.notification_service.notify(alert, incident)
+        notify_alert_created(alert)
         return alert
 
     def list_alerts(self, alert_type: str | None = None, severity: str | None = None, status: str | None = None, start_date: str | None = None, end_date: str | None = None) -> list[dict]:
