@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, Query, Response
 
 from app.auth.current_user import AuthenticatedUser
 from app.auth.permissions import Permission, require_permission
+from app.admin.feature_flag_service import FeatureFlagService
 from app.cost.azure_cost_management_client import AzureCostManagementClient
 from app.cost.budget_service import BudgetService
 from app.cost.cost_anomaly_detector import CostAnomalyDetector
@@ -9,6 +10,7 @@ from app.cost.cost_config import cost_monitoring_config
 from app.cost.cost_export_service import CostExportService
 from app.cost.cost_service import CostService
 from app.schemas.cost_schema import AgentCostBreakdownResponse, BudgetStatusResponse, CaseCostBreakdownResponse, CostAnomalyResponse, CostSummaryResponse, DailyCostTrendResponse, ModelCostBreakdownResponse, TokenUsageSummaryResponse
+from app.services.errors import ApiError
 
 router = APIRouter(prefix="/cost", tags=["cost"])
 cost_service = CostService()
@@ -16,9 +18,12 @@ budget_service = BudgetService(cost_service.repository)
 anomaly_detector = CostAnomalyDetector(cost_service.repository)
 azure_cost_client = AzureCostManagementClient()
 export_service = CostExportService(cost_service)
+feature_flags = FeatureFlagService()
 
 
 def _require_cost_view(_: AuthenticatedUser = Depends(require_permission(Permission.VIEW_METRICS))) -> None:
+    if not feature_flags.is_enabled("FEATURE_ENABLE_COST_DASHBOARD"):
+        raise ApiError(403, "feature_disabled", "Cost dashboard feature is disabled by admin configuration.")
     return None
 
 

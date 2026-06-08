@@ -95,6 +95,8 @@ Alerting and incident response with local alert stores, runbooks, KQL placeholde
 
 Cost monitoring and token usage dashboards are documented in [docs/cost-monitoring-token-usage-dashboard.md](docs/cost-monitoring-token-usage-dashboard.md). Cost estimates default to zero until pricing environment variables are configured.
 
+The safe Admin Configuration Panel is documented in [docs/admin-configuration-panel.md](docs/admin-configuration-panel.md). It manages only allow-listed non-secret runtime settings and feature flags.
+
 Local verification:
 
 1. Start the backend and frontend with `start-local.bat`.
@@ -106,6 +108,7 @@ Local verification:
 7. Open `http://localhost:3000/metrics` to review AI-human agreement, override rate, operational, RAG, agent, and audit metrics.
 8. Log in as `ADMIN`, open `http://localhost:3000/alerts`, simulate an alert, then open `http://localhost:3000/incidents` to review the generated incident.
 9. Open `http://localhost:3000/cost` to review token usage, estimated cost, budgets, and anomaly indicators.
+10. Open `http://localhost:3000/admin/config` as `ADMIN` to inspect safe configuration, update `RAG_TOP_K`, and review config history.
 
 ## Agent Runtime Modes
 
@@ -148,6 +151,7 @@ Implemented:
 - Observability telemetry fallback
 - Alerting and incident response MVP with runbooks
 - Cost monitoring and token usage dashboard with local estimates
+- Admin Configuration Panel with safe non-secret runtime overrides and feature flags
 
 Still placeholder-only:
 

@@ -17,6 +17,7 @@ param logLevel string = 'INFO'
 param telemetryEnvironment string = environmentName
 param alertingEnabled string = 'true'
 param costMonitoringEnabled string = 'true'
+param adminConfigEnabled string = 'true'
 param tags object
 
 resource app 'Microsoft.App/containerApps@2023-05-01' = {
@@ -185,6 +186,46 @@ resource app 'Microsoft.App/containerApps@2023-05-01' = {
             }
             {
               name: 'AZURE_COST_MANAGEMENT_ENABLED'
+              value: 'false'
+            }
+            {
+              name: 'ADMIN_CONFIG_ENABLED'
+              value: adminConfigEnabled
+            }
+            {
+              name: 'ADMIN_CONFIG_MODE'
+              value: 'local'
+            }
+            {
+              name: 'FEATURE_ENABLE_AGENTIC_INVESTIGATION'
+              value: 'true'
+            }
+            {
+              name: 'FEATURE_ENABLE_HUMAN_REVIEW'
+              value: 'true'
+            }
+            {
+              name: 'FEATURE_ENABLE_COST_DASHBOARD'
+              value: 'true'
+            }
+            {
+              name: 'FEATURE_ENABLE_OBSERVABILITY_PAGE'
+              value: 'true'
+            }
+            {
+              name: 'FEATURE_ENABLE_AZURE_SEARCH_RAG'
+              value: 'false'
+            }
+            {
+              name: 'FEATURE_ENABLE_AZURE_OPENAI'
+              value: 'false'
+            }
+            {
+              name: 'AZURE_APP_CONFIGURATION_ENABLED'
+              value: 'false'
+            }
+            {
+              name: 'AZURE_KEY_VAULT_ENABLED'
               value: 'false'
             }
           ]

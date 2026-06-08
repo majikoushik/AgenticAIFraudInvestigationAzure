@@ -92,6 +92,13 @@ Swagger UI is available at `http://localhost:8000/docs`.
 - `GET /api/v1/cost/budget/status`: return local budget and token limit status.
 - `GET /api/v1/cost/anomalies`: return MVP anomaly checks.
 - `POST /api/v1/cost/recalculate`: rebuild cost records from token usage using current pricing config.
+- `GET /api/v1/admin/config`: return safe allow-listed admin configuration grouped by category.
+- `PATCH /api/v1/admin/config`: update editable non-secret local overrides.
+- `POST /api/v1/admin/config/reset`: reset local non-secret overrides.
+- `GET /api/v1/admin/config/history`: return recent admin configuration changes.
+- `GET /api/v1/admin/config/health`: return safe admin configuration health.
+- `GET /api/v1/admin/feature-flags`: list feature flags.
+- `PATCH /api/v1/admin/feature-flags/{flag_key}`: update one feature flag.
 
 Decision request body:
 
@@ -253,3 +260,14 @@ DEFAULT_OUTPUT_TOKEN_COST_PER_1K=0.0000
 ```
 
 Use `POST /api/v1/cost/recalculate` after changing pricing values. The full design is documented in `docs/cost-monitoring-token-usage-dashboard.md`.
+
+## Admin Configuration
+
+Admin configuration uses an explicit safe registry and local non-secret overrides:
+
+```text
+data/synthetic/admin_config.json
+data/synthetic/admin_config_history.json
+```
+
+All admin config endpoints require `ADMIN_CONFIG`. Secret values, connection strings, API keys, tokens, webhook URLs, and SMTP credentials are never returned or editable. The full design is documented in `docs/admin-configuration-panel.md`.

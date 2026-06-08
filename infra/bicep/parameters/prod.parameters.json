@@ -53,6 +53,9 @@
     "costMonitoringEnabled": {
       "value": "true"
     },
+    "adminConfigEnabled": {
+      "value": "true"
+    },
     "tags": {
       "value": {
         "project": "agentic-ai-fraud-investigation-azure",

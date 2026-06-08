@@ -51,6 +51,9 @@ param alertingEnabled string = 'true'
 @description('Enable local estimated cost monitoring configuration in the backend. Pricing values should be supplied by environment or pipeline variables.')
 param costMonitoringEnabled string = 'true'
 
+@description('Enable safe non-secret admin configuration panel. Secrets must be stored in Key Vault or secure pipeline variables.')
+param adminConfigEnabled string = 'true'
+
 @description('Resource tags applied to all supported resources.')
 param tags object
 
@@ -221,6 +224,7 @@ module backendApp 'modules/backend-container-app.bicep' = {
     telemetryEnvironment: telemetryEnvironment
     alertingEnabled: alertingEnabled
     costMonitoringEnabled: costMonitoringEnabled
+    adminConfigEnabled: adminConfigEnabled
     tags: tags
   }
 }

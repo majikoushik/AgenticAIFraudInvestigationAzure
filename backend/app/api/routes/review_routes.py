@@ -15,9 +15,12 @@ from app.schemas.review_schema import (
 from app.services.audit_service import audit_service
 from app.services.case_status_service import case_status_service
 from app.services.human_review_service import HumanReviewService
+from app.admin.feature_flag_service import FeatureFlagService
+from app.services.errors import ApiError
 
 router = APIRouter(prefix="/cases", tags=["human-review"])
 review_service = HumanReviewService(CaseRepository(), audit_service, case_status_service)
+feature_flags = FeatureFlagService()
 
 
 @router.post("/{case_id}/review", response_model=HumanReviewResponse)
@@ -26,6 +29,8 @@ def submit_review(
     request: HumanReviewRequest,
     current_user: AuthenticatedUser = Depends(require_permission(Permission.SUBMIT_HUMAN_REVIEW)),
 ) -> HumanReviewResponse:
+    if not feature_flags.is_enabled("FEATURE_ENABLE_HUMAN_REVIEW"):
+        raise ApiError(403, "feature_disabled", "Human review feature is disabled by admin configuration.")
     validate_decision_permission(current_user, request.decision.value)
     request.reviewed_by = current_user.user_id
     request.reviewer_role = ReviewerRole(current_user.primary_role)

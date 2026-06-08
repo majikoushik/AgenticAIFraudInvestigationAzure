@@ -1,0 +1,40 @@
+export type AdminConfigItem = {
+  key: string;
+  value: string | number | boolean | null;
+  default_value: string | number | boolean | null;
+  category: string;
+  data_type: "string" | "integer" | "float" | "boolean" | "enum";
+  editable: boolean;
+  secret: boolean;
+  description: string;
+  allowed_values?: Array<string | number | boolean> | null;
+  min_value?: number | null;
+  max_value?: number | null;
+  requires_restart: boolean;
+  source: string;
+  last_updated_at?: string | null;
+  last_updated_by?: string | null;
+};
+
+export type AdminConfigCategory = { category: string; items: AdminConfigItem[] };
+export type AdminConfigResponse = { categories: AdminConfigCategory[]; secret_values_redacted: boolean };
+export type AdminConfigUpdateRequest = { updates: Array<{ key: string; value: unknown }>; comment?: string };
+export type AdminConfigUpdateResponse = { updated_count: number; failed_count: number; updated_items: AdminConfigItem[]; validation_errors: Array<{ key: string; valid: boolean; errors: string[] }>; message: string };
+export type AdminConfigHistoryRecord = { history_id: string; key: string; old_value: unknown; new_value: unknown; category: string; updated_by: string; updated_at: string; comment?: string | null };
+export type FeatureFlag = AdminConfigItem;
+export type ConfigHealthResponse = {
+  admin_config_enabled: boolean;
+  mode: string;
+  local_store_accessible: boolean;
+  history_store_accessible: boolean;
+  azure_app_configuration_enabled: boolean;
+  key_vault_enabled: boolean;
+  secret_values_redacted: boolean;
+  editable_config_count: number;
+  requires_restart_count: number;
+  allow_runtime_updates: boolean;
+  allow_reset_to_defaults: boolean;
+  require_admin_role: boolean;
+  azure_app_configuration_configured: boolean;
+  key_vault_configured: boolean;
+};

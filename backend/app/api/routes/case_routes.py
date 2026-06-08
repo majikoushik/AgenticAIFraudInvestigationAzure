@@ -10,11 +10,14 @@ from app.services.audit_service import audit_service
 from app.services.case_service import CaseService
 from app.services.case_status_service import case_status_service
 from app.services.investigation_service import InvestigationService
+from app.admin.feature_flag_service import FeatureFlagService
+from app.services.errors import ApiError
 
 router = APIRouter(prefix="/cases", tags=["cases"])
 case_repository = CaseRepository()
 case_service = CaseService(case_repository, audit_service, case_status_service)
 investigation_service = InvestigationService(case_repository, audit_service, case_status_service)
+feature_flags = FeatureFlagService()
 
 
 @router.get("", response_model=list[CaseSummary])
@@ -39,4 +42,6 @@ def get_case(case_id: str, current_user: AuthenticatedUser = Depends(require_per
 @router.post("/{case_id}/investigate", response_model=InvestigationPackage)
 def investigate_case(case_id: str, current_user: AuthenticatedUser = Depends(require_permission(Permission.RUN_AI_INVESTIGATION))) -> InvestigationPackage:
     del current_user
+    if not feature_flags.is_enabled("FEATURE_ENABLE_AGENTIC_INVESTIGATION"):
+        raise ApiError(403, "feature_disabled", "Agentic investigation feature is disabled by admin configuration.")
     return investigation_service.investigate_case(case_id)
