@@ -17,6 +17,7 @@ Next.js TypeScript dashboard for the Agentic AI Fraud Investigation MVP.
 - Admin incident pages at `/incidents` and `/incidents/[incidentId]` for triage, status updates, assignment, timeline notes, and closure.
 - Cost monitoring dashboard at `/cost` for token usage, estimated cost, agent/model cost, budgets, and anomaly indicators.
 - Admin Configuration Panel at `/admin/config` for safe non-secret runtime settings, feature flags, health, history, and reset controls.
+- Case assignment queues at `/queues/my`, `/queues/unassigned`, `/queues/team`, `/queues/sla-risk`, plus workload at `/assignment/workload`.
 - Local-only MVP behavior with no direct external AI calls.
 
 ## Install
@@ -47,6 +48,7 @@ Open `http://localhost:3000/alerts` as an admin to simulate and inspect alert ev
 Open `http://localhost:3000/incidents` as an admin to manage generated incidents.
 Open `http://localhost:3000/cost` to review estimated cost and token usage.
 Open `http://localhost:3000/admin/config` as `ADMIN` to manage safe configuration overrides.
+Open `http://localhost:3000/queues/my` as `FRAUD_ANALYST` or `http://localhost:3000/queues/team` as `FRAUD_MANAGER` to review assignment queues.
 Open `http://localhost:3000/login` to select a local demo role when `NEXT_PUBLIC_AUTH_MODE=local`.
 
 ## Environment Variables

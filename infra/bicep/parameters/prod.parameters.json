@@ -56,6 +56,9 @@
     "adminConfigEnabled": {
       "value": "true"
     },
+    "caseAssignmentEnabled": {
+      "value": "true"
+    },
     "tags": {
       "value": {
         "project": "agentic-ai-fraud-investigation-azure",

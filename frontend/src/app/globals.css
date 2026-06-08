@@ -360,6 +360,21 @@ button {
   justify-content: flex-end;
 }
 
+.queue-filters,
+.action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.queue-filters select {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--foreground);
+  padding: 9px 10px;
+}
+
 .card-header {
   border-bottom: 1px solid var(--border);
   padding: 16px 18px;
@@ -515,6 +530,39 @@ td {
 .status-badge {
   background: #eef4ff;
   color: var(--info);
+}
+
+.assignment-unassigned,
+.assignment-released,
+.sla-not-applicable {
+  background: #f2f4f7;
+  color: #475467;
+}
+
+.assignment-assigned,
+.assignment-transferred,
+.sla-on-track {
+  background: #eef4ff;
+  color: var(--info);
+}
+
+.assignment-accepted,
+.priority-low {
+  background: #ecfdf3;
+  color: var(--success);
+}
+
+.priority-medium,
+.sla-at-risk {
+  background: #fffaeb;
+  color: var(--warning);
+}
+
+.priority-high,
+.priority-critical,
+.sla-breached {
+  background: #fef3f2;
+  color: var(--danger);
 }
 
 .status-new {

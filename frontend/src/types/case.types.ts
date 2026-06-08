@@ -1,4 +1,5 @@
 import type { OverrideSummary } from "@/types/review.types";
+import type { CaseAssignment } from "@/types/assignment.types";
 
 export type RiskLevel = "low" | "medium" | "high" | "critical";
 
@@ -16,6 +17,7 @@ export type CaseSummary = {
   status: string;
   reason: string;
   created_at: string;
+  assignment?: CaseAssignment | null;
 };
 
 export type CustomerProfile = {
@@ -89,6 +91,7 @@ export type CaseDetail = {
   human_review: Record<string, unknown> | null;
   override_summary: OverrideSummary | null;
   audit_events: Record<string, unknown>[];
+  assignment?: CaseAssignment | null;
 };
 
 export type CaseListRow = {

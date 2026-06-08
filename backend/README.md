@@ -99,6 +99,17 @@ Swagger UI is available at `http://localhost:8000/docs`.
 - `GET /api/v1/admin/config/health`: return safe admin configuration health.
 - `GET /api/v1/admin/feature-flags`: list feature flags.
 - `PATCH /api/v1/admin/feature-flags/{flag_key}`: update one feature flag.
+- `GET /api/v1/queues/my`: return cases assigned to the authenticated user.
+- `GET /api/v1/queues/unassigned`: return unassigned cases for manager/admin assignment.
+- `GET /api/v1/queues/team`: return team cases for managers, compliance, auditors, and admins.
+- `GET /api/v1/queues/sla-risk`: return assignment cases with breached or at-risk SLA.
+- `POST /api/v1/cases/{case_id}/assign`: assign a case.
+- `POST /api/v1/cases/{case_id}/reassign`: reassign a case.
+- `POST /api/v1/cases/{case_id}/accept`: accept an assigned case.
+- `POST /api/v1/cases/{case_id}/release`: release a case back to the unassigned queue.
+- `GET /api/v1/cases/{case_id}/assignment-history`: return assignment history.
+- `GET /api/v1/assignment/workload`: return assignment workload summary.
+- `POST /api/v1/assignment/sla/refresh`: refresh local SLA status values.
 
 Decision request body:
 
@@ -271,3 +282,7 @@ data/synthetic/admin_config_history.json
 ```
 
 All admin config endpoints require `ADMIN_CONFIG`. Secret values, connection strings, API keys, tokens, webhook URLs, and SMTP credentials are never returned or editable. The full design is documented in `docs/admin-configuration-panel.md`.
+
+## Case Assignment
+
+Assignment data remains local-first in `data/synthetic/fraud_alerts.json`, `data/synthetic/assignment_history.json`, and `data/synthetic/investigators.json`. The backend enforces role permissions for assignment actions and rejects assignment changes for closed cases. The full design is documented in `docs/case-assignment-investigator-queue.md`.

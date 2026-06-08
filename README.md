@@ -97,6 +97,8 @@ Cost monitoring and token usage dashboards are documented in [docs/cost-monitori
 
 The safe Admin Configuration Panel is documented in [docs/admin-configuration-panel.md](docs/admin-configuration-panel.md). It manages only allow-listed non-secret runtime settings and feature flags.
 
+Case assignment and investigator queues are documented in [docs/case-assignment-investigator-queue.md](docs/case-assignment-investigator-queue.md). The MVP includes local JSON assignment history, role-enforced assignment APIs, queue pages, workload metrics, and SLA risk indicators.
+
 Local verification:
 
 1. Start the backend and frontend with `start-local.bat`.
@@ -109,6 +111,7 @@ Local verification:
 8. Log in as `ADMIN`, open `http://localhost:3000/alerts`, simulate an alert, then open `http://localhost:3000/incidents` to review the generated incident.
 9. Open `http://localhost:3000/cost` to review token usage, estimated cost, budgets, and anomaly indicators.
 10. Open `http://localhost:3000/admin/config` as `ADMIN` to inspect safe configuration, update `RAG_TOP_K`, and review config history.
+11. Open `http://localhost:3000/queues/my` as `FRAUD_ANALYST` or `http://localhost:3000/queues/team` as `FRAUD_MANAGER` to verify assignment queues.
 
 ## Agent Runtime Modes
 
@@ -152,6 +155,7 @@ Implemented:
 - Alerting and incident response MVP with runbooks
 - Cost monitoring and token usage dashboard with local estimates
 - Admin Configuration Panel with safe non-secret runtime overrides and feature flags
+- Case assignment, investigator queues, workload summary, assignment history, and SLA risk tracking
 
 Still placeholder-only:
 

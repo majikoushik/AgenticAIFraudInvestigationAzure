@@ -3,6 +3,7 @@ from fastapi import APIRouter
 from app.api.routes import (
     agent_routes,
     admin_config_routes,
+    assignment_routes,
     alert_routes,
     audit_routes,
     auth_routes,
@@ -22,6 +23,7 @@ api_router = APIRouter()
 api_router.include_router(health_routes.router)
 api_router.include_router(auth_routes.router, prefix="/api/v1")
 api_router.include_router(admin_config_routes.router, prefix="/api/v1")
+api_router.include_router(assignment_routes.router, prefix="/api/v1")
 api_router.include_router(alert_routes.router, prefix="/api/v1")
 api_router.include_router(case_routes.router, prefix="/api/v1")
 api_router.include_router(cost_routes.router, prefix="/api/v1")

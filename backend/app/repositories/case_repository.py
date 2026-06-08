@@ -42,6 +42,9 @@ class CaseRepository:
     def update_case_override_summary(self, case_id: str, override_summary: dict[str, Any] | None) -> dict[str, Any]:
         return self._update_alert_fields(case_id, {"override_summary": override_summary})
 
+    def update_case_fields(self, case_id: str, updates: dict[str, Any]) -> dict[str, Any]:
+        return self._update_alert_fields(case_id, updates)
+
     def get_latest_human_review(self, case_id: str) -> dict[str, Any] | None:
         case = self.get_case_by_id(case_id)
         if not case:

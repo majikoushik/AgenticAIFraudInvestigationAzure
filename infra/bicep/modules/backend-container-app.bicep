@@ -18,6 +18,7 @@ param telemetryEnvironment string = environmentName
 param alertingEnabled string = 'true'
 param costMonitoringEnabled string = 'true'
 param adminConfigEnabled string = 'true'
+param caseAssignmentEnabled string = 'true'
 param tags object
 
 resource app 'Microsoft.App/containerApps@2023-05-01' = {
@@ -197,6 +198,58 @@ resource app 'Microsoft.App/containerApps@2023-05-01' = {
               value: 'local'
             }
             {
+              name: 'CASE_ASSIGNMENT_ENABLED'
+              value: caseAssignmentEnabled
+            }
+            {
+              name: 'CASE_ASSIGNMENT_MODE'
+              value: 'local'
+            }
+            {
+              name: 'DEFAULT_ASSIGNMENT_TEAM'
+              value: 'Fraud Operations'
+            }
+            {
+              name: 'DEFAULT_ASSIGNMENT_PRIORITY'
+              value: 'MEDIUM'
+            }
+            {
+              name: 'SLA_LOW_PRIORITY_HOURS'
+              value: '72'
+            }
+            {
+              name: 'SLA_MEDIUM_PRIORITY_HOURS'
+              value: '48'
+            }
+            {
+              name: 'SLA_HIGH_PRIORITY_HOURS'
+              value: '24'
+            }
+            {
+              name: 'SLA_CRITICAL_PRIORITY_HOURS'
+              value: '4'
+            }
+            {
+              name: 'AUTO_SET_SLA_ON_ASSIGNMENT'
+              value: 'true'
+            }
+            {
+              name: 'ALLOW_SELF_ASSIGNMENT'
+              value: 'true'
+            }
+            {
+              name: 'ALLOW_ANALYST_RELEASE_OWN_CASE'
+              value: 'true'
+            }
+            {
+              name: 'WORKLOAD_HIGH_THRESHOLD'
+              value: '15'
+            }
+            {
+              name: 'WORKLOAD_CRITICAL_THRESHOLD'
+              value: '20'
+            }
+            {
               name: 'FEATURE_ENABLE_AGENTIC_INVESTIGATION'
               value: 'true'
             }
@@ -211,6 +264,10 @@ resource app 'Microsoft.App/containerApps@2023-05-01' = {
             {
               name: 'FEATURE_ENABLE_OBSERVABILITY_PAGE'
               value: 'true'
+            }
+            {
+              name: 'FEATURE_ENABLE_CASE_ASSIGNMENT'
+              value: caseAssignmentEnabled
             }
             {
               name: 'FEATURE_ENABLE_AZURE_SEARCH_RAG'

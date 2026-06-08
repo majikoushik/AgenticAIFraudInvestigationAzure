@@ -1,0 +1,30 @@
+[
+  {
+    "user_id": "fraud_analyst_01",
+    "display_name": "Fraud Analyst 01",
+    "role": "FRAUD_ANALYST",
+    "team": "Fraud Operations",
+    "active": true
+  },
+  {
+    "user_id": "fraud_analyst_02",
+    "display_name": "Fraud Analyst 02",
+    "role": "FRAUD_ANALYST",
+    "team": "Fraud Operations",
+    "active": true
+  },
+  {
+    "user_id": "fraud_manager_01",
+    "display_name": "Fraud Manager 01",
+    "role": "FRAUD_MANAGER",
+    "team": "Fraud Operations",
+    "active": true
+  },
+  {
+    "user_id": "compliance_officer_01",
+    "display_name": "Compliance Officer 01",
+    "role": "COMPLIANCE_OFFICER",
+    "team": "Compliance Review",
+    "active": true
+  }
+]

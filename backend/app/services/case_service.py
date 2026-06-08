@@ -1,5 +1,7 @@
 from app.core.constants import AuditEventType, CaseStatus, ReviewerRole, normalize_decision
+from app.assignment.assignment_repository import normalize_assignment_fields
 from app.repositories.case_repository import CaseRepository
+from app.schemas.assignment_schema import AssignmentFields
 from app.schemas.case_schema import CaseDetail, CaseMetadata, CaseSummary
 from app.schemas.decision_schema import DecisionRequest, DecisionResponse
 from app.services.audit_service import AuditService
@@ -33,6 +35,7 @@ class CaseService:
 
     def get_case_detail(self, case_id: str) -> CaseDetail:
         alert = self.ensure_case_exists(case_id)
+        assignment_case = normalize_assignment_fields(alert)
         current_status = self.status_service.get_status(case_id, alert.get("status"))
 
         return CaseDetail(
@@ -61,6 +64,10 @@ class CaseService:
             human_review=alert.get("human_review"),
             override_summary=alert.get("override_summary"),
             audit_events=[],
+            assignment=AssignmentFields(**{
+                key: assignment_case.get(key)
+                for key in AssignmentFields.model_fields
+            }),
         )
 
     def submit_decision(self, case_id: str, request: DecisionRequest, actor_role: ReviewerRole = ReviewerRole.FRAUD_ANALYST) -> DecisionResponse:

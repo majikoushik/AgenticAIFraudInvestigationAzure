@@ -7,29 +7,13 @@
     "beneficiary_id": "ben-001",
     "device_id": "dev-002",
     "severity": "medium",
-    "status": "APPROVED",
-    "status_updated_at": "2026-06-07T08:37:12.065857+00:00",
-    "status_updated_by": "manager_01",
-    "status_comment": "Synthetic review comment with enough detail.",
-    "ai_recommendation": "HOLD",
-    "investigation_summary": {
-      "recommended_action": "HOLD",
-      "confidence_level": "HIGH"
-    },
-    "human_review": {
-      "decision": "APPROVE",
-      "human_decision": "APPROVE",
-      "reviewed_by": "manager_01",
-      "reviewer_role": "FRAUD_MANAGER",
-      "reason_code": "CUSTOMER_CONFIRMED",
-      "comment": "Synthetic review comment with enough detail.",
-      "ai_recommendation": "APPROVE",
-      "human_override": false,
-      "override_reason": null,
-      "override_comparison_status": "MATCHED",
-      "override_detected_at": null,
-      "override_detected_by": null
-    },
+    "status": "NEW",
+    "status_updated_at": null,
+    "status_updated_by": null,
+    "status_comment": null,
+    "ai_recommendation": null,
+    "investigation_summary": null,
+    "human_review": null,
     "policy_references": [
       {
         "title": "New Beneficiary Policy",
@@ -38,7 +22,18 @@
     ],
     "audit_events": [],
     "reason": "New device and new beneficiary used for an unusually high card-not-present purchase.",
-    "created_at": "2026-01-15T10:35:00Z",
+    "created_at": "2026-06-05T10:35:00Z",
+    "assigned_to": null,
+    "assigned_to_name": null,
+    "assigned_to_role": null,
+    "assigned_team": "Fraud Operations",
+    "assigned_by": null,
+    "assigned_at": null,
+    "assignment_status": "UNASSIGNED",
+    "assignment_priority": "MEDIUM",
+    "sla_due_at": null,
+    "sla_status": "NOT_APPLICABLE",
+    "last_assignment_action": null,
     "risk_indicators": [
       {
         "code": "NEW_DEVICE",
@@ -50,16 +45,7 @@
         "description": "Beneficiary was first observed on the transaction date.",
         "severity": "medium"
       }
-    ],
-    "override_summary": {
-      "has_override": false,
-      "ai_recommendation": "APPROVE",
-      "human_decision": "APPROVE",
-      "override_reason": null,
-      "override_detected_at": null,
-      "override_detected_by": null,
-      "override_comparison_status": "MATCHED"
-    }
+    ]
   },
   {
     "alert_id": "alert-002",
@@ -84,7 +70,18 @@
     ],
     "audit_events": [],
     "reason": "High-value international transfer from a new device to a new beneficiary.",
-    "created_at": "2026-01-16T02:20:00Z",
+    "created_at": "2026-06-05T11:20:00Z",
+    "assigned_to": "fraud_analyst_01",
+    "assigned_to_name": "Fraud Analyst 01",
+    "assigned_to_role": "FRAUD_ANALYST",
+    "assigned_team": "Fraud Operations",
+    "assigned_by": "fraud_manager_01",
+    "assigned_at": "2026-06-08T03:00:00Z",
+    "assignment_status": "ASSIGNED",
+    "assignment_priority": "HIGH",
+    "sla_due_at": "2026-06-09T03:00:00Z",
+    "sla_status": "ON_TRACK",
+    "last_assignment_action": "ASSIGNED",
     "risk_indicators": [
       {
         "code": "HIGH_VALUE_TRANSFER",
@@ -120,7 +117,18 @@
     "human_review": null,
     "audit_events": [],
     "reason": "Travel merchant transaction selected for low-risk synthetic triage testing.",
-    "created_at": "2026-01-17T18:50:00Z",
+    "created_at": "2026-06-05T12:50:00Z",
+    "assigned_to": "fraud_analyst_02",
+    "assigned_to_name": "Fraud Analyst 02",
+    "assigned_to_role": "FRAUD_ANALYST",
+    "assigned_team": "Fraud Operations",
+    "assigned_by": "fraud_manager_01",
+    "assigned_at": "2026-06-07T08:00:00Z",
+    "assignment_status": "ACCEPTED",
+    "assignment_priority": "LOW",
+    "sla_due_at": "2026-06-10T08:00:00Z",
+    "sla_status": "ON_TRACK",
+    "last_assignment_action": "ACCEPTED",
     "risk_indicators": [
       {
         "code": "TRAVEL_MERCHANT",
@@ -136,44 +144,36 @@
     "transaction_id": "txn-001",
     "beneficiary_id": "ben-001",
     "device_id": "dev-002",
-    "severity": "medium",
-    "status": "HELD",
+    "severity": "critical",
+    "status": "PENDING_HUMAN_REVIEW",
     "status_updated_at": null,
     "status_updated_by": null,
     "status_comment": null,
     "ai_recommendation": "HOLD",
-    "investigation_summary": null,
-    "human_review": {
-      "decision": "HOLD",
-      "human_decision": "HOLD",
-      "reviewed_by": "synthetic.reviewer",
-      "reviewer_role": "FRAUD_ANALYST",
-      "reason_code": "SUSPICIOUS_DEVICE",
-      "comment": "Synthetic held case reviewed with matching AI recommendation.",
-      "ai_recommendation": "HOLD",
-      "human_override": false,
-      "override_reason": null,
-      "override_comparison_status": "MATCHED",
-      "override_detected_at": null,
-      "override_detected_by": null
+    "investigation_summary": {
+      "recommended_action": "HOLD",
+      "confidence_level": "HIGH"
     },
-    "override_summary": {
-      "has_override": false,
-      "ai_recommendation": "HOLD",
-      "human_decision": "HOLD",
-      "override_reason": null,
-      "override_detected_at": null,
-      "override_detected_by": null,
-      "override_comparison_status": "MATCHED"
-    },
+    "human_review": null,
     "audit_events": [],
-    "reason": "Synthetic held case for lifecycle testing.",
-    "created_at": "2026-01-18T09:00:00Z",
+    "reason": "Critical high-value transfer with device and beneficiary risk indicators.",
+    "created_at": "2026-06-05T13:00:00Z",
+    "assigned_to": "fraud_analyst_01",
+    "assigned_to_name": "Fraud Analyst 01",
+    "assigned_to_role": "FRAUD_ANALYST",
+    "assigned_team": "Fraud Operations",
+    "assigned_by": "fraud_manager_01",
+    "assigned_at": "2026-06-08T01:30:00Z",
+    "assignment_status": "ACCEPTED",
+    "assignment_priority": "CRITICAL",
+    "sla_due_at": "2026-06-08T05:30:00Z",
+    "sla_status": "AT_RISK",
+    "last_assignment_action": "ACCEPTED",
     "risk_indicators": [
       {
-        "code": "SUSPICIOUS_DEVICE",
-        "description": "Synthetic held case with suspicious device signal.",
-        "severity": "medium"
+        "code": "CRITICAL_VALUE_TRANSFER",
+        "description": "Synthetic transaction exceeds critical review threshold.",
+        "severity": "critical"
       }
     ]
   },
@@ -194,32 +194,21 @@
       "recommended_action": "ESCALATE",
       "confidence_level": "HIGH"
     },
-    "human_review": {
-      "decision": "ESCALATE",
-      "human_decision": "ESCALATE",
-      "reviewed_by": "synthetic.manager",
-      "reviewer_role": "FRAUD_MANAGER",
-      "reason_code": "HIGH_VALUE_TRANSFER",
-      "comment": "Synthetic escalated case reviewed with matching AI recommendation.",
-      "ai_recommendation": "ESCALATE",
-      "human_override": false,
-      "override_reason": null,
-      "override_comparison_status": "MATCHED",
-      "override_detected_at": null,
-      "override_detected_by": null
-    },
-    "override_summary": {
-      "has_override": false,
-      "ai_recommendation": "ESCALATE",
-      "human_decision": "ESCALATE",
-      "override_reason": null,
-      "override_detected_at": null,
-      "override_detected_by": null,
-      "override_comparison_status": "MATCHED"
-    },
+    "human_review": null,
     "audit_events": [],
-    "reason": "Synthetic escalated case for lifecycle testing.",
-    "created_at": "2026-01-18T10:00:00Z",
+    "reason": "Escalated synthetic case assigned to compliance review.",
+    "created_at": "2026-06-05T14:00:00Z",
+    "assigned_to": "compliance_officer_01",
+    "assigned_to_name": "Compliance Officer 01",
+    "assigned_to_role": "COMPLIANCE_OFFICER",
+    "assigned_team": "Compliance Review",
+    "assigned_by": "fraud_manager_01",
+    "assigned_at": "2026-06-07T04:00:00Z",
+    "assignment_status": "ACCEPTED",
+    "assignment_priority": "HIGH",
+    "sla_due_at": "2026-06-08T04:00:00Z",
+    "sla_status": "BREACHED",
+    "last_assignment_action": "TRANSFERRED",
     "risk_indicators": [
       {
         "code": "HIGH_VALUE_TRANSFER",
@@ -267,12 +256,60 @@
     },
     "audit_events": [],
     "reason": "Synthetic closed case for lifecycle testing.",
-    "created_at": "2026-01-18T11:00:00Z",
+    "created_at": "2026-06-05T15:00:00Z",
+    "assigned_to": null,
+    "assigned_to_name": null,
+    "assigned_to_role": null,
+    "assigned_team": "Fraud Operations",
+    "assigned_by": null,
+    "assigned_at": null,
+    "assignment_status": "UNASSIGNED",
+    "assignment_priority": "LOW",
+    "sla_due_at": null,
+    "sla_status": "NOT_APPLICABLE",
+    "last_assignment_action": null,
     "risk_indicators": [
       {
         "code": "FALSE_POSITIVE",
         "description": "Synthetic closed false-positive case.",
         "severity": "low"
+      }
+    ]
+  },
+  {
+    "alert_id": "alert-007",
+    "case_id": "case-007",
+    "customer_id": "cust-002",
+    "transaction_id": "txn-002",
+    "beneficiary_id": "ben-002",
+    "device_id": "dev-003",
+    "severity": "high",
+    "status": "NEW",
+    "status_updated_at": null,
+    "status_updated_by": null,
+    "status_comment": null,
+    "ai_recommendation": null,
+    "investigation_summary": null,
+    "human_review": null,
+    "audit_events": [],
+    "reason": "Unassigned high-priority transfer returned to the queue after release.",
+    "created_at": "2026-06-05T16:00:00Z",
+    "assigned_to": null,
+    "assigned_to_name": null,
+    "assigned_to_role": null,
+    "assigned_team": "Fraud Operations",
+    "assigned_by": null,
+    "assigned_at": null,
+    "assignment_status": "UNASSIGNED",
+    "assignment_priority": "HIGH",
+    "sla_due_at": null,
+    "sla_status": "NOT_APPLICABLE",
+    "last_assignment_action": "RELEASED",
+    "risk_indicators": [
+      {
+        "code": "NEW_BENEFICIARY",
+        "description": "Synthetic case returned to the unassigned queue after release.",
+        "severity": "high"
       }
     ]
   }

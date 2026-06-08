@@ -20,6 +20,15 @@ class Permission(StrEnum):
     VIEW_AUDIT = "VIEW_AUDIT"
     VIEW_METRICS = "VIEW_METRICS"
     ADMIN_CONFIG = "ADMIN_CONFIG"
+    VIEW_OWN_QUEUE = "VIEW_OWN_QUEUE"
+    VIEW_TEAM_QUEUE = "VIEW_TEAM_QUEUE"
+    VIEW_UNASSIGNED_QUEUE = "VIEW_UNASSIGNED_QUEUE"
+    ASSIGN_CASE = "ASSIGN_CASE"
+    REASSIGN_CASE = "REASSIGN_CASE"
+    RELEASE_CASE = "RELEASE_CASE"
+    ACCEPT_CASE = "ACCEPT_CASE"
+    TRANSFER_CASE = "TRANSFER_CASE"
+    VIEW_ASSIGNMENT_HISTORY = "VIEW_ASSIGNMENT_HISTORY"
 
 
 PERMISSIONS_BY_ROLE: dict[str, set[Permission]] = {
@@ -33,6 +42,10 @@ PERMISSIONS_BY_ROLE: dict[str, set[Permission]] = {
         Permission.REJECT_DECISION,
         Permission.VIEW_AUDIT,
         Permission.VIEW_METRICS,
+        Permission.VIEW_OWN_QUEUE,
+        Permission.ACCEPT_CASE,
+        Permission.RELEASE_CASE,
+        Permission.VIEW_ASSIGNMENT_HISTORY,
     },
     "FRAUD_MANAGER": {
         Permission.VIEW_CASES,
@@ -46,6 +59,15 @@ PERMISSIONS_BY_ROLE: dict[str, set[Permission]] = {
         Permission.CLOSE_CASE,
         Permission.VIEW_AUDIT,
         Permission.VIEW_METRICS,
+        Permission.VIEW_OWN_QUEUE,
+        Permission.VIEW_TEAM_QUEUE,
+        Permission.VIEW_UNASSIGNED_QUEUE,
+        Permission.ASSIGN_CASE,
+        Permission.REASSIGN_CASE,
+        Permission.RELEASE_CASE,
+        Permission.ACCEPT_CASE,
+        Permission.TRANSFER_CASE,
+        Permission.VIEW_ASSIGNMENT_HISTORY,
     },
     "COMPLIANCE_OFFICER": {
         Permission.VIEW_CASES,
@@ -57,12 +79,19 @@ PERMISSIONS_BY_ROLE: dict[str, set[Permission]] = {
         Permission.CLOSE_CASE,
         Permission.VIEW_AUDIT,
         Permission.VIEW_METRICS,
+        Permission.VIEW_OWN_QUEUE,
+        Permission.VIEW_TEAM_QUEUE,
+        Permission.ACCEPT_CASE,
+        Permission.RELEASE_CASE,
+        Permission.VIEW_ASSIGNMENT_HISTORY,
     },
     "AUDITOR": {
         Permission.VIEW_CASES,
         Permission.VIEW_CASE_DETAILS,
         Permission.VIEW_AUDIT,
         Permission.VIEW_METRICS,
+        Permission.VIEW_TEAM_QUEUE,
+        Permission.VIEW_ASSIGNMENT_HISTORY,
     },
     "ADMIN": set(Permission),
 }

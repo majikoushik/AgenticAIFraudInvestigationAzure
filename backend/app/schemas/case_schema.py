@@ -6,6 +6,7 @@ from app.schemas.beneficiary_schema import Beneficiary
 from app.schemas.customer_schema import CustomerProfile
 from app.schemas.device_schema import Device
 from app.schemas.evidence_schema import HistoricalCaseSummary, RiskIndicator
+from app.schemas.assignment_schema import AssignmentFields
 from app.schemas.transaction_schema import Transaction
 
 
@@ -20,6 +21,7 @@ class CaseSummary(BaseModel):
     status_comment: str | None = None
     reason: str
     created_at: str
+    assignment: AssignmentFields | None = None
 
 
 class CaseMetadata(BaseModel):
@@ -58,3 +60,4 @@ class CaseDetail(BaseModel):
     human_review: dict | None = None
     override_summary: OverrideSummary | None = None
     audit_events: list[dict] = []
+    assignment: AssignmentFields | None = None

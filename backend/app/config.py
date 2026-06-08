@@ -95,6 +95,7 @@ class Settings(BaseSettings):
     feature_enable_cost_dashboard: bool = True
     feature_enable_observability_page: bool = True
     feature_enable_alert_simulation: bool = True
+    feature_enable_case_assignment: bool = True
     feature_enable_local_demo_mode: bool = True
     feature_enable_azure_search_rag: bool = False
     feature_enable_azure_openai: bool = False
@@ -126,6 +127,22 @@ class Settings(BaseSettings):
     alert_email_recipients: str = ""
     incident_auto_create_enabled: bool = True
     incident_auto_assign_default_owner: str = "platform-operations"
+    case_assignment_enabled: bool = True
+    case_assignment_mode: str = "local"
+    assignment_history_store_path: str = "data/synthetic/assignment_history.json"
+    default_assignment_team: str = "Fraud Operations"
+    default_assignment_priority: str = "MEDIUM"
+    sla_low_priority_hours: int = 72
+    sla_medium_priority_hours: int = 48
+    sla_high_priority_hours: int = 24
+    sla_critical_priority_hours: int = 4
+    auto_set_sla_on_assignment: bool = True
+    allow_self_assignment: bool = True
+    allow_analyst_release_own_case: bool = True
+    allow_analyst_transfer_request: bool = False
+    max_active_cases_per_investigator: int = 20
+    workload_high_threshold: int = 15
+    workload_critical_threshold: int = 20
 
     model_config = SettingsConfigDict(
         env_file=".env",

@@ -1,5 +1,7 @@
 from app.repositories.case_repository import CaseRepository
+from app.assignment.assignment_repository import normalize_assignment_fields
 from app.schemas.case_schema import CaseSummary
+from app.schemas.assignment_schema import AssignmentFields
 from app.services.case_status_service import CaseStatusService
 
 
@@ -21,6 +23,10 @@ class FraudAlertService:
                 status_comment=alert.get("status_comment"),
                 reason=alert["reason"],
                 created_at=alert["created_at"],
+                assignment=AssignmentFields(**{
+                    key: normalize_assignment_fields(alert).get(key)
+                    for key in AssignmentFields.model_fields
+                }),
             )
             for alert in self.repository.list_alerts()
         ]

@@ -54,6 +54,9 @@ param costMonitoringEnabled string = 'true'
 @description('Enable safe non-secret admin configuration panel. Secrets must be stored in Key Vault or secure pipeline variables.')
 param adminConfigEnabled string = 'true'
 
+@description('Enable case assignment and investigator queue features.')
+param caseAssignmentEnabled string = 'true'
+
 @description('Resource tags applied to all supported resources.')
 param tags object
 
@@ -225,6 +228,7 @@ module backendApp 'modules/backend-container-app.bicep' = {
     alertingEnabled: alertingEnabled
     costMonitoringEnabled: costMonitoringEnabled
     adminConfigEnabled: adminConfigEnabled
+    caseAssignmentEnabled: caseAssignmentEnabled
     tags: tags
   }
 }

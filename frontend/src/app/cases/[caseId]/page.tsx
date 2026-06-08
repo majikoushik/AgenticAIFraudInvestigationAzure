@@ -23,12 +23,19 @@ import { HumanDecisionPanel } from "@/components/cases/HumanDecisionPanel";
 import { AuditTrailPanel } from "@/components/cases/AuditTrailPanel";
 import { HumanOverrideBanner } from "@/components/cases/HumanOverrideBanner";
 import { StatusLifecyclePanel } from "@/components/cases/StatusLifecyclePanel";
+import { AssignmentActionPanel } from "@/components/assignment/AssignmentActionPanel";
+import { AssignmentHistoryPanel } from "@/components/assignment/AssignmentHistoryPanel";
+import { AssignmentPriorityBadge } from "@/components/assignment/AssignmentPriorityBadge";
+import { AssignmentStatusBadge } from "@/components/assignment/AssignmentStatusBadge";
+import { SlaStatusBadge } from "@/components/assignment/SlaStatusBadge";
+import { getAssignmentHistory } from "@/services/assignmentService";
 import { getAuditTrail } from "@/services/auditService";
 import { runInvestigation } from "@/services/agentService";
 import { getCaseDetail } from "@/services/caseService";
 import { getCaseStatus } from "@/services/statusService";
 import type { InvestigationPackage } from "@/types/agent.types";
 import type { AuditTrail } from "@/types/audit.types";
+import type { AssignmentHistoryRecord } from "@/types/assignment.types";
 import type { CaseDetail } from "@/types/case.types";
 import type { CaseStatusInfo } from "@/types/status.types";
 
@@ -40,6 +47,7 @@ export default function CaseDetailPage({ params }: PageProps) {
   const [caseId, setCaseId] = useState<string>("");
   const [caseDetail, setCaseDetail] = useState<CaseDetail | null>(null);
   const [auditTrail, setAuditTrail] = useState<AuditTrail | null>(null);
+  const [assignmentHistory, setAssignmentHistory] = useState<AssignmentHistoryRecord[]>([]);
   const [statusInfo, setStatusInfo] = useState<CaseStatusInfo | null>(null);
   const [investigation, setInvestigation] = useState<InvestigationPackage | null>(null);
   const [loading, setLoading] = useState(true);
@@ -54,10 +62,16 @@ export default function CaseDetailPage({ params }: PageProps) {
     if (!caseId) {
       return;
     }
-    const [detail, audit, status] = await Promise.all([getCaseDetail(caseId), getAuditTrail(caseId), getCaseStatus(caseId)]);
+    const [detail, audit, status, history] = await Promise.all([
+      getCaseDetail(caseId),
+      getAuditTrail(caseId),
+      getCaseStatus(caseId),
+      getAssignmentHistory(caseId).catch(() => ({ history: [] }))
+    ]);
     setCaseDetail(detail);
     setAuditTrail(audit);
     setStatusInfo(status);
+    setAssignmentHistory(history.history);
   }, [caseId]);
 
   useEffect(() => {
@@ -65,11 +79,17 @@ export default function CaseDetailPage({ params }: PageProps) {
       return;
     }
 
-    Promise.all([getCaseDetail(caseId), getAuditTrail(caseId), getCaseStatus(caseId)])
-      .then(([detail, audit, status]) => {
+    Promise.all([
+      getCaseDetail(caseId),
+      getAuditTrail(caseId),
+      getCaseStatus(caseId),
+      getAssignmentHistory(caseId).catch(() => ({ history: [] }))
+    ])
+      .then(([detail, audit, status, history]) => {
         setCaseDetail(detail);
         setAuditTrail(audit);
         setStatusInfo(status);
+        setAssignmentHistory(history.history);
       })
       .catch((err: Error) => setError(err.message))
       .finally(() => setLoading(false));
@@ -122,6 +142,19 @@ export default function CaseDetailPage({ params }: PageProps) {
               )}
               <CaseSummaryCard caseDetail={caseDetail} />
               <StatusLifecyclePanel statusInfo={statusInfo} />
+              <section className="card">
+                <div className="card-header">
+                  <h3>Assignment Summary</h3>
+                  <p>Current ownership, priority, and SLA posture.</p>
+                </div>
+                <div className="card-body meta-list">
+                  <div className="meta-row"><span className="meta-label">Assigned To</span><span className="meta-value">{caseDetail.assignment?.assigned_to_name ?? caseDetail.assignment?.assigned_to ?? "Unassigned"}</span></div>
+                  <div className="meta-row"><span className="meta-label">Team</span><span className="meta-value">{caseDetail.assignment?.assigned_team ?? "Fraud Operations"}</span></div>
+                  <div className="meta-row"><span className="meta-label">Status</span><span className="meta-value"><AssignmentStatusBadge status={caseDetail.assignment?.assignment_status ?? "UNASSIGNED"} /></span></div>
+                  <div className="meta-row"><span className="meta-label">Priority</span><span className="meta-value"><AssignmentPriorityBadge priority={caseDetail.assignment?.assignment_priority ?? "MEDIUM"} /></span></div>
+                  <div className="meta-row"><span className="meta-label">SLA</span><span className="meta-value"><SlaStatusBadge status={caseDetail.assignment?.sla_status ?? "NOT_APPLICABLE"} /></span></div>
+                </div>
+              </section>
               <CustomerProfileCard customer={caseDetail.customer} />
               <TransactionDetailsCard transaction={caseDetail.suspicious_transaction} />
               <BeneficiaryDetailsCard beneficiary={caseDetail.beneficiary} />
@@ -159,6 +192,8 @@ export default function CaseDetailPage({ params }: PageProps) {
                 aiRecommendation={caseDetail.ai_recommendation}
                 onDecisionRecorded={handleDecisionRecorded}
               />
+              <AssignmentActionPanel caseId={caseId} assignment={caseDetail.assignment} onDone={refreshCase} />
+              <AssignmentHistoryPanel history={assignmentHistory} />
               <AuditTrailPanel auditTrail={auditTrail} />
             </div>
           ) : (

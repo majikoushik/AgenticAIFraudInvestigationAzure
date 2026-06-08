@@ -88,6 +88,20 @@ SAFE_CONFIG_REGISTRY: dict[str, ConfigDefinition] = {
     "TELEMETRY_ENABLE_LLM": _item("TELEMETRY_ENABLE_LLM", "OBSERVABILITY", "boolean", True, "Emit LLM telemetry."),
     "TELEMETRY_ENABLE_BUSINESS": _item("TELEMETRY_ENABLE_BUSINESS", "OBSERVABILITY", "boolean", True, "Emit business telemetry."),
     "TELEMETRY_ENABLE_SECURITY": _item("TELEMETRY_ENABLE_SECURITY", "OBSERVABILITY", "boolean", True, "Emit security telemetry."),
+    "CASE_ASSIGNMENT_ENABLED": _item("CASE_ASSIGNMENT_ENABLED", "CASE_ASSIGNMENT", "boolean", True, "Enable local case assignment and queue APIs."),
+    "DEFAULT_ASSIGNMENT_TEAM": _item("DEFAULT_ASSIGNMENT_TEAM", "CASE_ASSIGNMENT", "string", "Fraud Operations", "Default assignment team."),
+    "DEFAULT_ASSIGNMENT_PRIORITY": _item("DEFAULT_ASSIGNMENT_PRIORITY", "CASE_ASSIGNMENT", "enum", "MEDIUM", "Default assignment priority.", allowed=["LOW", "MEDIUM", "HIGH", "CRITICAL"]),
+    "SLA_LOW_PRIORITY_HOURS": _item("SLA_LOW_PRIORITY_HOURS", "CASE_ASSIGNMENT", "integer", 72, "SLA hours for low priority cases.", min_value=1, max_value=720),
+    "SLA_MEDIUM_PRIORITY_HOURS": _item("SLA_MEDIUM_PRIORITY_HOURS", "CASE_ASSIGNMENT", "integer", 48, "SLA hours for medium priority cases.", min_value=1, max_value=720),
+    "SLA_HIGH_PRIORITY_HOURS": _item("SLA_HIGH_PRIORITY_HOURS", "CASE_ASSIGNMENT", "integer", 24, "SLA hours for high priority cases.", min_value=1, max_value=720),
+    "SLA_CRITICAL_PRIORITY_HOURS": _item("SLA_CRITICAL_PRIORITY_HOURS", "CASE_ASSIGNMENT", "integer", 4, "SLA hours for critical priority cases.", min_value=1, max_value=168),
+    "AUTO_SET_SLA_ON_ASSIGNMENT": _item("AUTO_SET_SLA_ON_ASSIGNMENT", "CASE_ASSIGNMENT", "boolean", True, "Automatically set SLA due date during assignment."),
+    "ALLOW_SELF_ASSIGNMENT": _item("ALLOW_SELF_ASSIGNMENT", "CASE_ASSIGNMENT", "boolean", True, "Allow analysts to self-assign unassigned cases."),
+    "ALLOW_ANALYST_RELEASE_OWN_CASE": _item("ALLOW_ANALYST_RELEASE_OWN_CASE", "CASE_ASSIGNMENT", "boolean", True, "Allow analysts to release their own cases."),
+    "ALLOW_ANALYST_TRANSFER_REQUEST": _item("ALLOW_ANALYST_TRANSFER_REQUEST", "CASE_ASSIGNMENT", "boolean", False, "Allow analyst transfer requests when workflow is implemented."),
+    "MAX_ACTIVE_CASES_PER_INVESTIGATOR": _item("MAX_ACTIVE_CASES_PER_INVESTIGATOR", "CASE_ASSIGNMENT", "integer", 20, "Maximum target active cases per investigator.", min_value=1, max_value=200),
+    "WORKLOAD_HIGH_THRESHOLD": _item("WORKLOAD_HIGH_THRESHOLD", "CASE_ASSIGNMENT", "integer", 15, "High workload threshold.", min_value=1, max_value=200),
+    "WORKLOAD_CRITICAL_THRESHOLD": _item("WORKLOAD_CRITICAL_THRESHOLD", "CASE_ASSIGNMENT", "integer", 20, "Critical workload threshold.", min_value=1, max_value=200),
 }
 
 
@@ -98,6 +112,7 @@ FEATURE_FLAG_KEYS = [
     "FEATURE_ENABLE_COST_DASHBOARD",
     "FEATURE_ENABLE_OBSERVABILITY_PAGE",
     "FEATURE_ENABLE_ALERT_SIMULATION",
+    "FEATURE_ENABLE_CASE_ASSIGNMENT",
     "FEATURE_ENABLE_LOCAL_DEMO_MODE",
     "FEATURE_ENABLE_AZURE_SEARCH_RAG",
     "FEATURE_ENABLE_AZURE_OPENAI",
