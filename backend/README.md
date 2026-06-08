@@ -70,6 +70,15 @@ Swagger UI is available at `http://localhost:8000/docs`.
 - `GET /api/v1/auth/me`: return authenticated user context.
 - `GET /api/v1/auth/permissions`: return permissions for the authenticated user.
 - `GET /api/v1/health/details`: return protected secret-safe health and observability details.
+- `GET /api/v1/retention/policies`: list effective retention policies.
+- `POST /api/v1/retention/scan`: run a dry-run retention eligibility scan.
+- `GET /api/v1/retention/review-queue`: list archive, purge, review, and legal hold candidates.
+- `POST /api/v1/retention/archive`: dry-run or execute archive workflow.
+- `POST /api/v1/retention/purge`: dry-run or protected purge workflow requiring explicit approval when configured.
+- `POST /api/v1/legal-holds`: create an auditable legal hold that blocks purge.
+- `POST /api/v1/legal-holds/{legal_hold_id}/release`: release an active legal hold.
+- `GET /api/v1/compliance/summary`: return compliance posture summary.
+- `POST /api/v1/compliance/exports/case/{case_id}`: create a sanitized case compliance export.
 - `GET /api/v1/observability/events`: return recent sanitized local telemetry events for admin users.
 - `GET /api/v1/alerts`: list alert events for admin users.
 - `GET /api/v1/alerts/{alert_id}`: return a single alert event.

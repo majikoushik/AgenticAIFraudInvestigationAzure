@@ -21,6 +21,7 @@ param adminConfigEnabled string = 'true'
 param caseAssignmentEnabled string = 'true'
 param notificationSystemEnabled string = 'true'
 param feedbackLoopEnabled string = 'true'
+param dataRetentionEnabled string = 'true'
 param useManagedIdentity string = 'true'
 param keyVaultEnabled string = 'true'
 param keyVaultUri string = ''
@@ -247,6 +248,38 @@ resource app 'Microsoft.App/containerApps@2023-05-01' = {
             }
             {
               name: 'FEEDBACK_AUTO_EXPORT_ACCEPTED_TO_EVAL'
+              value: 'false'
+            }
+            {
+              name: 'DATA_RETENTION_ENABLED'
+              value: dataRetentionEnabled
+            }
+            {
+              name: 'DATA_RETENTION_MODE'
+              value: 'local'
+            }
+            {
+              name: 'PURGE_DRY_RUN_DEFAULT'
+              value: 'true'
+            }
+            {
+              name: 'RETENTION_AUTO_ARCHIVE_ENABLED'
+              value: 'false'
+            }
+            {
+              name: 'RETENTION_AUTO_PURGE_ENABLED'
+              value: 'false'
+            }
+            {
+              name: 'RETENTION_REQUIRE_APPROVAL_FOR_PURGE'
+              value: 'true'
+            }
+            {
+              name: 'COMPLIANCE_EXPORT_REDACT_PII'
+              value: 'true'
+            }
+            {
+              name: 'RETENTION_POLICY_LEGALLY_REVIEWED'
               value: 'false'
             }
             {

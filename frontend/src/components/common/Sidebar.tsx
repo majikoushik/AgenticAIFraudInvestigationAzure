@@ -24,6 +24,11 @@ export function Sidebar() {
         {hasPermission("SUBMIT_AI_FEEDBACK") && <Link href="/feedback">AI Feedback</Link>}
         {hasPermission("VIEW_AI_FEEDBACK") && <Link href="/feedback/backlog">Improvement Backlog</Link>}
         {hasPermission("VIEW_AI_FEEDBACK") && <Link href="/feedback/analytics">Feedback Analytics</Link>}
+        {hasPermission("VIEW_COMPLIANCE") && <Link href="/compliance">Compliance Summary</Link>}
+        {hasPermission("VIEW_COMPLIANCE") && <Link href="/compliance/retention">Retention Policies</Link>}
+        {hasPermission("VIEW_COMPLIANCE") && <Link href="/compliance/review-queue">Retention Review Queue</Link>}
+        {hasPermission("VIEW_COMPLIANCE") && <Link href="/compliance/legal-holds">Legal Holds</Link>}
+        {hasPermission("VIEW_COMPLIANCE") && <Link href="/compliance/exports">Compliance Exports</Link>}
         {hasPermission("ADMIN_CONFIG") && <Link href="/alerts">Alerts</Link>}
         {hasPermission("ADMIN_CONFIG") && <Link href="/incidents">Incidents</Link>}
         <Link href="/metrics">Evaluation Metrics</Link>

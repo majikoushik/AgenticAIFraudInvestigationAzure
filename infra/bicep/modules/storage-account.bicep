@@ -28,5 +28,29 @@ resource evidenceContainer 'Microsoft.Storage/storageAccounts/blobServices/conta
   }
 }
 
+resource complianceExportsContainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-05-01' = {
+  name: '${storage.name}/default/compliance-exports'
+  properties: {
+    publicAccess: 'None'
+  }
+}
+
+resource archivesContainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-05-01' = {
+  name: '${storage.name}/default/archives'
+  properties: {
+    publicAccess: 'None'
+  }
+}
+
+resource retentionReportsContainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-05-01' = {
+  name: '${storage.name}/default/retention-reports'
+  properties: {
+    publicAccess: 'None'
+  }
+}
+
+// Production note: configure immutable storage/legal holds and lifecycle rules
+// only after compliance approval. See storage-lifecycle-management.bicep.
+
 output storageAccountName string = storage.name
 output storageAccountResourceId string = storage.id

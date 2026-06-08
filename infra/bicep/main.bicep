@@ -63,6 +63,9 @@ param notificationSystemEnabled string = 'true'
 @description('Enable local-first AI feedback loop and improvement backlog.')
 param feedbackLoopEnabled string = 'true'
 
+@description('Enable data retention and compliance framework.')
+param dataRetentionEnabled string = 'true'
+
 @description('Use managed identity for runtime Azure access.')
 param useManagedIdentity string = 'true'
 
@@ -259,6 +262,7 @@ module backendApp 'modules/backend-container-app.bicep' = {
     caseAssignmentEnabled: caseAssignmentEnabled
     notificationSystemEnabled: notificationSystemEnabled
     feedbackLoopEnabled: feedbackLoopEnabled
+    dataRetentionEnabled: dataRetentionEnabled
     useManagedIdentity: useManagedIdentity
     keyVaultEnabled: keyVaultEnabled
     keyVaultUri: keyVault.outputs.keyVaultUri

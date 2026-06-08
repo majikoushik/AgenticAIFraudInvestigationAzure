@@ -123,6 +123,13 @@ SAFE_CONFIG_REGISTRY: dict[str, ConfigDefinition] = {
     "USE_MANAGED_IDENTITY": _item("USE_MANAGED_IDENTITY", "SECURITY_DEPLOYMENT", "boolean", False, "Whether managed identity is enabled.", editable=False),
     "PRIVATE_ENDPOINTS_ENABLED": _item("PRIVATE_ENDPOINTS_ENABLED", "SECURITY_DEPLOYMENT", "boolean", False, "Whether private endpoint deployment is enabled.", editable=False),
     "DISABLE_PUBLIC_NETWORK_ACCESS": _item("DISABLE_PUBLIC_NETWORK_ACCESS", "SECURITY_DEPLOYMENT", "boolean", False, "Whether public network access should be disabled where supported.", editable=False),
+    "DATA_RETENTION_ENABLED": _item("DATA_RETENTION_ENABLED", "DATA_RETENTION_COMPLIANCE", "boolean", True, "Enable data retention and compliance APIs."),
+    "PURGE_DRY_RUN_DEFAULT": _item("PURGE_DRY_RUN_DEFAULT", "DATA_RETENTION_COMPLIANCE", "boolean", True, "Default purge operations to dry-run mode."),
+    "RETENTION_AUTO_ARCHIVE_ENABLED": _item("RETENTION_AUTO_ARCHIVE_ENABLED", "DATA_RETENTION_COMPLIANCE", "boolean", False, "Allow automatic archival after review controls are implemented."),
+    "RETENTION_AUTO_PURGE_ENABLED": _item("RETENTION_AUTO_PURGE_ENABLED", "DATA_RETENTION_COMPLIANCE", "boolean", False, "Allow automatic purge after approval workflow is implemented."),
+    "RETENTION_REQUIRE_APPROVAL_FOR_PURGE": _item("RETENTION_REQUIRE_APPROVAL_FOR_PURGE", "DATA_RETENTION_COMPLIANCE", "boolean", True, "Require approval ID for non-dry-run purge."),
+    "RETENTION_REVIEW_LOOKAHEAD_DAYS": _item("RETENTION_REVIEW_LOOKAHEAD_DAYS", "DATA_RETENTION_COMPLIANCE", "integer", 30, "Days before purge eligibility to put records into review.", min_value=1, max_value=365),
+    "COMPLIANCE_EXPORT_REDACT_PII": _item("COMPLIANCE_EXPORT_REDACT_PII", "DATA_RETENTION_COMPLIANCE", "boolean", True, "Redact PII-like values in compliance exports."),
 }
 
 

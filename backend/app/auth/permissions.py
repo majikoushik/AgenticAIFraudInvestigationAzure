@@ -35,6 +35,11 @@ class Permission(StrEnum):
     VIEW_AI_FEEDBACK = "VIEW_AI_FEEDBACK"
     MANAGE_AI_FEEDBACK = "MANAGE_AI_FEEDBACK"
     EXPORT_AI_FEEDBACK = "EXPORT_AI_FEEDBACK"
+    VIEW_COMPLIANCE = "VIEW_COMPLIANCE"
+    MANAGE_RETENTION = "MANAGE_RETENTION"
+    MANAGE_LEGAL_HOLDS = "MANAGE_LEGAL_HOLDS"
+    CREATE_COMPLIANCE_EXPORT = "CREATE_COMPLIANCE_EXPORT"
+    EXECUTE_RETENTION_PURGE = "EXECUTE_RETENTION_PURGE"
 
 
 PERMISSIONS_BY_ROLE: dict[str, set[Permission]] = {
@@ -80,6 +85,7 @@ PERMISSIONS_BY_ROLE: dict[str, set[Permission]] = {
         Permission.SUBMIT_AI_FEEDBACK,
         Permission.VIEW_AI_FEEDBACK,
         Permission.MANAGE_AI_FEEDBACK,
+        Permission.VIEW_COMPLIANCE,
     },
     "COMPLIANCE_OFFICER": {
         Permission.VIEW_CASES,
@@ -100,6 +106,11 @@ PERMISSIONS_BY_ROLE: dict[str, set[Permission]] = {
         Permission.SUBMIT_AI_FEEDBACK,
         Permission.VIEW_AI_FEEDBACK,
         Permission.MANAGE_AI_FEEDBACK,
+        Permission.VIEW_COMPLIANCE,
+        Permission.MANAGE_RETENTION,
+        Permission.MANAGE_LEGAL_HOLDS,
+        Permission.CREATE_COMPLIANCE_EXPORT,
+        Permission.EXECUTE_RETENTION_PURGE,
     },
     "AUDITOR": {
         Permission.VIEW_CASES,
@@ -110,6 +121,7 @@ PERMISSIONS_BY_ROLE: dict[str, set[Permission]] = {
         Permission.VIEW_ASSIGNMENT_HISTORY,
         Permission.VIEW_NOTIFICATIONS,
         Permission.VIEW_AI_FEEDBACK,
+        Permission.VIEW_COMPLIANCE,
     },
     "ADMIN": set(Permission),
 }

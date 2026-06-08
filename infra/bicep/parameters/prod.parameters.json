@@ -65,6 +65,9 @@
     "feedbackLoopEnabled": {
       "value": "true"
     },
+    "dataRetentionEnabled": {
+      "value": "true"
+    },
     "useManagedIdentity": {
       "value": "true"
     },

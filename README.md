@@ -68,6 +68,13 @@ npm run dev
 - `.env.example` files contain placeholders only.
 - No real banking data, secrets, or credentials should be committed.
 - High-impact actions such as freezing accounts must require human review.
+- Retention defaults are placeholders and must be approved by legal/compliance before production use.
+
+## Data Retention and Compliance
+
+The MVP includes local JSON-backed retention policies, legal holds, dry-run retention scans, archive and purge execution frameworks, review queues, and sanitized compliance exports. Purge defaults to dry-run, active legal holds block purge, and compliance exports redact PII-like values while excluding raw prompts, raw model responses, secrets, and chain-of-thought.
+
+See [docs/data-retention-compliance-policy.md](docs/data-retention-compliance-policy.md).
 
 ## Human Review Workflow
 

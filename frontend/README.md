@@ -19,6 +19,7 @@ Next.js TypeScript dashboard for the Agentic AI Fraud Investigation MVP.
 - Admin Configuration Panel at `/admin/config` for safe non-secret runtime settings, feature flags, health, history, and reset controls.
 - Case assignment queues at `/queues/my`, `/queues/unassigned`, `/queues/team`, `/queues/sla-risk`, plus workload at `/assignment/workload`.
 - Notification bell, inbox at `/notifications`, preferences at `/notifications/preferences`, and admin health/test page at `/admin/notifications`.
+- Compliance dashboard at `/compliance`, retention policies at `/compliance/retention`, review queue at `/compliance/review-queue`, legal holds at `/compliance/legal-holds`, and sanitized exports at `/compliance/exports`.
 - Local-only MVP behavior with no direct external AI calls.
 
 ## Install
@@ -51,6 +52,7 @@ Open `http://localhost:3000/cost` to review estimated cost and token usage.
 Open `http://localhost:3000/admin/config` as `ADMIN` to manage safe configuration overrides.
 Open `http://localhost:3000/queues/my` as `FRAUD_ANALYST` or `http://localhost:3000/queues/team` as `FRAUD_MANAGER` to review assignment queues.
 Open `http://localhost:3000/admin/notifications` as `ADMIN` to send a local test notification, then open `http://localhost:3000/notifications` to review the inbox.
+Open `http://localhost:3000/compliance` as `ADMIN`, `COMPLIANCE_OFFICER`, or `AUDITOR` to review retention and compliance posture.
 Open `http://localhost:3000/login` to select a local demo role when `NEXT_PUBLIC_AUTH_MODE=local`.
 
 ## Environment Variables
