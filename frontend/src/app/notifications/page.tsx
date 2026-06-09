@@ -15,20 +15,20 @@ export default function NotificationsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  async function refresh() {
-    setLoading(true);
-    try {
-      const result = await getMyNotifications({ limit: 100 });
-      setItems(result.notifications);
-    } catch (err) {
-      setError((err as Error).message);
-    } finally {
-      setLoading(false);
-    }
-  }
-
   useEffect(() => {
-    refresh();
+    let mounted = true;
+    const doRefresh = async () => {
+      try {
+        const result = await getMyNotifications({ limit: 100 });
+        if (mounted) setItems(result.notifications);
+      } catch (err) {
+        if (mounted) setError((err as Error).message);
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    };
+    doRefresh();
+    return () => { mounted = false; };
   }, []);
 
   async function read(id: string) {
@@ -39,6 +39,18 @@ export default function NotificationsPage() {
   async function archive(id: string) {
     await archiveNotification(id);
     await refresh();
+  }
+
+  async function refresh() {
+    setLoading(true);
+    try {
+      const result = await getMyNotifications({ limit: 100 });
+      setItems(result.notifications);
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function readAll() {

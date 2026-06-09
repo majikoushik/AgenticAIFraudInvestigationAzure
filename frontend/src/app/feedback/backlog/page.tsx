@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "@/components/common/Header";
 import { ProtectedRoute } from "@/auth/ProtectedRoute";
 import { Sidebar } from "@/components/common/Sidebar";
@@ -16,12 +16,21 @@ export default function FeedbackBacklogPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const load = useCallback(() => {
-    setLoading(true);
-    getFeedbackBacklog().then((result) => setItems(result.backlog_items)).catch((err: Error) => setError(err.message)).finally(() => setLoading(false));
+  useEffect(() => {
+    let mounted = true;
+    const doLoad = async () => {
+      try {
+        const result = await getFeedbackBacklog();
+        if (mounted) setItems(result.backlog_items);
+      } catch (err: unknown) {
+        if (mounted) setError(err instanceof Error ? err.message : String(err));
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    };
+    doLoad();
+    return () => { mounted = false; };
   }, []);
-
-  useEffect(() => load(), [load]);
 
   return (
     <ProtectedRoute><div className="app-layout">
@@ -30,7 +39,7 @@ export default function FeedbackBacklogPage() {
         <Header title="Improvement Backlog" subtitle="Prompt, RAG, safety, and evaluation actions from feedback." />
         <section className="content">
           <FeedbackExportPanel />
-          {loading ? <LoadingSpinner label="Loading backlog" /> : error ? <ErrorMessage message={error} /> : <FeedbackBacklogTable items={items} onUpdated={load} />}
+          {loading ? <LoadingSpinner label="Loading backlog" /> : error ? <ErrorMessage message={error} /> : <FeedbackBacklogTable items={items} onUpdated={async () => { setLoading(true); try { const result = await getFeedbackBacklog(); setItems(result.backlog_items); } catch (err: unknown) { setError(err instanceof Error ? err.message : String(err)); } finally { setLoading(false); } }} />}
         </section>
       </main>
     </div></ProtectedRoute>

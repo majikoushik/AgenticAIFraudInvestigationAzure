@@ -36,6 +36,9 @@ export function Sidebar() {
         {hasPermission("ADMIN_CONFIG") && <Link href="/observability">Observability</Link>}
         {hasPermission("ADMIN_CONFIG") && <Link href="/admin/config">Admin Config</Link>}
         {hasPermission("ADMIN_CONFIG") && <Link href="/admin/notifications">Notification Admin</Link>}
+        {hasPermission("VIEW_READINESS") && <Link href="/readiness">Production Readiness</Link>}
+        {hasPermission("VIEW_READINESS") && <Link href="/readiness/risks">Risk Register</Link>}
+        {hasPermission("VIEW_READINESS") && <Link href="/readiness/checklist">Readiness Checklist</Link>}
       </nav>
     </aside>
   );

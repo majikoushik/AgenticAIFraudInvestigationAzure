@@ -40,6 +40,11 @@ class Permission(StrEnum):
     MANAGE_LEGAL_HOLDS = "MANAGE_LEGAL_HOLDS"
     CREATE_COMPLIANCE_EXPORT = "CREATE_COMPLIANCE_EXPORT"
     EXECUTE_RETENTION_PURGE = "EXECUTE_RETENTION_PURGE"
+    VIEW_READINESS = "VIEW_READINESS"
+    RUN_READINESS_ASSESSMENT = "RUN_READINESS_ASSESSMENT"
+    MANAGE_READINESS_RISKS = "MANAGE_READINESS_RISKS"
+    ADD_READINESS_EVIDENCE = "ADD_READINESS_EVIDENCE"
+    EXPORT_READINESS_REPORT = "EXPORT_READINESS_REPORT"
 
 
 PERMISSIONS_BY_ROLE: dict[str, set[Permission]] = {
@@ -59,6 +64,7 @@ PERMISSIONS_BY_ROLE: dict[str, set[Permission]] = {
         Permission.VIEW_ASSIGNMENT_HISTORY,
         Permission.VIEW_NOTIFICATIONS,
         Permission.SUBMIT_AI_FEEDBACK,
+        Permission.VIEW_READINESS,
     },
     "FRAUD_MANAGER": {
         Permission.VIEW_CASES,
@@ -86,6 +92,7 @@ PERMISSIONS_BY_ROLE: dict[str, set[Permission]] = {
         Permission.VIEW_AI_FEEDBACK,
         Permission.MANAGE_AI_FEEDBACK,
         Permission.VIEW_COMPLIANCE,
+        Permission.VIEW_READINESS,
     },
     "COMPLIANCE_OFFICER": {
         Permission.VIEW_CASES,
@@ -111,6 +118,10 @@ PERMISSIONS_BY_ROLE: dict[str, set[Permission]] = {
         Permission.MANAGE_LEGAL_HOLDS,
         Permission.CREATE_COMPLIANCE_EXPORT,
         Permission.EXECUTE_RETENTION_PURGE,
+        Permission.VIEW_READINESS,
+        Permission.ADD_READINESS_EVIDENCE,
+        Permission.MANAGE_READINESS_RISKS,
+        Permission.EXPORT_READINESS_REPORT,
     },
     "AUDITOR": {
         Permission.VIEW_CASES,
@@ -122,6 +133,8 @@ PERMISSIONS_BY_ROLE: dict[str, set[Permission]] = {
         Permission.VIEW_NOTIFICATIONS,
         Permission.VIEW_AI_FEEDBACK,
         Permission.VIEW_COMPLIANCE,
+        Permission.VIEW_READINESS,
+        Permission.EXPORT_READINESS_REPORT,
     },
     "ADMIN": set(Permission),
 }

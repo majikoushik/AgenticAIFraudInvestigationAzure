@@ -64,5 +64,27 @@
     "comment": "Accepted for test.",
     "history_id": "ASSIGNHIST-84AA357FF2D4",
     "timestamp": "2026-06-08T16:31:44.813563+00:00"
+  },
+  {
+    "case_id": "case-001",
+    "action": "ASSIGNED",
+    "previous_assigned_to": "fraud_analyst_01",
+    "new_assigned_to": "fraud_analyst_01",
+    "actor": "fraud_manager_01",
+    "actor_role": "FRAUD_MANAGER",
+    "comment": "Synthetic integration assignment.",
+    "history_id": "ASSIGNHIST-132597A999C7",
+    "timestamp": "2026-06-09T15:08:41.483530+00:00"
+  },
+  {
+    "case_id": "case-002",
+    "action": "ACCEPTED",
+    "previous_assigned_to": "fraud_analyst_01",
+    "new_assigned_to": "fraud_analyst_01",
+    "actor": "fraud_analyst_01",
+    "actor_role": "FRAUD_ANALYST",
+    "comment": "Accepted for test.",
+    "history_id": "ASSIGNHIST-BC9288E4F6CB",
+    "timestamp": "2026-06-09T15:08:41.747894+00:00"
   }
 ]

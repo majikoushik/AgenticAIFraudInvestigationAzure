@@ -8,7 +8,7 @@
     "device_id": "dev-002",
     "severity": "medium",
     "status": "NEW",
-    "status_updated_at": "2026-06-08T16:32:06.386594+00:00",
+    "status_updated_at": "2026-06-09T15:09:02.289457+00:00",
     "status_updated_by": "test",
     "status_comment": null,
     "ai_recommendation": null,
@@ -24,7 +24,7 @@
       "human_override": true,
       "override_reason": "Beneficiary linked to multiple suspicious synthetic cases.",
       "override_comparison_status": "OVERRIDDEN",
-      "override_detected_at": "2026-06-08T16:32:05.887196+00:00",
+      "override_detected_at": "2026-06-09T15:09:01.858610+00:00",
       "override_detected_by": "local_demo_user"
     },
     "policy_references": [
@@ -41,10 +41,10 @@
     "assigned_to_role": "FRAUD_ANALYST",
     "assigned_team": "Fraud Operations",
     "assigned_by": "fraud_manager_01",
-    "assigned_at": "2026-06-08T16:31:44.533969+00:00",
+    "assigned_at": "2026-06-09T15:08:41.472814+00:00",
     "assignment_status": "ASSIGNED",
     "assignment_priority": "HIGH",
-    "sla_due_at": "2026-06-09T16:31:44.533969+00:00",
+    "sla_due_at": "2026-06-10T15:08:41.472814+00:00",
     "sla_status": "ON_TRACK",
     "last_assignment_action": "ASSIGNED",
     "risk_indicators": [
@@ -64,7 +64,7 @@
       "ai_recommendation": "HOLD",
       "human_decision": "ESCALATE",
       "override_reason": "Beneficiary linked to multiple suspicious synthetic cases.",
-      "override_detected_at": "2026-06-08T16:32:05.887196+00:00",
+      "override_detected_at": "2026-06-09T15:09:01.858610+00:00",
       "override_detected_by": "local_demo_user",
       "override_comparison_status": "OVERRIDDEN"
     }
@@ -78,7 +78,7 @@
     "device_id": "dev-003",
     "severity": "high",
     "status": "PENDING_HUMAN_REVIEW",
-    "status_updated_at": "2026-06-08T16:32:04.403983+00:00",
+    "status_updated_at": "2026-06-09T15:08:59.918536+00:00",
     "status_updated_by": "system",
     "status_comment": "Case is ready for human review",
     "ai_recommendation": null,

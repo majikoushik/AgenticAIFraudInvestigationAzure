@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { ConfigCategoryTabs } from "@/components/admin/ConfigCategoryTabs";
 import { ConfigHealthPanel } from "@/components/admin/ConfigHealthPanel";
 import { ConfigHistoryPanel } from "@/components/admin/ConfigHistoryPanel";
@@ -25,19 +25,40 @@ export function AdminConfigPage() {
   const [message, setMessage] = useState<string | null>(null);
   const [validationErrors, setValidationErrors] = useState<Array<{ key: string; errors: string[] }>>([]);
 
-  async function refresh() {
-    const dashboard = await getAdminConfigDashboard();
-    setCategories(dashboard.config.categories);
-    setHealth(dashboard.health);
-    setHistory(dashboard.history);
-    setFlags(dashboard.featureFlags);
-  }
-
   useEffect(() => {
-    refresh().catch((err: Error) => setError(err.message)).finally(() => setLoading(false));
+    let mounted = true;
+    const doRefresh = async () => {
+      try {
+        const dashboard = await getAdminConfigDashboard();
+        if (mounted) {
+          setCategories(dashboard.config.categories);
+          setHealth(dashboard.health);
+          setHistory(dashboard.history);
+          setFlags(dashboard.featureFlags);
+        }
+      } catch (err) {
+        if (mounted) setError((err as Error).message);
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    };
+    doRefresh();
+    return () => { mounted = false; };
   }, []);
 
   const activeCategory = useMemo(() => categories.find((category) => category.category === active) ?? categories[0], [categories, active]);
+
+  async function refresh() {
+    try {
+      const dashboard = await getAdminConfigDashboard();
+      setCategories(dashboard.config.categories);
+      setHealth(dashboard.health);
+      setHistory(dashboard.history);
+      setFlags(dashboard.featureFlags);
+    } catch {
+      // ignore
+    }
+  }
 
   async function saveItem(key: string, value: unknown) {
     const response = await updateAdminConfig({ updates: [{ key, value }], comment: "Updated from admin configuration panel." });

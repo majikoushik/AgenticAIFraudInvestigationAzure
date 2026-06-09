@@ -1,0 +1,11 @@
+// KQL: Production Readiness Score Low
+// Detects assessments where overall readiness score drops below threshold (default 80)
+
+customEvents
+| where name == "READINESS_ASSESSMENT_COMPLETED"
+| extend score = todouble(customMeasurements["overall_score"])
+| extend environment = tostring(customDimensions["environment"])
+| extend go_live = tostring(customDimensions["go_live_decision"])
+| where score < 80
+| project timestamp, environment, go_live, score
+| order by timestamp desc

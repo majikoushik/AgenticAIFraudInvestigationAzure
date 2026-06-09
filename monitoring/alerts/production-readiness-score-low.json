@@ -1,0 +1,22 @@
+{
+  "name": "Production Readiness Score Low",
+  "description": "Alert when production readiness overall score drops below 80.",
+  "severity": 2,
+  "enabled": true,
+  "evaluationFrequency": "PT1H",
+  "windowSize": "PT1H",
+  "criteria": {
+    "query": "customEvents | where name == 'READINESS_ASSESSMENT_COMPLETED' | extend score = todouble(customMeasurements['overall_score']) | where score < 80",
+    "threshold": 0,
+    "operator": "GreaterThan",
+    "timeAggregation": "Count"
+  },
+  "actions": {
+    "actionGroupId": "<action-group-resource-id>",
+    "webhookPayload": {
+      "alertName": "Production Readiness Score Low",
+      "severity": "High",
+      "runbook": "docs/runbooks/production-readiness-score-low.md"
+    }
+  }
+}

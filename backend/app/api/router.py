@@ -19,6 +19,7 @@ from app.api.routes import (
     notification_routes,
     observability_routes,
     rag_routes,
+    readiness_routes,
     review_routes,
     security_routes,
     status_routes,
@@ -52,3 +53,4 @@ api_router.include_router(audit_routes.router, prefix="/api/v1")
 api_router.include_router(audit_routes.audit_router, prefix="/api/v1")
 api_router.include_router(status_routes.router, prefix="/api/v1")
 api_router.include_router(retention_routes.router, prefix="/api/v1")
+api_router.include_router(readiness_routes.router, prefix="/api/v1")
