@@ -1,35 +1,5 @@
 [
   {
-    "timestamp": "2026-06-08T15:59:55.605962+00:00",
-    "telemetry_type": "event",
-    "name": "API_REQUEST_STARTED",
-    "properties": {
-      "service_name": "fraud-investigation-platform",
-      "environment": "local",
-      "correlation_id": "b441a1ce027545cdbd580de2f6e888b7",
-      "path": "/api/v1/cases/case-001/review",
-      "method": "POST"
-    },
-    "measurements": {}
-  },
-  {
-    "timestamp": "2026-06-08T15:59:55.699317+00:00",
-    "telemetry_type": "event",
-    "name": "API_REQUEST_COMPLETED",
-    "properties": {
-      "service_name": "fraud-investigation-platform",
-      "environment": "local",
-      "correlation_id": "b441a1ce027545cdbd580de2f6e888b7",
-      "path": "/api/v1/cases/case-001/review",
-      "method": "POST",
-      "status_code": 200,
-      "success": true
-    },
-    "measurements": {
-      "duration_ms": 106.22
-    }
-  },
-  {
     "timestamp": "2026-06-08T15:59:55.736714+00:00",
     "telemetry_type": "event",
     "name": "API_REQUEST_STARTED",
@@ -15526,6 +15496,36 @@
       "completion_tokens": 500,
       "total_tokens": 1500,
       "estimated_cost": 0.2
+    }
+  },
+  {
+    "timestamp": "2026-06-09T01:28:47.553083+00:00",
+    "telemetry_type": "event",
+    "name": "API_REQUEST_STARTED",
+    "properties": {
+      "service_name": "fraud-investigation-platform",
+      "environment": "local",
+      "correlation_id": "68a7875d75654ead8e5550a1b7452178",
+      "path": "/api/v1/cases",
+      "method": "GET"
+    },
+    "measurements": {}
+  },
+  {
+    "timestamp": "2026-06-09T01:28:47.621457+00:00",
+    "telemetry_type": "event",
+    "name": "API_REQUEST_COMPLETED",
+    "properties": {
+      "service_name": "fraud-investigation-platform",
+      "environment": "local",
+      "correlation_id": "68a7875d75654ead8e5550a1b7452178",
+      "path": "/api/v1/cases",
+      "method": "GET",
+      "status_code": 200,
+      "success": true
+    },
+    "measurements": {
+      "duration_ms": 69.38
     }
   }
 ]
