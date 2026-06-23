@@ -193,7 +193,7 @@ def add_evidence(
 @router.post("/assessments/{assessment_id}/export", summary="Export readiness report")
 def export_report(
     assessment_id: str,
-    format: str = Query("markdown", regex="^(markdown|json)$"),
+    format: str = Query("markdown", pattern="^(markdown|json)$"),
     current_user: AuthenticatedUser = Depends(get_current_user),
 ) -> dict[str, Any]:
     assert_permission(current_user, Permission.EXPORT_READINESS_REPORT)

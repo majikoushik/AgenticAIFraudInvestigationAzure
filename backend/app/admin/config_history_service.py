@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from uuid import uuid4
 
 from app.alerting.json_file_store import resolve_store_path
@@ -13,9 +13,9 @@ class ConfigHistoryService:
         self.path = resolve_store_path(path_text or admin_config_settings.history_store_path)
 
     def append_history_record(self, key: str, old_value, new_value, category: str, updated_by: str, comment: str | None = None) -> dict:
-        now = datetime.utcnow().isoformat() + "Z"
+        now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
         record = {
-            "history_id": f"CONFHIST-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid4().hex[:6]}",
+            "history_id": f"CONFHIST-{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}-{uuid4().hex[:6]}",
             "key": key,
             "old_value": mask_secret_value(old_value) if is_secret_key(key) else old_value,
             "new_value": mask_secret_value(new_value) if is_secret_key(key) else new_value,

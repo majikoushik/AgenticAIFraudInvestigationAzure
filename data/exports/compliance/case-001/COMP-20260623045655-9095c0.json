@@ -1,4 +1,239 @@
 {
+  "manifest": {
+    "export_id": "COMP-[REDACTED_ACCOUNT]-9095c0",
+    "generated_by": "admin_user",
+    "generated_at": "2026-06-23T04:56:55.496635+00:00",
+    "included_sections": [
+      "case_details",
+      "retention_metadata",
+      "legal_holds",
+      "audit_trail",
+      "feedback_records",
+      "ai_outputs"
+    ],
+    "redaction_applied": true,
+    "source_files": [
+      "data/synthetic/fraud_alerts.json",
+      "data/synthetic/audit_events.json"
+    ]
+  },
+  "case_details": {
+    "alert_id": "alert-001",
+    "case_id": "case-001",
+    "customer_id": "cust-001",
+    "transaction_id": "txn-001",
+    "beneficiary_id": "ben-001",
+    "device_id": "dev-002",
+    "severity": "medium",
+    "status": "NEW",
+    "status_updated_at": "2026-06-09T15:09:02.289457+00:00",
+    "status_updated_by": "test",
+    "status_comment": null,
+    "ai_recommendation": null,
+    "investigation_summary": null,
+    "human_review": {
+      "decision": "ESCALATE",
+      "human_decision": "ESCALATE",
+      "reviewed_by": "local_demo_user",
+      "reviewer_role": "FRAUD_ANALYST",
+      "reason_code": "SUSPICIOUS_DEVICE",
+      "comment": "Synthetic review comment with enough detail.",
+      "ai_recommendation": "HOLD",
+      "human_override": true,
+      "override_reason": "Beneficiary linked to multiple suspicious synthetic cases.",
+      "override_comparison_status": "OVERRIDDEN",
+      "override_detected_at": "2026-06-09T15:09:01.858610+00:00",
+      "override_detected_by": "local_demo_user"
+    },
+    "policy_references": [
+      {
+        "title": "New Beneficiary Policy",
+        "source": "new-beneficiary-policy.md"
+      }
+    ],
+    "audit_events": [],
+    "reason": "New device and new beneficiary used for an unusually high card-not-present purchase.",
+    "created_at": "2026-06-05T10:35:00Z",
+    "assigned_to": "fraud_analyst_01",
+    "assigned_to_name": "Fraud Analyst 01",
+    "assigned_to_role": "FRAUD_ANALYST",
+    "assigned_team": "Fraud Operations",
+    "assigned_by": "fraud_manager_01",
+    "assigned_at": "2026-06-09T15:08:41.472814+00:00",
+    "assignment_status": "ASSIGNED",
+    "assignment_priority": "HIGH",
+    "sla_due_at": "2026-06-10T15:08:41.472814+00:00",
+    "sla_status": "ON_TRACK",
+    "last_assignment_action": "ASSIGNED",
+    "risk_indicators": [
+      {
+        "code": "NEW_DEVICE",
+        "description": "Transaction originated from a device first seen during the alert window.",
+        "severity": "medium"
+      },
+      {
+        "code": "NEW_BENEFICIARY",
+        "description": "Beneficiary was first observed on the transaction date.",
+        "severity": "medium"
+      }
+    ],
+    "override_summary": {
+      "has_override": true,
+      "ai_recommendation": "HOLD",
+      "human_decision": "ESCALATE",
+      "override_reason": "Beneficiary linked to multiple suspicious synthetic cases.",
+      "override_detected_at": "2026-06-09T15:09:01.858610+00:00",
+      "override_detected_by": "local_demo_user",
+      "override_comparison_status": "OVERRIDDEN"
+    }
+  },
+  "retention_metadata": {
+    "data_category": "FRAUD_CASE",
+    "legal_hold_status": "NONE"
+  },
+  "legal_holds": [],
+  "audit_trail": [
+    {
+      "case_id": "case-001",
+      "event_type": "AI_FEEDBACK_BACKLOG_CREATED",
+      "event_category": "AI_FEEDBACK",
+      "actor": "system",
+      "actor_role": "SYSTEM",
+      "action": "Ai Feedback Backlog Created",
+      "description": "Ai Feedback Backlog Created",
+      "previous_status": null,
+      "new_status": null,
+      "decision": null,
+      "reason_code": null,
+      "ai_recommendation": null,
+      "human_decision": null,
+      "human_override": false,
+      "override_reason": null,
+      "agent_name": null,
+      "tool_name": null,
+      "rag_query": null,
+      "rag_sources": [],
+      "error_code": null,
+      "error_message": null,
+      "correlation_id": null,
+      "metadata": {
+        "feedback_id": "FB-1",
+        "backlog_id": "AIBL-[REDACTED_ACCOUNT]-9fa528",
+        "backlog_type": "PROMPT_IMPROVEMENT"
+      },
+      "timestamp": "2026-06-09T15:09:10.458892Z",
+      "audit_id": "AUDIT-[REDACTED_ACCOUNT]-429c36"
+    },
+    {
+      "case_id": "case-001",
+      "event_type": "AI_FEEDBACK_SUBMITTED",
+      "event_category": "AI_FEEDBACK",
+      "actor": "fraud_analyst_01",
+      "actor_role": "FRAUD_ANALYST",
+      "action": "Ai Feedback Submitted",
+      "description": "Ai Feedback Submitted",
+      "previous_status": null,
+      "new_status": null,
+      "decision": null,
+      "reason_code": null,
+      "ai_recommendation": null,
+      "human_decision": null,
+      "human_override": false,
+      "override_reason": null,
+      "agent_name": null,
+      "tool_name": null,
+      "rag_query": null,
+      "rag_sources": [],
+      "error_code": null,
+      "error_message": null,
+      "correlation_id": null,
+      "metadata": {
+        "feedback_id": "FB-[masked-number]-1e7693",
+        "case_id": "case-001",
+        "target_type": "AI_RECOMMENDATION",
+        "rating": "POOR",
+        "issue_types": [
+          "HALLUCINATION_SUSPECTED"
+        ],
+        "severity": "CRITICAL",
+        "disposition": "NEW",
+        "submitted_by": "fraud_analyst_01",
+        "submitted_by_role": "FRAUD_ANALYST"
+      },
+      "timestamp": "2026-06-09T15:09:10.648604Z",
+      "audit_id": "AUDIT-[REDACTED_ACCOUNT]-9288a4"
+    },
+    {
+      "case_id": "case-001",
+      "event_type": "AI_FEEDBACK_CRITICAL_ISSUE_REPORTED",
+      "event_category": "AI_FEEDBACK",
+      "actor": "fraud_analyst_01",
+      "actor_role": "FRAUD_ANALYST",
+      "action": "Ai Feedback Critical Issue Reported",
+      "description": "Ai Feedback Critical Issue Reported",
+      "previous_status": null,
+      "new_status": null,
+      "decision": null,
+      "reason_code": null,
+      "ai_recommendation": null,
+      "human_decision": null,
+      "human_override": false,
+      "override_reason": null,
+      "agent_name": null,
+      "tool_name": null,
+      "rag_query": null,
+      "rag_sources": [],
+      "error_code": null,
+      "error_message": null,
+      "correlation_id": null,
+      "metadata": {
+        "feedback_id": "FB-[masked-number]-1e7693",
+        "case_id": "case-001",
+        "target_type": "AI_RECOMMENDATION",
+        "rating": "POOR",
+        "issue_types": [
+          "HALLUCINATION_SUSPECTED"
+        ],
+        "severity": "CRITICAL",
+        "disposition": "NEW",
+        "submitted_by": "fraud_analyst_01",
+        "submitted_by_role": "FRAUD_ANALYST"
+      },
+      "timestamp": "2026-06-09T15:09:10.726205Z",
+      "audit_id": "AUDIT-[REDACTED_ACCOUNT]-763a2b"
+    },
+    {
+      "case_id": "case-001",
+      "event_type": "AI_FEEDBACK_BACKLOG_CREATED",
+      "event_category": "AI_FEEDBACK",
+      "actor": "system",
+      "actor_role": "SYSTEM",
+      "action": "Ai Feedback Backlog Created",
+      "description": "Ai Feedback Backlog Created",
+      "previous_status": null,
+      "new_status": null,
+      "decision": null,
+      "reason_code": null,
+      "ai_recommendation": null,
+      "human_decision": null,
+      "human_override": false,
+      "override_reason": null,
+      "agent_name": null,
+      "tool_name": null,
+      "rag_query": null,
+      "rag_sources": [],
+      "error_code": null,
+      "error_message": null,
+      "correlation_id": null,
+      "metadata": {
+        "feedback_id": "FB-[masked-number]-1e7693",
+        "backlog_id": "AIBL-[REDACTED_ACCOUNT]-fed697",
+        "backlog_type": "SAFETY_REVIEW"
+      },
+      "timestamp": "2026-06-09T15:09:10.776707Z",
+      "audit_id": "AUDIT-[REDACTED_ACCOUNT]-e661a4"
+    }
+  ],
   "feedback_records": [
     {
       "case_id": "case-001",
@@ -295,80 +530,10 @@
       "case_status_at_feedback": "NEW",
       "created_at": "[masked-phone]T15:08:45.959711+00:00",
       "updated_at": "[masked-phone]T15:08:46.155999+00:00"
-    },
-    {
-      "case_id": "case-001",
-      "target_type": "AI_RECOMMENDATION",
-      "target_id": null,
-      "rating": "POOR",
-      "issue_types": [
-        "INCORRECT_RECOMMENDATION"
-      ],
-      "severity": "HIGH",
-      "comment": "The recommendation should escalate due to beneficiary risk.",
-      "suggested_correction": null,
-      "expected_recommendation": "ESCALATE",
-      "actual_ai_recommendation": "HOLD",
-      "human_decision": "ESCALATE",
-      "policy_source_file": null,
-      "policy_chunk_id": null,
-      "agent_name": null,
-      "sanitized_ai_output_snapshot": {},
-      "ai_provider": "local",
-      "model_or_deployment": "local-deterministic",
-      "metadata": {
-        "case_severity": "medium",
-        "case_status": "NEW",
-        "risk_indicator_codes": [
-          "NEW_DEVICE",
-          "NEW_BENEFICIARY"
-        ]
-      },
-      "feedback_id": "FB-[masked-number]-bc849b",
-      "submitted_by": "fraud_analyst_01",
-      "submitted_by_role": "FRAUD_ANALYST",
-      "disposition": "NEW",
-      "case_status_at_feedback": "NEW",
-      "created_at": "[masked-phone]T04:56:58.235237+00:00",
-      "updated_at": "[masked-phone]T04:56:58.235237+00:00"
-    },
-    {
-      "case_id": "case-001",
-      "target_type": "POLICY_CITATION",
-      "target_id": null,
-      "rating": "POOR",
-      "issue_types": [
-        "WRONG_POLICY_CITATION"
-      ],
-      "severity": "HIGH",
-      "comment": "Wrong policy citation was selected.",
-      "suggested_correction": null,
-      "expected_recommendation": null,
-      "actual_ai_recommendation": null,
-      "human_decision": "ESCALATE",
-      "policy_source_file": "fraud-investigation-policy.md",
-      "policy_chunk_id": null,
-      "agent_name": null,
-      "sanitized_ai_output_snapshot": {},
-      "ai_provider": "local",
-      "model_or_deployment": "local-deterministic",
-      "metadata": {
-        "case_severity": "medium",
-        "case_status": "NEW",
-        "risk_indicator_codes": [
-          "NEW_DEVICE",
-          "NEW_BENEFICIARY"
-        ],
-        "disposition_updated_by": "fraud_manager_01",
-        "disposition_comment": null
-      },
-      "feedback_id": "FB-[masked-number]-8e7145",
-      "submitted_by": "fraud_manager_01",
-      "submitted_by_role": "FRAUD_MANAGER",
-      "disposition": "ACCEPTED_FOR_IMPROVEMENT",
-      "case_status_at_feedback": "NEW",
-      "created_at": "[masked-phone]T04:56:58.867982+00:00",
-      "updated_at": "[masked-phone]T04:56:59.035881+00:00"
     }
-  ]
+  ],
+  "ai_outputs": {
+    "included": false,
+    "reason": "Raw prompts, raw model responses, and chain-of-thought are excluded by policy."
+  }
 }

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from uuid import uuid4
 
 from app.alerting.alert_config import alerting_config
@@ -29,9 +29,9 @@ class IncidentService:
         return incident
 
     def create_incident_from_alert(self, alert: dict) -> dict:
-        now = datetime.utcnow().isoformat() + "Z"
+        now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
         incident = {
-            "incident_id": f"INC-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid4().hex[:6]}",
+            "incident_id": f"INC-{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}-{uuid4().hex[:6]}",
             "alert_id": alert["alert_id"],
             "title": alert["title"],
             "description": alert["description"],
@@ -60,7 +60,7 @@ class IncidentService:
     def update_incident_status(self, incident_id: str, target_status: str, actor: str, comment: str | None = None) -> dict:
         incident = self.get_incident(incident_id)
         self.status_service.validate_transition(incident["status"], target_status)
-        now = datetime.utcnow().isoformat() + "Z"
+        now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
         updates = {"status": target_status, "updated_at": now}
         if target_status == IncidentStatus.ACKNOWLEDGED.value:
             updates.update({"acknowledged_by": actor, "acknowledged_at": now})
@@ -79,7 +79,7 @@ class IncidentService:
 
     def assign_incident(self, incident_id: str, assigned_to: str, actor: str, comment: str | None = None) -> dict:
         incident = self.get_incident(incident_id)
-        now = datetime.utcnow().isoformat() + "Z"
+        now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
         timeline = [*incident.get("timeline", []), {"timestamp": now, "actor": actor, "action": "INCIDENT_ASSIGNED", "comment": comment or f"Assigned to {assigned_to}."}]
         updated = self.repository.update_incident(incident_id, {"assigned_to": assigned_to, "updated_at": now, "timeline": timeline})
         audit_service.record_event(None, AuditEventType.INCIDENT_ASSIGNED, actor, ReviewerRole.ADMIN, metadata={"incident_id": incident_id, "assigned_to": assigned_to})
@@ -88,7 +88,7 @@ class IncidentService:
 
     def add_timeline_event(self, incident_id: str, actor: str, action: str, comment: str) -> dict:
         incident = self.get_incident(incident_id)
-        now = datetime.utcnow().isoformat() + "Z"
+        now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
         timeline = [*incident.get("timeline", []), {"timestamp": now, "actor": actor, "action": action, "comment": comment}]
         return self.repository.update_incident(incident_id, {"updated_at": now, "timeline": timeline})
 

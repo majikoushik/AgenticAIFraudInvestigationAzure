@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from math import ceil
 from uuid import uuid4
 
@@ -28,11 +28,11 @@ class TokenUsageService:
         error_type: str | None = None,
         correlation_id: str | None = None,
     ) -> dict:
-        now = datetime.utcnow().isoformat() + "Z"
+        now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
         prompt = max(int(prompt_tokens or 0), 0)
         completion = max(int(completion_tokens or 0), 0)
         record = {
-            "usage_id": f"TOK-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid4().hex[:6]}",
+            "usage_id": f"TOK-{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}-{uuid4().hex[:6]}",
             "case_id": case_id,
             "correlation_id": correlation_id,
             "agent_name": agent_name,
@@ -56,7 +56,7 @@ class TokenUsageService:
         self.repository.append_token_usage_record(record)
         cost = self.estimator.estimate_total_cost_for_usage(record)
         cost_record = {
-            "cost_id": f"COST-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid4().hex[:6]}",
+            "cost_id": f"COST-{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}-{uuid4().hex[:6]}",
             "usage_id": record["usage_id"],
             "case_id": case_id,
             "agent_name": agent_name,

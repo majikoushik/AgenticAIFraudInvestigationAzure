@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from uuid import uuid4
 
 from app.alerting.json_file_store import JsonFileStore
@@ -12,8 +12,8 @@ class LocalNotificationChannel:
 
     def send(self, payload: dict) -> dict:
         notification = {
-            "notification_id": f"NOTIF-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid4().hex[:6]}",
-            "sent_at": datetime.utcnow().isoformat() + "Z",
+            "notification_id": f"NOTIF-{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}-{uuid4().hex[:6]}",
+            "sent_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
             "status": "SENT",
             "error_message": None,
             **sanitize_telemetry_properties(payload),

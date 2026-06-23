@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from app.alerting.alert_config import alerting_config
 from app.alerting.json_file_store import JsonFileStore
@@ -26,7 +26,7 @@ class AlertRepository:
             if alert.get("alert_id") == alert_id:
                 alert["status"] = status
                 if status == "RESOLVED":
-                    alert["resolved_at"] = datetime.utcnow().isoformat() + "Z"
+                    alert["resolved_at"] = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
                 self.store.write(alerts)
                 return alert
         raise KeyError(alert_id)

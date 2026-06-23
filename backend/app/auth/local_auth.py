@@ -14,7 +14,11 @@ DEFAULT_LOCAL_USER = {
 
 
 def get_local_user(request: Request) -> AuthenticatedUser:
+    from app.config import settings
     # Development-only fallback. Do not use local auth mode in production.
+    if settings.deployment_mode.lower() in ["prod", "production"]:
+        raise ApiError(500, "auth_configuration_error", "Local demo auth is not allowed in production mode.")
+
     user_id = request.headers.get("X-Demo-User") or DEFAULT_LOCAL_USER["user_id"]
     role = request.headers.get("X-Demo-Role") or DEFAULT_LOCAL_USER["role"]
     email = request.headers.get("X-Demo-Email") or DEFAULT_LOCAL_USER["email"]

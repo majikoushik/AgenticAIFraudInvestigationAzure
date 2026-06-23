@@ -15,5 +15,6 @@
 - [ ] Security health endpoint protected
 - [ ] Admin config does not expose secrets
 - [ ] Frontend does not receive backend secrets
+- [x] Local demo auth is explicitly disabled in production mode
 - [ ] Secret rotation process documented
 - [ ] Incident response runbooks available

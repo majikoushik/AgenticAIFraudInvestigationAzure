@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from uuid import uuid4
 
 from app.alerting.alert_config import alerting_config
@@ -33,9 +33,9 @@ class AlertService:
         duplicate = self._active_duplicate(alert_data["alert_type"])
         if duplicate:
             return duplicate
-        now = datetime.utcnow().isoformat() + "Z"
+        now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
         alert = {
-            "alert_id": f"ALERT-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid4().hex[:6]}",
+            "alert_id": f"ALERT-{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}-{uuid4().hex[:6]}",
             "status": "ACTIVE",
             "created_at": now,
             "resolved_at": None,
@@ -74,10 +74,10 @@ class AlertService:
         return self.incident_service.create_incident_from_alert(self.get_alert(alert_id))
 
     def _active_duplicate(self, alert_type: str) -> dict | None:
-        cutoff = datetime.utcnow() - timedelta(minutes=15)
+        cutoff = datetime.now(timezone.utc) - timedelta(minutes=15)
         for alert in self.repository.search_alerts(alert_type=alert_type, status="ACTIVE"):
             try:
-                created = datetime.fromisoformat(alert.get("created_at", "").replace("Z", "+00:00")).replace(tzinfo=None)
+                created = datetime.fromisoformat(alert.get("created_at", "").replace("Z", "+00:00"))
                 if created >= cutoff:
                     return alert
             except Exception:

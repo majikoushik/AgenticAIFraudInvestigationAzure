@@ -1,18 +1,19 @@
 # Agentic AI Fraud Investigation Azure
 
-Production-style MVP skeleton for an Agentic AI Banking Fraud Investigation System on Azure.
+Production-style local MVP for an Agentic AI Banking Fraud Investigation System on Azure.
 
-The project demonstrates the shape of a banking fraud investigation platform without real customer data, real credentials, or external AI calls. The current MVP includes a runnable FastAPI backend health endpoint, a valid Next.js TypeScript frontend skeleton, local synthetic data, agent and RAG module placeholders, Azure Bicep placeholders, and an Azure DevOps pipeline placeholder.
+This project is a portfolio piece demonstrating solution architecture, AI safety, backend engineering, DevOps/IaC awareness, observability, and regulated-domain workflow design. It is built to be Azure-ready but is entirely runnable locally without real credentials, customer data, or external AI calls by default.
 
-## Architecture
+## 30-Second Architecture Summary
 
-- `frontend/`: Next.js TypeScript investigator dashboard shell.
-- `backend/`: FastAPI API service for case and investigation workflows.
-- `agents/`: Python agent orchestration structure for deterministic MVP agents.
-- `rag/`: Local document ingestion and retrieval structure, future-ready for Azure AI Search.
-- `data/synthetic/`: Synthetic customers, transactions, beneficiaries, devices, fraud alerts, and historical cases.
-- `infra/bicep/`: Azure infrastructure placeholders.
-- `pipelines/`: Azure DevOps pipeline placeholder.
+- **Frontend (`frontend/`)**: Next.js TypeScript dashboard for investigators and admins.
+- **Backend (`backend/`)**: FastAPI service enforcing business logic, status lifecycles, and human review boundaries.
+- **Agents (`agents/`)**: Python agent orchestration (deterministic by default, ready for Azure OpenAI).
+- **RAG (`rag/`)**: Local document ingestion/retrieval (ready for Azure AI Search).
+- **Data (`data/`)**: Local JSON persistence for synthetic data (cases, users, telemetry, audits).
+- **Infra & DevOps (`infra/`, `pipelines/`)**: Azure Bicep and Azure DevOps templates for the target production topology.
+
+For detailed documentation, see the [Architecture Document](docs/architecture.md) and the [Architecture Decision Records (ADRs)](docs/adr).
 
 ## Local Setup
 
@@ -145,34 +146,37 @@ AZURE_OPENAI_EMBEDDING_DEPLOYMENT=text-embedding-3-small
 
 Never commit API keys. The backend safe config endpoint at `/api/v1/agents/config` reports mode and deployment configuration status without returning secrets.
 
-## Current MVP Scope
+## Why This Project is Valuable as a Portfolio Project
 
-Implemented:
+This repository serves as a comprehensive artifact demonstrating:
+- **Solution Architecture**: Shows a complete vision from local development to Azure cloud production topologies.
+- **AI Safety**: Implements human-in-the-loop workflows, deterministic fallbacks, and explicit policy citations to mitigate LLM risks in regulated environments.
+- **Backend Engineering**: Features robust API design, role-based access control, dependency injection, and centralized observability using FastAPI.
+- **DevOps & IaC**: Incorporates realistic Bicep templates for infrastructure and Azure DevOps pipelines for CI/CD validation.
 
-- Repository skeleton
-- FastAPI health endpoint
-- Next.js app shell
-- Docker Compose wiring
-- Azure DevOps pipeline placeholder
-- Synthetic JSON seed files
-- Fraud case dashboard APIs
-- Local deterministic agent investigation workflow
-- Local and Azure-ready RAG structure
-- Human review workflow with role permissions
-- Audit trail persistence
-- Evaluation metrics dashboard
-- Observability telemetry fallback
-- Alerting and incident response MVP with runbooks
-- Cost monitoring and token usage dashboard with local estimates
-- Admin Configuration Panel with safe non-secret runtime overrides and feature flags
-- Case assignment, investigator queues, workload summary, assignment history, and SLA risk tracking
-- Notification system with in-app inbox, local delivery history, templates, preferences, audit, and telemetry
+## Current Local MVP vs Production Roadmap
 
-Still placeholder-only:
+| Feature Area | Implemented & Runnable Locally | Implemented as Abstraction / Template | Future Production Enhancements |
+| :--- | :--- | :--- | :--- |
+| **Backend API** | FastAPI health, cases, audit, alerts, config, queues, cost | Cosmos DB / Storage adapters | Full database persistence |
+| **Frontend** | Next.js investigator dashboard, metrics, settings | Entra ID auth scaffolding | Deployment to Azure Container Apps |
+| **Agent Logic** | Deterministic investigation workflows | Azure OpenAI service clients | Real Azure OpenAI/AI Foundry integration |
+| **RAG** | Local keyword-based document retrieval | Azure AI Search client templates | Full Azure AI Search indexing/vectorization |
+| **Security** | Local demo auth, explicit role boundaries | Key Vault integration scaffolding | Entra app registration, RBAC, Managed Identity |
+| **Observability** | Local JSON telemetry and metrics | Application Insights middleware | Log Analytics, real Azure Monitor integration |
+| **DevOps & IaC** | Local Docker Compose | Bicep templates, validation CI/CD | Real Azure deployments, VNet configuration |
 
-- Production Azure Monitor alert deployment
-- Production Teams, email, and ticketing integrations
-- Real database persistence
+## Future Roadmap
+
+The following enhancements are intentionally deferred to future iterations:
+- Cosmos DB repository adapters.
+- Real Azure OpenAI / AI Foundry integration.
+- Real Azure Monitor scheduled query deployment.
+- Entra app registration bootstrap.
+- Container Apps private networking / VNet integration.
+- Production notification integrations (Teams, Slack, Email).
+- Load/performance testing and formal SLOs.
+- API contract publishing.
 # AI Feedback Loop
 
 Investigators can submit structured feedback on AI summaries, recommendations, policy citations, similar cases, risk indicators, reviewer validation, and agent traces from the case detail page after running an AI investigation. Feedback is stored locally in `data/synthetic/ai_feedback.json`, critical items create backlog records in `data/synthetic/ai_improvement_backlog.json`, and accepted feedback can be exported as a sanitized evaluation dataset.

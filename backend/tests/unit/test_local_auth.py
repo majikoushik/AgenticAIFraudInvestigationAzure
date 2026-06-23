@@ -26,3 +26,14 @@ def test_local_auth_reads_demo_headers() -> None:
 def test_local_auth_rejects_invalid_role() -> None:
     with pytest.raises(ApiError):
         get_local_user(make_request({"X-Demo-Role": "ROOT"}))
+
+
+def test_local_auth_rejects_in_production_mode() -> None:
+    from app.config import settings
+    old_mode = settings.deployment_mode
+    settings.deployment_mode = "prod"
+    try:
+        with pytest.raises(ApiError, match="Local demo auth is not allowed in production mode"):
+            get_local_user(make_request())
+    finally:
+        settings.deployment_mode = old_mode
