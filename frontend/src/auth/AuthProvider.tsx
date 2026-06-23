@@ -33,16 +33,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    if (authMode === "local") {
-      const stored = getStoredLocalUser();
-      if (stored) setUser(toAuthUser(stored));
-    } else if (typeof window !== "undefined") {
-      const token = window.sessionStorage.getItem("entra_access_token");
-      const email = window.sessionStorage.getItem("entra_user_email") ?? "entra_user@example.com";
-      const role = (window.sessionStorage.getItem("entra_user_role") as AppRole | null) ?? "FRAUD_ANALYST";
-      if (token) setUser({ user_id: email, display_name: email, email, role, permissions: rolePermissions[role] ?? [], auth_mode: "entra" });
-    }
-    setIsReady(true);
+    let mounted = true;
+    
+    const initAuth = () => {
+      let initialUser: AuthUser | null = null;
+      if (authMode === "local") {
+        const stored = getStoredLocalUser();
+        if (stored) initialUser = toAuthUser(stored);
+      } else if (typeof window !== "undefined") {
+        const token = window.sessionStorage.getItem("entra_access_token");
+        const email = window.sessionStorage.getItem("entra_user_email") ?? "entra_user@example.com";
+        const role = (window.sessionStorage.getItem("entra_user_role") as AppRole | null) ?? "FRAUD_ANALYST";
+        if (token) initialUser = { user_id: email, display_name: email, email, role, permissions: rolePermissions[role] ?? [], auth_mode: "entra" };
+      }
+      
+      if (mounted) {
+        if (initialUser) setUser(initialUser);
+        setIsReady(true);
+      }
+    };
+
+    initAuth();
+    
+    return () => { mounted = false; };
   }, []);
 
   const value = useMemo<AuthContextValue>(() => ({
@@ -66,7 +79,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       window.location.href = "/login";
     },
     hasPermission: (permission: string) => Boolean(user?.permissions.includes(permission))
-  }), [user]);
+  }), [user, isReady]);
 
   return (
     <MsalProvider instance={msalInstance}>

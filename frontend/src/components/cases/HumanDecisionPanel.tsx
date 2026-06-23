@@ -45,13 +45,18 @@ export function HumanDecisionPanel({ caseId, currentStatus, aiRecommendation, on
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let mounted = true;
     if (!user) return;
-    setReviewerRole(user.role as ReviewerRole);
-    setReviewedBy(user.user_id);
-    if (!allowedDecisions.includes(decision) && allowedDecisions[0]) {
-      setDecision(allowedDecisions[0]);
-    }
-  }, [allowedDecisions, decision, user]);
+    const updateRoles = () => {
+      if (mounted) {
+        setReviewerRole(user.role as ReviewerRole);
+        setReviewedBy(user.user_id);
+        setDecision((prev) => !allowedDecisions.includes(prev) && allowedDecisions[0] ? allowedDecisions[0] : prev);
+      }
+    };
+    updateRoles();
+    return () => { mounted = false; };
+  }, [allowedDecisions, user]);
 
   const isPendingReview = currentStatus === "PENDING_HUMAN_REVIEW";
   const isAuditor = user?.role === "AUDITOR";

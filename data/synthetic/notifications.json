@@ -1064,22 +1064,22 @@
         "channel": "IN_APP",
         "status": "SENT",
         "attempt_count": 1,
-        "last_attempt_at": "2026-06-08T16:32:08.886940+00:00",
+        "last_attempt_at": "2026-06-09T15:09:11.344708+00:00",
         "error_message": null,
-        "sent_at": "2026-06-08T16:32:08.886940+00:00"
+        "sent_at": "2026-06-09T15:09:11.344708+00:00"
       },
       {
         "channel": "LOCAL",
         "status": "SENT",
         "attempt_count": 1,
-        "last_attempt_at": "2026-06-08T16:32:08.886940+00:00",
+        "last_attempt_at": "2026-06-09T15:09:11.344724+00:00",
         "error_message": null,
-        "sent_at": "2026-06-08T16:32:08.886940+00:00"
+        "sent_at": "2026-06-09T15:09:11.344724+00:00"
       }
     ],
     "created_at": "2026-06-08T15:56:50.844459+00:00",
-    "sent_at": "2026-06-08T16:32:08.903527+00:00",
-    "read_at": "2026-06-08T16:31:57.898294+00:00",
+    "sent_at": "2026-06-09T15:09:11.365902+00:00",
+    "read_at": "2026-06-09T15:08:53.821149+00:00",
     "archived_at": null
   },
   {
@@ -3487,8 +3487,8 @@
       "IN_APP",
       "LOCAL"
     ],
-    "status": "SENT",
-    "read": false,
+    "status": "READ",
+    "read": true,
     "archived": false,
     "case_id": "case-1",
     "alert_id": null,
@@ -3523,7 +3523,7 @@
     ],
     "created_at": "2026-06-08T16:32:08.589922+00:00",
     "sent_at": "2026-06-08T16:32:08.703672+00:00",
-    "read_at": null,
+    "read_at": "2026-06-09T15:08:53.804640+00:00",
     "archived_at": null
   },
   {
@@ -3576,8 +3576,8 @@
       "IN_APP",
       "LOCAL"
     ],
-    "status": "SENT",
-    "read": false,
+    "status": "READ",
+    "read": true,
     "archived": false,
     "case_id": "case-1",
     "alert_id": null,
@@ -3612,7 +3612,7 @@
     ],
     "created_at": "2026-06-08T16:32:09.036895+00:00",
     "sent_at": "2026-06-08T16:32:09.125804+00:00",
-    "read_at": null,
+    "read_at": "2026-06-09T15:08:53.768949+00:00",
     "archived_at": null
   },
   {
@@ -3682,8 +3682,8 @@
       "IN_APP",
       "LOCAL"
     ],
-    "status": "SENT",
-    "read": false,
+    "status": "READ",
+    "read": true,
     "archived": false,
     "case_id": "case-1",
     "alert_id": null,
@@ -3718,7 +3718,7 @@
     ],
     "created_at": "2026-06-08T16:32:09.462405+00:00",
     "sent_at": "2026-06-08T16:32:09.552130+00:00",
-    "read_at": null,
+    "read_at": "2026-06-09T15:08:53.755788+00:00",
     "archived_at": null
   },
   {
@@ -3841,8 +3841,8 @@
       "IN_APP",
       "LOCAL"
     ],
-    "status": "SENT",
-    "read": false,
+    "status": "READ",
+    "read": true,
     "archived": false,
     "case_id": "case-1",
     "alert_id": null,
@@ -3877,7 +3877,7 @@
     ],
     "created_at": "2026-06-08T16:32:10.072244+00:00",
     "sent_at": "2026-06-08T16:32:10.170221+00:00",
-    "read_at": null,
+    "read_at": "2026-06-09T15:08:53.741579+00:00",
     "archived_at": null
   },
   {
@@ -4349,6 +4349,1401 @@
     ],
     "created_at": "2026-06-08T16:32:13.877088+00:00",
     "sent_at": "2026-06-08T16:32:13.958366+00:00",
+    "read_at": null,
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********0839-0d28b6",
+    "event_type": "ADMIN_CONFIG_UPDATED",
+    "priority": "INFO",
+    "title": "Admin configuration updated",
+    "message": "Configuration key RAG_TOP_K was updated.",
+    "recipient_type": "ROLE",
+    "recipient_id": null,
+    "recipient_role": "ADMIN",
+    "recipient_team": null,
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "SENT",
+    "read": false,
+    "archived": false,
+    "case_id": null,
+    "alert_id": null,
+    "incident_id": null,
+    "correlation_id": null,
+    "metadata": {
+      "priority": "INFO",
+      "key": "RAG_TOP_K",
+      "category": "RAG",
+      "updated_by": "admin_user"
+    },
+    "delivery_records": [
+      {
+        "channel": "IN_APP",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:08:39.894256+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:08:39.894256+00:00"
+      },
+      {
+        "channel": "LOCAL",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:08:39.894276+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:08:39.894276+00:00"
+      }
+    ],
+    "created_at": "2026-06-09T15:08:39.843646+00:00",
+    "sent_at": "2026-06-09T15:08:39.913740+00:00",
+    "read_at": null,
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********0841-07ee9e",
+    "event_type": "CASE_ASSIGNED",
+    "priority": "HIGH",
+    "title": "Case case-001 assigned",
+    "message": "Case case-001 has been assigned to Fraud Analyst 01 with priority HIGH.",
+    "recipient_type": "USER",
+    "recipient_id": "fraud_analyst_01",
+    "recipient_role": "FRAUD_ANALYST",
+    "recipient_team": "Fraud Operations",
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "READ",
+    "read": true,
+    "archived": false,
+    "case_id": "case-001",
+    "alert_id": null,
+    "incident_id": null,
+    "correlation_id": null,
+    "metadata": {
+      "case_id": "case-001",
+      "assigned_to": "fraud_analyst_01",
+      "assigned_to_name": "Fraud Analyst 01",
+      "assigned_to_role": "FRAUD_ANALYST",
+      "assigned_team": "Fraud Operations",
+      "assignment_priority": "HIGH",
+      "priority": "HIGH"
+    },
+    "delivery_records": [
+      {
+        "channel": "IN_APP",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:08:41.604301+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:08:41.604301+00:00"
+      },
+      {
+        "channel": "LOCAL",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:08:41.604317+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:08:41.604317+00:00"
+      }
+    ],
+    "created_at": "2026-06-09T15:08:41.546296+00:00",
+    "sent_at": "2026-06-09T15:08:41.624772+00:00",
+    "read_at": "2026-06-09T15:08:53.728135+00:00",
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********0841-ea846c",
+    "event_type": "CASE_ACCEPTED",
+    "priority": "HIGH",
+    "title": "Case Accepted",
+    "message": "Notification event CASE_ACCEPTED.",
+    "recipient_type": "ROLE",
+    "recipient_id": null,
+    "recipient_role": "FRAUD_MANAGER",
+    "recipient_team": null,
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "SENT",
+    "read": false,
+    "archived": false,
+    "case_id": "case-002",
+    "alert_id": null,
+    "incident_id": null,
+    "correlation_id": null,
+    "metadata": {
+      "case_id": "case-002",
+      "assigned_to": "fraud_analyst_01",
+      "assigned_to_name": "Fraud Analyst 01",
+      "assigned_to_role": "FRAUD_ANALYST",
+      "assigned_team": "Fraud Operations",
+      "assignment_priority": "HIGH",
+      "priority": "HIGH"
+    },
+    "delivery_records": [
+      {
+        "channel": "IN_APP",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:08:41.845891+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:08:41.845891+00:00"
+      },
+      {
+        "channel": "LOCAL",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:08:41.845907+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:08:41.845907+00:00"
+      }
+    ],
+    "created_at": "2026-06-09T15:08:41.796240+00:00",
+    "sent_at": "2026-06-09T15:08:41.870398+00:00",
+    "read_at": null,
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********0845-0f23cc",
+    "event_type": "FEATURE_FLAG_UPDATED",
+    "priority": "INFO",
+    "title": "Feature Flag Updated",
+    "message": "Notification event FEATURE_FLAG_UPDATED.",
+    "recipient_type": "ROLE",
+    "recipient_id": null,
+    "recipient_role": "ADMIN",
+    "recipient_team": null,
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "SENT",
+    "read": false,
+    "archived": false,
+    "case_id": null,
+    "alert_id": null,
+    "incident_id": null,
+    "correlation_id": null,
+    "metadata": {
+      "priority": "INFO",
+      "key": "FEATURE_ENABLE_COST_DASHBOARD",
+      "category": "FEATURE_FLAGS",
+      "updated_by": "admin_user"
+    },
+    "delivery_records": [
+      {
+        "channel": "IN_APP",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:08:45.210720+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:08:45.210720+00:00"
+      },
+      {
+        "channel": "LOCAL",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:08:45.210754+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:08:45.210754+00:00"
+      }
+    ],
+    "created_at": "2026-06-09T15:08:45.158654+00:00",
+    "sent_at": "2026-06-09T15:08:45.245701+00:00",
+    "read_at": null,
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********0852-618fdb",
+    "event_type": "CASE_ASSIGNED",
+    "priority": "INFO",
+    "title": "Test notification",
+    "message": "This is a test notification.",
+    "recipient_type": "USER",
+    "recipient_id": "fraud_analyst_01",
+    "recipient_role": null,
+    "recipient_team": null,
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "READ",
+    "read": true,
+    "archived": false,
+    "case_id": null,
+    "alert_id": null,
+    "incident_id": null,
+    "correlation_id": null,
+    "metadata": {
+      "test": true,
+      "sent_by": "fraud_analyst_01"
+    },
+    "delivery_records": [
+      {
+        "channel": "IN_APP",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:08:52.655348+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:08:52.655348+00:00"
+      },
+      {
+        "channel": "LOCAL",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:08:52.655364+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:08:52.655364+00:00"
+      }
+    ],
+    "created_at": "2026-06-09T15:08:52.603699+00:00",
+    "sent_at": "2026-06-09T15:08:52.677644+00:00",
+    "read_at": "2026-06-09T15:08:53.713707+00:00",
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********0852-25e599",
+    "event_type": "CASE_ASSIGNED",
+    "priority": "INFO",
+    "title": "Route test",
+    "message": "Route test.",
+    "recipient_type": "USER",
+    "recipient_id": "fraud_analyst_01",
+    "recipient_role": null,
+    "recipient_team": null,
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "ARCHIVED",
+    "read": true,
+    "archived": true,
+    "case_id": null,
+    "alert_id": null,
+    "incident_id": null,
+    "correlation_id": null,
+    "metadata": {
+      "test": true,
+      "sent_by": "fraud_analyst_01"
+    },
+    "delivery_records": [
+      {
+        "channel": "IN_APP",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:08:52.869852+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:08:52.869852+00:00"
+      },
+      {
+        "channel": "LOCAL",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:08:52.869867+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:08:52.869867+00:00"
+      }
+    ],
+    "created_at": "2026-06-09T15:08:52.817568+00:00",
+    "sent_at": "2026-06-09T15:08:52.895134+00:00",
+    "read_at": "2026-06-09T15:08:53.102558+00:00",
+    "archived_at": "2026-06-09T15:08:53.194116+00:00"
+  },
+  {
+    "notification_id": "NOTIF-**********0853-2b403a",
+    "event_type": "CASE_ASSIGNED",
+    "priority": "INFO",
+    "title": "Private",
+    "message": "Private.",
+    "recipient_type": "USER",
+    "recipient_id": "fraud_analyst_01",
+    "recipient_role": null,
+    "recipient_team": null,
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "READ",
+    "read": true,
+    "archived": false,
+    "case_id": null,
+    "alert_id": null,
+    "incident_id": null,
+    "correlation_id": null,
+    "metadata": {
+      "test": true,
+      "sent_by": "fraud_analyst_01"
+    },
+    "delivery_records": [
+      {
+        "channel": "IN_APP",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:08:53.342257+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:08:53.342257+00:00"
+      },
+      {
+        "channel": "LOCAL",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:08:53.342273+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:08:53.342273+00:00"
+      }
+    ],
+    "created_at": "2026-06-09T15:08:53.284669+00:00",
+    "sent_at": "2026-06-09T15:08:53.364646+00:00",
+    "read_at": "2026-06-09T15:08:53.708421+00:00",
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********[masked-phone]",
+    "event_type": "ADMIN_CONFIG_UPDATED",
+    "priority": "INFO",
+    "title": "Admin configuration updated",
+    "message": "Configuration key RAG_TOP_K was updated.",
+    "recipient_type": "ROLE",
+    "recipient_id": null,
+    "recipient_role": "ADMIN",
+    "recipient_team": null,
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "PENDING",
+    "read": false,
+    "archived": false,
+    "case_id": null,
+    "alert_id": null,
+    "incident_id": null,
+    "correlation_id": null,
+    "metadata": {
+      "priority": "INFO",
+      "key": "RAG_TOP_K",
+      "category": "RAG",
+      "updated_by": "admin"
+    },
+    "delivery_records": [],
+    "created_at": "2026-06-09T15:09:05.123657+00:00",
+    "sent_at": null,
+    "read_at": null,
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********[masked-phone]",
+    "event_type": "ADMIN_CONFIG_UPDATED",
+    "priority": "INFO",
+    "title": "Admin configuration updated",
+    "message": "Configuration key RAG_TOP_K was updated.",
+    "recipient_type": "ROLE",
+    "recipient_id": null,
+    "recipient_role": "ADMIN",
+    "recipient_team": null,
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "PENDING",
+    "read": false,
+    "archived": false,
+    "case_id": null,
+    "alert_id": null,
+    "incident_id": null,
+    "correlation_id": null,
+    "metadata": {
+      "priority": "INFO",
+      "key": "RAG_TOP_K",
+      "category": "RAG",
+      "updated_by": "admin"
+    },
+    "delivery_records": [],
+    "created_at": "2026-06-09T15:09:05.378811+00:00",
+    "sent_at": null,
+    "read_at": null,
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********0905-a626df",
+    "event_type": "ALERT_CREATED",
+    "priority": "HIGH",
+    "title": "Operational alert created",
+    "message": "High API error rate",
+    "recipient_type": "ROLE",
+    "recipient_id": null,
+    "recipient_role": "ADMIN",
+    "recipient_team": null,
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "SENT",
+    "read": false,
+    "archived": false,
+    "case_id": null,
+    "alert_id": "ALERT-**********0905-04d4e3",
+    "incident_id": null,
+    "correlation_id": null,
+    "metadata": {
+      "alert_id": "ALERT-**********0905-04d4e3",
+      "title": "High API error rate",
+      "message": "Errors exceeded threshold.",
+      "priority": "HIGH"
+    },
+    "delivery_records": [
+      {
+        "channel": "IN_APP",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:05.987065+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:05.987065+00:00"
+      },
+      {
+        "channel": "LOCAL",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:05.987082+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:05.987082+00:00"
+      }
+    ],
+    "created_at": "2026-06-09T15:09:05.937408+00:00",
+    "sent_at": "2026-06-09T15:09:06.008704+00:00",
+    "read_at": null,
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********0906-143aaf",
+    "event_type": "ALERT_CREATED",
+    "priority": "HIGH",
+    "title": "Operational alert created",
+    "message": "High API error rate",
+    "recipient_type": "ROLE",
+    "recipient_id": null,
+    "recipient_role": "ADMIN",
+    "recipient_team": null,
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "SENT",
+    "read": false,
+    "archived": false,
+    "case_id": null,
+    "alert_id": "ALERT-**********[masked-phone]",
+    "incident_id": null,
+    "correlation_id": null,
+    "metadata": {
+      "alert_id": "ALERT-**********[masked-phone]",
+      "title": "High API error rate",
+      "message": "Errors exceeded threshold.",
+      "priority": "HIGH"
+    },
+    "delivery_records": [
+      {
+        "channel": "IN_APP",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:06.183054+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:06.183054+00:00"
+      },
+      {
+        "channel": "LOCAL",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:06.183072+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:06.183072+00:00"
+      }
+    ],
+    "created_at": "2026-06-09T15:09:06.125594+00:00",
+    "sent_at": "2026-06-09T15:09:06.206459+00:00",
+    "read_at": null,
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********0906-ac120c",
+    "event_type": "CASE_ASSIGNED",
+    "priority": "HIGH",
+    "title": "Case case-1 assigned",
+    "message": "Case case-1 has been assigned to fraud_analyst_01 with priority HIGH.",
+    "recipient_type": "USER",
+    "recipient_id": "fraud_analyst_01",
+    "recipient_role": "FRAUD_ANALYST",
+    "recipient_team": "Fraud Operations",
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "SENT",
+    "read": false,
+    "archived": false,
+    "case_id": "case-1",
+    "alert_id": null,
+    "incident_id": null,
+    "correlation_id": null,
+    "metadata": {
+      "case_id": "case-1",
+      "assigned_to": "fraud_analyst_01",
+      "assigned_to_name": "fraud_analyst_01",
+      "assigned_to_role": "FRAUD_ANALYST",
+      "assigned_team": "Fraud Operations",
+      "assignment_priority": "HIGH",
+      "priority": "HIGH"
+    },
+    "delivery_records": [
+      {
+        "channel": "IN_APP",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:06.500874+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:06.500874+00:00"
+      },
+      {
+        "channel": "LOCAL",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:06.500889+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:06.500889+00:00"
+      }
+    ],
+    "created_at": "2026-06-09T15:09:06.439609+00:00",
+    "sent_at": "2026-06-09T15:09:06.523548+00:00",
+    "read_at": null,
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********0906-5f41f5",
+    "event_type": "CASE_ASSIGNED",
+    "priority": "HIGH",
+    "title": "Case case-1 assigned",
+    "message": "Case case-1 has been assigned to fraud_analyst_01 with priority HIGH.",
+    "recipient_type": "USER",
+    "recipient_id": "fraud_analyst_01",
+    "recipient_role": "FRAUD_ANALYST",
+    "recipient_team": "Fraud Operations",
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "SENT",
+    "read": false,
+    "archived": false,
+    "case_id": "case-1",
+    "alert_id": null,
+    "incident_id": null,
+    "correlation_id": null,
+    "metadata": {
+      "case_id": "case-1",
+      "assigned_to": "fraud_analyst_01",
+      "assigned_to_name": "fraud_analyst_01",
+      "assigned_to_role": "FRAUD_ANALYST",
+      "assigned_team": "Fraud Operations",
+      "assignment_priority": "HIGH",
+      "priority": "HIGH"
+    },
+    "delivery_records": [
+      {
+        "channel": "IN_APP",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:06.681861+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:06.681861+00:00"
+      },
+      {
+        "channel": "LOCAL",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:06.681876+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:06.681876+00:00"
+      }
+    ],
+    "created_at": "2026-06-09T15:09:06.622704+00:00",
+    "sent_at": "2026-06-09T15:09:06.703090+00:00",
+    "read_at": null,
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********0906-a3bdf2",
+    "event_type": "CASE_ASSIGNED",
+    "priority": "HIGH",
+    "title": "Case case-1 assigned",
+    "message": "Case case-1 has been assigned to fraud_analyst_01 with priority HIGH.",
+    "recipient_type": "USER",
+    "recipient_id": "fraud_analyst_01",
+    "recipient_role": "FRAUD_ANALYST",
+    "recipient_team": "Fraud Operations",
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "SENT",
+    "read": false,
+    "archived": false,
+    "case_id": "case-1",
+    "alert_id": null,
+    "incident_id": null,
+    "correlation_id": null,
+    "metadata": {
+      "case_id": "case-1",
+      "assigned_to": "fraud_analyst_01",
+      "assigned_to_name": "fraud_analyst_01",
+      "assigned_to_role": "FRAUD_ANALYST",
+      "assigned_team": "Fraud Operations",
+      "assignment_priority": "HIGH",
+      "priority": "HIGH"
+    },
+    "delivery_records": [
+      {
+        "channel": "IN_APP",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:06.860763+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:06.860763+00:00"
+      },
+      {
+        "channel": "LOCAL",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:06.860783+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:06.860783+00:00"
+      }
+    ],
+    "created_at": "2026-06-09T15:09:06.802504+00:00",
+    "sent_at": "2026-06-09T15:09:06.880764+00:00",
+    "read_at": null,
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********0906-580e96",
+    "event_type": "CASE_REASSIGNED",
+    "priority": "HIGH",
+    "title": "Case case-1 reassigned",
+    "message": "Case case-1 has a new assignment owner.",
+    "recipient_type": "USER",
+    "recipient_id": "fraud_analyst_02",
+    "recipient_role": "FRAUD_ANALYST",
+    "recipient_team": "Fraud Operations",
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "SENT",
+    "read": false,
+    "archived": false,
+    "case_id": "case-1",
+    "alert_id": null,
+    "incident_id": null,
+    "correlation_id": null,
+    "metadata": {
+      "case_id": "case-1",
+      "assigned_to": "fraud_analyst_02",
+      "assigned_to_name": "Fraud Analyst 02",
+      "assigned_to_role": "FRAUD_ANALYST",
+      "assigned_team": "Fraud Operations",
+      "assignment_priority": "HIGH",
+      "priority": "HIGH"
+    },
+    "delivery_records": [
+      {
+        "channel": "IN_APP",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:07.041663+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:07.041663+00:00"
+      },
+      {
+        "channel": "LOCAL",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:07.041684+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:07.041684+00:00"
+      }
+    ],
+    "created_at": "2026-06-09T15:09:06.987379+00:00",
+    "sent_at": "2026-06-09T15:09:07.062028+00:00",
+    "read_at": null,
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********0907-afd206",
+    "event_type": "CASE_ASSIGNED",
+    "priority": "HIGH",
+    "title": "Case case-1 assigned",
+    "message": "Case case-1 has been assigned to fraud_analyst_01 with priority HIGH.",
+    "recipient_type": "USER",
+    "recipient_id": "fraud_analyst_01",
+    "recipient_role": "FRAUD_ANALYST",
+    "recipient_team": "Fraud Operations",
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "SENT",
+    "read": false,
+    "archived": false,
+    "case_id": "case-1",
+    "alert_id": null,
+    "incident_id": null,
+    "correlation_id": null,
+    "metadata": {
+      "case_id": "case-1",
+      "assigned_to": "fraud_analyst_01",
+      "assigned_to_name": "fraud_analyst_01",
+      "assigned_to_role": "FRAUD_ANALYST",
+      "assigned_team": "Fraud Operations",
+      "assignment_priority": "HIGH",
+      "priority": "HIGH"
+    },
+    "delivery_records": [
+      {
+        "channel": "IN_APP",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:07.214903+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:07.214903+00:00"
+      },
+      {
+        "channel": "LOCAL",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:07.214919+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:07.214919+00:00"
+      }
+    ],
+    "created_at": "2026-06-09T15:09:07.157678+00:00",
+    "sent_at": "2026-06-09T15:09:07.242926+00:00",
+    "read_at": null,
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********0907-06cf38",
+    "event_type": "CASE_ACCEPTED",
+    "priority": "HIGH",
+    "title": "Case Accepted",
+    "message": "Notification event CASE_ACCEPTED.",
+    "recipient_type": "ROLE",
+    "recipient_id": null,
+    "recipient_role": "FRAUD_MANAGER",
+    "recipient_team": null,
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "SENT",
+    "read": false,
+    "archived": false,
+    "case_id": "case-1",
+    "alert_id": null,
+    "incident_id": null,
+    "correlation_id": null,
+    "metadata": {
+      "case_id": "case-1",
+      "assigned_to": "fraud_analyst_01",
+      "assigned_to_name": "fraud_analyst_01",
+      "assigned_to_role": "FRAUD_ANALYST",
+      "assigned_team": "Fraud Operations",
+      "assignment_priority": "HIGH",
+      "priority": "HIGH"
+    },
+    "delivery_records": [
+      {
+        "channel": "IN_APP",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:07.514967+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:07.514967+00:00"
+      },
+      {
+        "channel": "LOCAL",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:07.514993+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:07.514993+00:00"
+      }
+    ],
+    "created_at": "2026-06-09T15:09:07.438189+00:00",
+    "sent_at": "2026-06-09T15:09:07.542390+00:00",
+    "read_at": null,
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********0907-277ba8",
+    "event_type": "CASE_RELEASED",
+    "priority": "HIGH",
+    "title": "Case Released",
+    "message": "Notification event CASE_RELEASED.",
+    "recipient_type": "ROLE",
+    "recipient_id": null,
+    "recipient_role": "FRAUD_MANAGER",
+    "recipient_team": null,
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "SENT",
+    "read": false,
+    "archived": false,
+    "case_id": "case-1",
+    "alert_id": null,
+    "incident_id": null,
+    "correlation_id": null,
+    "metadata": {
+      "case_id": "case-1",
+      "assigned_to": null,
+      "assigned_to_name": null,
+      "assigned_to_role": null,
+      "assigned_team": "Fraud Operations",
+      "assignment_priority": "HIGH",
+      "priority": "HIGH"
+    },
+    "delivery_records": [
+      {
+        "channel": "IN_APP",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:07.732686+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:07.732686+00:00"
+      },
+      {
+        "channel": "LOCAL",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:07.732705+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:07.732705+00:00"
+      }
+    ],
+    "created_at": "2026-06-09T15:09:07.670110+00:00",
+    "sent_at": "2026-06-09T15:09:07.756626+00:00",
+    "read_at": null,
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********0907-3aa2a6",
+    "event_type": "CASE_ASSIGNED",
+    "priority": "HIGH",
+    "title": "Case case-1 assigned",
+    "message": "Case case-1 has been assigned to fraud_analyst_01 with priority HIGH.",
+    "recipient_type": "USER",
+    "recipient_id": "fraud_analyst_01",
+    "recipient_role": "FRAUD_ANALYST",
+    "recipient_team": "Fraud Operations",
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "SENT",
+    "read": false,
+    "archived": false,
+    "case_id": "case-1",
+    "alert_id": null,
+    "incident_id": null,
+    "correlation_id": null,
+    "metadata": {
+      "case_id": "case-1",
+      "assigned_to": "fraud_analyst_01",
+      "assigned_to_name": "fraud_analyst_01",
+      "assigned_to_role": "FRAUD_ANALYST",
+      "assigned_team": "Fraud Operations",
+      "assignment_priority": "HIGH",
+      "priority": "HIGH"
+    },
+    "delivery_records": [
+      {
+        "channel": "IN_APP",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:08.025824+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:08.025824+00:00"
+      },
+      {
+        "channel": "LOCAL",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:08.025845+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:08.025845+00:00"
+      }
+    ],
+    "created_at": "2026-06-09T15:09:07.859336+00:00",
+    "sent_at": "2026-06-09T15:09:08.092064+00:00",
+    "read_at": null,
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********0908-799e17",
+    "event_type": "BUDGET_EXCEEDED",
+    "priority": "CRITICAL",
+    "title": "Budget exceeded",
+    "message": "Cost monitoring has exceeded the configured budget.",
+    "recipient_type": "ROLE",
+    "recipient_id": null,
+    "recipient_role": "ADMIN",
+    "recipient_team": null,
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "SENT",
+    "read": false,
+    "archived": false,
+    "case_id": null,
+    "alert_id": null,
+    "incident_id": null,
+    "correlation_id": null,
+    "metadata": {
+      "daily_budget_limit": 1,
+      "daily_estimated_cost": 2.0,
+      "daily_budget_used_percentage": 200.0,
+      "monthly_budget_limit": 1000.0,
+      "monthly_estimated_cost": 2.0,
+      "monthly_budget_used_percentage": 0.2,
+      "status": "EXCEEDED",
+      "case_thresholds": {
+        "threshold": 2.0,
+        "exceeded_cases": [],
+        "status": "OK"
+      },
+      "priority": "CRITICAL"
+    },
+    "delivery_records": [
+      {
+        "channel": "IN_APP",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:08.483199+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:08.483199+00:00"
+      },
+      {
+        "channel": "LOCAL",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:08.483215+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:08.483215+00:00"
+      }
+    ],
+    "created_at": "2026-06-09T15:09:08.427125+00:00",
+    "sent_at": "2026-06-09T15:09:08.503493+00:00",
+    "read_at": null,
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********0910-2544d4",
+    "event_type": "FEATURE_FLAG_UPDATED",
+    "priority": "INFO",
+    "title": "Feature Flag Updated",
+    "message": "Notification event FEATURE_FLAG_UPDATED.",
+    "recipient_type": "ROLE",
+    "recipient_id": null,
+    "recipient_role": "ADMIN",
+    "recipient_team": null,
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "SENT",
+    "read": false,
+    "archived": false,
+    "case_id": null,
+    "alert_id": null,
+    "incident_id": null,
+    "correlation_id": null,
+    "metadata": {
+      "priority": "INFO",
+      "key": "FEATURE_ENABLE_COST_DASHBOARD",
+      "category": "FEATURE_FLAGS",
+      "updated_by": "admin"
+    },
+    "delivery_records": [
+      {
+        "channel": "IN_APP",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:10.136882+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:10.136882+00:00"
+      },
+      {
+        "channel": "LOCAL",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:10.136900+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:10.136900+00:00"
+      }
+    ],
+    "created_at": "2026-06-09T15:09:10.095023+00:00",
+    "sent_at": "2026-06-09T15:09:10.158649+00:00",
+    "read_at": null,
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********0910-0925b0",
+    "event_type": "AI_FEEDBACK_CRITICAL_SUBMITTED",
+    "priority": "CRITICAL",
+    "title": "Critical AI feedback submitted",
+    "message": "Critical feedback FB-[masked-number]-1e7693 was submitted for case case-001.",
+    "recipient_type": "ROLE",
+    "recipient_id": null,
+    "recipient_role": "ADMIN",
+    "recipient_team": null,
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "SENT",
+    "read": false,
+    "archived": false,
+    "case_id": "case-001",
+    "alert_id": null,
+    "incident_id": null,
+    "correlation_id": null,
+    "metadata": {
+      "feedback_id": "FB-[masked-number]-1e7693",
+      "severity": "CRITICAL",
+      "issue_types": [
+        "HALLUCINATION_SUSPECTED"
+      ]
+    },
+    "delivery_records": [
+      {
+        "channel": "IN_APP",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:10.877220+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:10.877220+00:00"
+      },
+      {
+        "channel": "LOCAL",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:10.877237+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:10.877237+00:00"
+      }
+    ],
+    "created_at": "2026-06-09T15:09:10.824708+00:00",
+    "sent_at": "2026-06-09T15:09:10.901160+00:00",
+    "read_at": null,
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********0911-ba6815",
+    "event_type": "INCIDENT_CREATED",
+    "priority": "HIGH",
+    "title": "Incident INC-**********0911-b30265 created",
+    "message": "High API error rate",
+    "recipient_type": "ROLE",
+    "recipient_id": null,
+    "recipient_role": "ADMIN",
+    "recipient_team": null,
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "SENT",
+    "read": false,
+    "archived": false,
+    "case_id": null,
+    "alert_id": "ALERT-1",
+    "incident_id": "INC-**********0911-b30265",
+    "correlation_id": null,
+    "metadata": {
+      "incident_id": "INC-**********0911-b30265",
+      "alert_id": "ALERT-1",
+      "title": "High API error rate",
+      "message": "Errors exceeded threshold.",
+      "assigned_to": "platform-operations",
+      "priority": "HIGH"
+    },
+    "delivery_records": [
+      {
+        "channel": "IN_APP",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:11.157086+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:11.157086+00:00"
+      },
+      {
+        "channel": "LOCAL",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:11.157112+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:11.157112+00:00"
+      }
+    ],
+    "created_at": "2026-06-09T15:09:11.102384+00:00",
+    "sent_at": "2026-06-09T15:09:11.180405+00:00",
+    "read_at": null,
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********[masked-phone]",
+    "event_type": "INCIDENT_STATUS_CHANGED",
+    "priority": "HIGH",
+    "title": "Incident Status Changed",
+    "message": "Errors exceeded threshold.",
+    "recipient_type": "ROLE",
+    "recipient_id": null,
+    "recipient_role": "FRAUD_MANAGER",
+    "recipient_team": null,
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "PENDING",
+    "read": false,
+    "archived": false,
+    "case_id": null,
+    "alert_id": "ALERT-1",
+    "incident_id": "INC-**********0911-b30265",
+    "correlation_id": null,
+    "metadata": {
+      "incident_id": "INC-**********0911-b30265",
+      "alert_id": "ALERT-1",
+      "title": "High API error rate",
+      "message": "Errors exceeded threshold.",
+      "assigned_to": "platform-operations",
+      "priority": "HIGH"
+    },
+    "delivery_records": [],
+    "created_at": "2026-06-09T15:09:11.292913+00:00",
+    "sent_at": null,
+    "read_at": null,
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********0911-d664c8",
+    "event_type": "INCIDENT_ASSIGNED",
+    "priority": "HIGH",
+    "title": "Incident Assigned",
+    "message": "Errors exceeded threshold.",
+    "recipient_type": "ROLE",
+    "recipient_id": null,
+    "recipient_role": "FRAUD_MANAGER",
+    "recipient_team": null,
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "SENT",
+    "read": false,
+    "archived": false,
+    "case_id": null,
+    "alert_id": "ALERT-1",
+    "incident_id": "INC-**********0911-b30265",
+    "correlation_id": null,
+    "metadata": {
+      "incident_id": "INC-**********0911-b30265",
+      "alert_id": "ALERT-1",
+      "title": "High API error rate",
+      "message": "Errors exceeded threshold.",
+      "assigned_to": "fraud-ops",
+      "priority": "HIGH"
+    },
+    "delivery_records": [
+      {
+        "channel": "IN_APP",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:11.517471+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:11.517471+00:00"
+      },
+      {
+        "channel": "LOCAL",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:11.517494+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:11.517494+00:00"
+      }
+    ],
+    "created_at": "2026-06-09T15:09:11.462505+00:00",
+    "sent_at": "2026-06-09T15:09:11.543735+00:00",
+    "read_at": null,
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********0911-06bc66",
+    "event_type": "INCIDENT_CREATED",
+    "priority": "HIGH",
+    "title": "Incident INC-**********0911-07e26f created",
+    "message": "High API error rate",
+    "recipient_type": "ROLE",
+    "recipient_id": null,
+    "recipient_role": "ADMIN",
+    "recipient_team": null,
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "SENT",
+    "read": false,
+    "archived": false,
+    "case_id": null,
+    "alert_id": "ALERT-1",
+    "incident_id": "INC-**********0911-07e26f",
+    "correlation_id": null,
+    "metadata": {
+      "incident_id": "INC-**********0911-07e26f",
+      "alert_id": "ALERT-1",
+      "title": "High API error rate",
+      "message": "Errors exceeded threshold.",
+      "assigned_to": "platform-operations",
+      "priority": "HIGH"
+    },
+    "delivery_records": [
+      {
+        "channel": "IN_APP",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:11.712148+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:11.712148+00:00"
+      },
+      {
+        "channel": "LOCAL",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:11.712165+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:11.712165+00:00"
+      }
+    ],
+    "created_at": "2026-06-09T15:09:11.660096+00:00",
+    "sent_at": "2026-06-09T15:09:11.734828+00:00",
+    "read_at": null,
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********0911-b8e02a",
+    "event_type": "INCIDENT_STATUS_CHANGED",
+    "priority": "HIGH",
+    "title": "Incident Status Changed",
+    "message": "Errors exceeded threshold.",
+    "recipient_type": "ROLE",
+    "recipient_id": null,
+    "recipient_role": "FRAUD_MANAGER",
+    "recipient_team": null,
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "SENT",
+    "read": false,
+    "archived": false,
+    "case_id": null,
+    "alert_id": "ALERT-1",
+    "incident_id": "INC-**********0911-07e26f",
+    "correlation_id": null,
+    "metadata": {
+      "incident_id": "INC-**********0911-07e26f",
+      "alert_id": "ALERT-1",
+      "title": "High API error rate",
+      "message": "Errors exceeded threshold.",
+      "assigned_to": "platform-operations",
+      "priority": "HIGH"
+    },
+    "delivery_records": [
+      {
+        "channel": "IN_APP",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:11.904191+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:11.904191+00:00"
+      },
+      {
+        "channel": "LOCAL",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:11.904208+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:11.904208+00:00"
+      }
+    ],
+    "created_at": "2026-06-09T15:09:11.852564+00:00",
+    "sent_at": "2026-06-09T15:09:11.925300+00:00",
+    "read_at": null,
+    "archived_at": null
+  },
+  {
+    "notification_id": "NOTIF-**********0912-e43904",
+    "event_type": "INCIDENT_CLOSED",
+    "priority": "HIGH",
+    "title": "Incident Closed",
+    "message": "Errors exceeded threshold.",
+    "recipient_type": "ROLE",
+    "recipient_id": null,
+    "recipient_role": "FRAUD_MANAGER",
+    "recipient_team": null,
+    "channels": [
+      "IN_APP",
+      "LOCAL"
+    ],
+    "status": "SENT",
+    "read": false,
+    "archived": false,
+    "case_id": null,
+    "alert_id": "ALERT-1",
+    "incident_id": "INC-**********0911-07e26f",
+    "correlation_id": null,
+    "metadata": {
+      "incident_id": "INC-**********0911-07e26f",
+      "alert_id": "ALERT-1",
+      "title": "High API error rate",
+      "message": "Errors exceeded threshold.",
+      "assigned_to": "platform-operations",
+      "priority": "HIGH"
+    },
+    "delivery_records": [
+      {
+        "channel": "IN_APP",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:12.139494+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:12.139494+00:00"
+      },
+      {
+        "channel": "LOCAL",
+        "status": "SENT",
+        "attempt_count": 1,
+        "last_attempt_at": "2026-06-09T15:09:12.139520+00:00",
+        "error_message": null,
+        "sent_at": "2026-06-09T15:09:12.139520+00:00"
+      }
+    ],
+    "created_at": "2026-06-09T15:09:12.044613+00:00",
+    "sent_at": "2026-06-09T15:09:12.174678+00:00",
     "read_at": null,
     "archived_at": null
   }

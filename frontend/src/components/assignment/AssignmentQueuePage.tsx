@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ProtectedRoute } from "@/auth/ProtectedRoute";
 import { Header } from "@/components/common/Header";
 import { Sidebar } from "@/components/common/Sidebar";
@@ -22,18 +22,20 @@ export function AssignmentQueuePage({ title, subtitle, loader }: Props) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const refresh = useCallback(() => {
-    setLoading(true);
-    setError(null);
-    loader(filters)
-      .then(setQueue)
-      .catch((err: Error) => setError(err.message))
-      .finally(() => setLoading(false));
-  }, [filters, loader]);
-
   useEffect(() => {
-    refresh();
-  }, [refresh]);
+    let mounted = true;
+    loader(filters)
+      .then((data) => {
+        if (mounted) setQueue(data);
+      })
+      .catch((err: Error) => {
+        if (mounted) setError(err.message);
+      })
+      .finally(() => {
+        if (mounted) setLoading(false);
+      });
+    return () => { mounted = false; };
+  }, [filters, loader]);
 
   return (
     <ProtectedRoute><div className="app-layout">
@@ -42,7 +44,11 @@ export function AssignmentQueuePage({ title, subtitle, loader }: Props) {
         <Header title={title} subtitle={subtitle} />
         <section className="content grid">
           <QueueFilters filters={filters} onChange={setFilters} />
-          {loading ? <LoadingSpinner label="Loading queue" /> : error ? <ErrorMessage message={error} /> : queue && <CaseQueueTable cases={queue.cases} title={title} onRefresh={refresh} />}
+          {loading ? <LoadingSpinner label="Loading queue" /> : error ? <ErrorMessage message={error} /> : queue && <CaseQueueTable cases={queue.cases} title={title} onRefresh={() => {
+            setLoading(true);
+            setError(null);
+            loader(filters).then(setQueue).catch((err: Error) => setError(err.message)).finally(() => setLoading(false));
+          }} />}
         </section>
       </main>
     </div></ProtectedRoute>

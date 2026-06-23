@@ -1,0 +1,13 @@
+// KQL: Production Readiness Blocker Found
+// Detects any assessment where a BLOCKER-severity check has FAILED
+// Use this query in Azure Monitor / Log Analytics to alert on blockers
+
+customEvents
+| where name == "READINESS_ASSESSMENT_COMPLETED"
+| extend score = todouble(customMeasurements["overall_score"])
+| extend blockers = toint(customMeasurements["blocking_issue_count"])
+| extend environment = tostring(customDimensions["environment"])
+| extend go_live = tostring(customDimensions["go_live_decision"])
+| where blockers > 0
+| project timestamp, environment, go_live, score, blockers
+| order by timestamp desc

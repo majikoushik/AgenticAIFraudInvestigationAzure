@@ -15,14 +15,38 @@ export default function AlertsPage() {
   const [alerts, setAlerts] = useState<AlertEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  async function load() { const response = await getAlerts(); setAlerts(response.alerts); }
-  useEffect(() => { load().catch((err: Error) => setError(err.message)).finally(() => setLoading(false)); }, []);
-  async function evaluate() { await evaluateAlerts(); await load(); }
+  useEffect(() => {
+    let mounted = true;
+    const doLoad = async () => {
+      try {
+        const response = await getAlerts();
+        if (mounted) setAlerts(response.alerts);
+      } catch (err: unknown) {
+        if (mounted) setError(err instanceof Error ? err.message : String(err));
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    };
+    doLoad();
+    return () => { mounted = false; };
+  }, []);
+  async function evaluate() {
+    await evaluateAlerts();
+    setLoading(true);
+    try {
+      const response = await getAlerts();
+      setAlerts(response.alerts);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : String(err));
+    } finally {
+      setLoading(false);
+    }
+  }
   return (
     <ProtectedRoute><div className="app-layout"><Sidebar /><main className="main-shell">
       <Header title="Alerts" subtitle="Operational alert rules, local simulation, and active alert signals." />
       <section className="content">
-        <div className="page-heading"><div><h2>Alert Center</h2><p>Simulate and evaluate alerts locally without Azure Monitor.</p></div><div className="stack"><button className="button secondary" onClick={evaluate}>Evaluate Rules</button><AlertSimulationPanel onSimulated={load} /></div></div>
+        <div className="page-heading"><div><h2>Alert Center</h2><p>Simulate and evaluate alerts locally without Azure Monitor.</p></div><div className="stack"><button className="button secondary" onClick={evaluate}>Evaluate Rules</button><AlertSimulationPanel onSimulated={async () => { setLoading(true); try { const response = await getAlerts(); setAlerts(response.alerts); } catch (err: unknown) { setError(err instanceof Error ? err.message : String(err)); } finally { setLoading(false); } }} /></div></div>
         {loading ? <LoadingSpinner label="Loading alerts" /> : error ? <ErrorMessage message={error} /> : <AlertList alerts={alerts} />}
       </section>
     </main></div></ProtectedRoute>

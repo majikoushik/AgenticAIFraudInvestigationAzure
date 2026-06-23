@@ -234,6 +234,23 @@ class Settings(BaseSettings):
     compliance_export_include_feedback: bool = True
     compliance_export_redact_pii: bool = True
     retention_policy_legally_reviewed: bool = False
+    # Production Readiness Framework settings
+    production_readiness_enabled: bool = True
+    production_readiness_mode: str = "local"
+    readiness_assessment_store_path: str = "data/synthetic/readiness_assessments.json"
+    readiness_risk_register_store_path: str = "data/synthetic/readiness_risk_register.json"
+    readiness_report_export_path: str = "data/exports/readiness"
+    readiness_require_admin_role: bool = True
+    readiness_min_score_for_ready: float = 90.0
+    readiness_max_blockers_for_ready: int = 0
+    readiness_max_high_risks_for_ready_with_risks: int = 3
+    readiness_enable_static_file_checks: bool = True
+    readiness_enable_health_endpoint_checks: bool = True
+    readiness_enable_config_checks: bool = True
+    readiness_enable_security_checks: bool = True
+    readiness_enable_test_coverage_checks: bool = False
+    readiness_default_environment: str = "dev"
+    readiness_target_environment: str = "prod"
 
     model_config = SettingsConfigDict(
         env_file=".env",

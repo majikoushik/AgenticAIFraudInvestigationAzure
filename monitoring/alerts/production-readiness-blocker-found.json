@@ -1,0 +1,22 @@
+{
+  "name": "Production Readiness Blocker Found",
+  "description": "Alert when a production readiness assessment finds BLOCKER-severity check failures.",
+  "severity": 1,
+  "enabled": true,
+  "evaluationFrequency": "PT1H",
+  "windowSize": "PT1H",
+  "criteria": {
+    "query": "customEvents | where name == 'READINESS_ASSESSMENT_COMPLETED' | extend blockers = toint(customMeasurements['blocking_issue_count']) | where blockers > 0",
+    "threshold": 0,
+    "operator": "GreaterThan",
+    "timeAggregation": "Count"
+  },
+  "actions": {
+    "actionGroupId": "<action-group-resource-id>",
+    "webhookPayload": {
+      "alertName": "Production Readiness Blocker Found",
+      "severity": "Critical",
+      "runbook": "docs/runbooks/production-readiness-blocker-found.md"
+    }
+  }
+}

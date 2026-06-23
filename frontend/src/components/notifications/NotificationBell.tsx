@@ -10,15 +10,32 @@ export function NotificationBell() {
   const [summary, setSummary] = useState<NotificationSummary | null>(null);
   const [items, setItems] = useState<NotificationResponse[]>([]);
 
-  async function refresh() {
-    const [nextSummary, nextItems] = await Promise.all([getNotificationSummary(), getMyNotifications({ unread_only: true, limit: 5 })]);
-    setSummary(nextSummary);
-    setItems(nextItems.notifications);
-  }
-
   useEffect(() => {
-    refresh().catch(() => undefined);
+    let mounted = true;
+    const doRefresh = async () => {
+      try {
+        const [nextSummary, nextItems] = await Promise.all([getNotificationSummary(), getMyNotifications({ unread_only: true, limit: 5 })]);
+        if (mounted) {
+          setSummary(nextSummary);
+          setItems(nextItems.notifications);
+        }
+      } catch {
+        // ignore
+      }
+    };
+    doRefresh();
+    return () => { mounted = false; };
   }, []);
+
+  async function refresh() {
+    try {
+      const [nextSummary, nextItems] = await Promise.all([getNotificationSummary(), getMyNotifications({ unread_only: true, limit: 5 })]);
+      setSummary(nextSummary);
+      setItems(nextItems.notifications);
+    } catch {
+      // ignore
+    }
+  }
 
   async function handleRead(id: string) {
     await markAsRead(id);
