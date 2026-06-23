@@ -1,3 +1,5 @@
+[![CI](https://github.com/majikoushik/AgenticAIFraudInvestigationAzure/actions/workflows/ci.yml/badge.svg)](https://github.com/majikoushik/AgenticAIFraudInvestigationAzure/actions/workflows/ci.yml)
+
 # Agentic AI Fraud Investigation Azure
 
 Production-style local MVP for an Agentic AI Banking Fraud Investigation System on Azure.
