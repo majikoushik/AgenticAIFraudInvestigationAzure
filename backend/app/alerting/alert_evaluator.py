@@ -106,7 +106,8 @@ class AlertEvaluator:
 
     @staticmethod
     def _telemetry_events() -> list[dict]:
-        path = Path(__file__).resolve().parents[3] / "data" / "synthetic" / "telemetry_events.json"
+        from app.config import get_synthetic_data_path
+        path = get_synthetic_data_path() / "telemetry_events.json"
         if not path.exists():
             return []
         try:

@@ -15,7 +15,8 @@ logger = logging.getLogger(__name__)
 class TelemetryClient:
     def __init__(self, local_store_path: Path | None = None) -> None:
         self.config = observability_config
-        self.local_store_path = local_store_path or Path(__file__).resolve().parents[3] / "data" / "synthetic" / "telemetry_events.json"
+        from app.config import get_synthetic_data_path
+        self.local_store_path = local_store_path or get_synthetic_data_path() / "telemetry_events.json"
         self._applicationinsights_connection_string = secure_config_loader.get_secret("APPLICATIONINSIGHTS_CONNECTION_STRING") or self.config.applicationinsights_connection_string
         self._azure_enabled = self.config.enabled and bool(self._applicationinsights_connection_string or self.config.applicationinsights_instrumentation_key)
         if self._azure_enabled:

@@ -53,6 +53,10 @@ class RetentionConfig:
         configured = Path(path)
         if configured.is_absolute():
             return configured
+        parts = configured.parts
+        if len(parts) >= 2 and parts[0] == "data" and parts[1] == "synthetic":
+            from app.config import get_synthetic_data_path
+            return get_synthetic_data_path().joinpath(*parts[2:])
         return (Path(__file__).resolve().parents[3] / configured).resolve()
 
     def safe_summary(self) -> dict:

@@ -30,7 +30,8 @@ class _CaseRepository:
 
 
 def _write_telemetry(records: list[dict]):
-    telemetry_path = Path(__file__).resolve().parents[3] / "data" / "synthetic" / "telemetry_events.json"
+    from app.config import get_synthetic_data_path
+    telemetry_path = get_synthetic_data_path() / "telemetry_events.json"
     original = telemetry_path.read_text(encoding="utf-8") if telemetry_path.exists() else "[]"
     telemetry_path.write_text(json.dumps(records), encoding="utf-8")
     return telemetry_path, original

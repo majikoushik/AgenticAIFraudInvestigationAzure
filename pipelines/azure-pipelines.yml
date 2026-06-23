@@ -74,11 +74,7 @@ stages:
               scriptType: bash
               scriptLocation: inlineScript
               inlineScript: |
-                az deployment sub validate \
-                  --name fraud-ai-dev-validate-$(Build.BuildId) \
-                  --location $(azureLocation) \
-                  --template-file infra/bicep/main.bicep \
-                  --parameters @$(devParametersFile)
+                az bicep build --file infra/bicep/main.bicep
 
   - stage: security_validation
     displayName: Security validation
@@ -101,13 +97,13 @@ stages:
               inlineScript: |
                 echo "Placeholder: run az deployment sub what-if with secure variable groups and approvals."
 
-  - stage: deploy_infra_dev
-    displayName: Deploy infrastructure dev
+  - stage: deploy_infra_dev_template
+    displayName: Deploy infrastructure dev placeholder
     dependsOn:
       - validate_infra
       - security_validation
     jobs:
-      - deployment: deploy_infra_dev
+      - deployment: deploy_infra_dev_placeholder
         environment: dev
         strategy:
           runOnce:
@@ -115,21 +111,17 @@ stages:
               steps:
                 - checkout: self
                 - task: AzureCLI@2
-                  displayName: Deploy dev Bicep
+                  displayName: Deploy dev Bicep placeholder
                   inputs:
                     azureSubscription: '$(azureServiceConnection)'
                     scriptType: bash
                     scriptLocation: inlineScript
                     inlineScript: |
-                      az deployment sub create \
-                        --name fraud-ai-dev-deploy-$(Build.BuildId) \
-                        --location $(azureLocation) \
-                        --template-file infra/bicep/main.bicep \
-                        --parameters @$(devParametersFile)
+                      echo "Placeholder: az deployment sub create --name fraud-ai-dev-deploy-$(Build.BuildId) --location $(azureLocation) --template-file infra/bicep/main.bicep --parameters @$(devParametersFile)"
 
   - stage: build_backend_container
     displayName: Build backend container
-    dependsOn: deploy_infra_dev
+    dependsOn: deploy_infra_dev_template
     jobs:
       - job: build_backend_container
         steps:
@@ -139,7 +131,7 @@ stages:
 
   - stage: build_frontend_container
     displayName: Build frontend container
-    dependsOn: deploy_infra_dev
+    dependsOn: deploy_infra_dev_template
     jobs:
       - job: build_frontend_container
         steps:

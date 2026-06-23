@@ -17,7 +17,8 @@ feature_flags = FeatureFlagService()
 def recent_telemetry_events(_: AuthenticatedUser = Depends(require_permission(Permission.ADMIN_CONFIG))) -> list[dict]:
     if not feature_flags.is_enabled("FEATURE_ENABLE_OBSERVABILITY_PAGE"):
         raise ApiError(403, "feature_disabled", "Observability page feature is disabled by admin configuration.")
-    path = Path(__file__).resolve().parents[4] / "data" / "synthetic" / "telemetry_events.json"
+    from app.config import get_synthetic_data_path
+    path = get_synthetic_data_path() / "telemetry_events.json"
     if not path.exists():
         return []
     try:

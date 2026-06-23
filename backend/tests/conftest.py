@@ -37,22 +37,27 @@ def isolate_synthetic_data():
             else:
                 shutil.copy2(s, d)
 
-    # Override setting
-    old_path = settings.synthetic_data_path
-    old_compliance = settings.compliance_export_path
-    old_feedback = settings.feedback_export_path
-    old_readiness = settings.readiness_report_export_path
-    
-    settings.synthetic_data_path = temp_dir
-    settings.compliance_export_path = str(Path(temp_dir) / "exports" / "compliance")
-    settings.feedback_export_path = str(Path(temp_dir) / "exports" / "feedback_eval_dataset.json")
-    settings.readiness_report_export_path = str(Path(temp_dir) / "exports" / "readiness")
+    old_values = {}
+    for field_name, value in settings.model_dump().items():
+        if isinstance(value, str):
+            if value.startswith("data/synthetic/"):
+                old_values[field_name] = value
+                filename = value.replace("data/synthetic/", "")
+                setattr(settings, field_name, str(Path(temp_dir) / filename))
+            elif value.startswith("data/exports/"):
+                old_values[field_name] = value
+                filename = value.replace("data/exports/", "exports/")
+                setattr(settings, field_name, str(Path(temp_dir) / filename))
+            elif value == "data/archive":
+                old_values[field_name] = value
+                setattr(settings, field_name, str(Path(temp_dir) / "archive"))
+            elif field_name == "synthetic_data_path":
+                old_values[field_name] = value
+                setattr(settings, field_name, temp_dir)
 
     yield
 
     # Restore and cleanup
-    settings.synthetic_data_path = old_path
-    settings.compliance_export_path = old_compliance
-    settings.feedback_export_path = old_feedback
-    settings.readiness_report_export_path = old_readiness
+    for field_name, old_value in old_values.items():
+        setattr(settings, field_name, old_value)
     shutil.rmtree(temp_dir)
